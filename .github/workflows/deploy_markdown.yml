@@ -64,7 +64,7 @@ jobs:
         with:
           name: email.html
           path: email.html
-        
+        # Send the email html
       - name: Send mail
         uses: dawidd6/action-send-mail@v3
         with:
@@ -112,7 +112,7 @@ jobs:
           #attachments: attachments.zip,git.diff,./dist/static/*.js
           # Optional priority: 'high', 'normal' (default) or 'low'
           priority: low
-       # Load gitpage
+       # Render the bookdown
       - name: Render page
         env:
           GOOGLE_AUTHENTICATION_CREDENTIALS: ${{ secrets.GOOGLE_AUTHENTICATION_CREDENTIALS }}
@@ -124,7 +124,7 @@ jobs:
           name: _book
           path: _book/
 
-
+#Deploy the bookdown
   checkout-and-deploy:
    runs-on: ubuntu-latest
    needs: bookdown
