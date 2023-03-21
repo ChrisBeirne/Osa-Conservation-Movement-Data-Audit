@@ -19,7 +19,7 @@ jobs:
           # install full prebuilt version
           TINYTEX_INSTALLER: TinyTeX
       - name: Install rmarkdown
-        run: Rscript -e 'install.packages(c("rmarkdown"))'
+        run: Rscript -e 'install.packages(c("rmarkdown", "bookdown"))'
       - name: Install kableExtra
         run: Rscript -e "install.packages('kableExtra')"
       - name: Install rgdal
@@ -38,16 +38,22 @@ jobs:
         run: Rscript -e "install.packages('viridis')"
       - name: Install lubridate
         run: Rscript -e "install.packages('lubridate')"
-      # - name: Install plotly
-      #   run: Rscript -e "install.packages('plotly')"
-      # - name: Install raster
-      #   run: Rscript -e "install.packages('raster', type='mac.binary')"
-      # - name: Install googledrive
-      #   run: Rscript -e "install.packages('googledrive')"
-      # - name: Install purrr
-      #   run: Rscript -e "install.packages('purrr')"
-      # - name: Install readxl
-      #   run: Rscript -e "install.packages('readxl')"
+      - name: Install plotly
+        run: Rscript -e "install.packages('plotly')"
+      - name: Install raster
+        run: Rscript -e "install.packages('raster', type='mac.binary')"
+      - name: Install googledrive
+        run: Rscript -e "install.packages('googledrive')"
+      - name: Install purrr
+        run: Rscript -e "install.packages('purrr')"
+      - name: Install readxl
+        run: Rscript -e "install.packages('readxl')"
+      - name: Install geosphere
+        run: Rscript -e "install.packages('geosphere')"
+      - name: Install foreach
+        run: Rscript -e "install.packages('foreach')"
+      - name: Install maptools
+        run: Rscript -e "install.packages('maptools')"
       - name: Render Book
         env:
           GOOGLE_AUTHENTICATION_CREDENTIALS: ${{ secrets.GOOGLE_AUTHENTICATION_CREDENTIALS }}
@@ -58,6 +64,12 @@ jobs:
         with:
           name: email.html
           path: email.html
+          
+        run: Rscript -e 'bookdown::render_book("index.Rmd")'
+      - uses: actions/upload-artifact@v2
+        with:
+          name: _book
+          path: _book/
 
 
 #  sending-email:
@@ -113,5 +125,24 @@ jobs:
           # Optional priority: 'high', 'normal' (default) or 'low'
           priority: low
 
-
+checkout-and-deploy:
+   runs-on: ubuntu-latest
+   needs: bookdown
+   steps:
+     - name: Checkout
+       uses: actions/checkout@v2
+     - name: Download artifact
+       uses: actions/download-artifact@v2
+       with:
+         # Artifact name
+         name: _book # optional
+         # Destination path
+         path: _book # optional
+     - name: Deploy to GitHub Pages
+       uses: Cecilapp/GitHub-Pages-deploy@v3
+       env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+       with:
+        build_dir: _book
+        branch: gh-pages
 
