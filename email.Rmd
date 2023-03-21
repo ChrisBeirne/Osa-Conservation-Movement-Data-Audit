@@ -171,7 +171,7 @@ For the current locations of all animals see: [Osa Conservation Daily Report](ht
 
 Tagged animals which have not checked in for >14 days:
 
-```{r  c05, echo=F}
+```{r, echo=F}
 tmp2 <- animals[!(animals$local_identifier %in% tmp$name),]
 tmp2$timestamp_end <- with_tz(tmp2$timestamp_end, tzone = "America/Costa_Rica")
 #str(tmp2)
