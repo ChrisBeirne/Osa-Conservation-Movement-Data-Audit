@@ -112,6 +112,13 @@ jobs:
           #attachments: attachments.zip,git.diff,./dist/static/*.js
           # Optional priority: 'high', 'normal' (default) or 'low'
           priority: low
+          
+          
+              # delete-artifact
+      - uses: geekyeggo/delete-artifact@v2
+        with:
+          name: email.html
+          
        # Render the bookdown
       - name: Render page
         env:
@@ -154,5 +161,5 @@ jobs:
  #     - name: Check out repository code
  #       uses: actions/checkout@v2
 
-
+ 
 
