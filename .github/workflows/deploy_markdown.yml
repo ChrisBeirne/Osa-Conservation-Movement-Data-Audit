@@ -123,7 +123,7 @@ jobs:
         with:
           name: _book
           path: _book/
-
+ 
 #Deploy the bookdown
   checkout-and-deploy:
    runs-on: ubuntu-latest
