@@ -4,7 +4,7 @@ editor_options:
   chunk_output_type: console
 output: rmarkdown::html_vignette
 ---
-
+ 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(kableExtra)
