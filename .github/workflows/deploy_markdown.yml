@@ -128,7 +128,6 @@ jobs:
           name: _book
           path: _book/
  
-  #Deploy the bookdown
   checkout-and-deploy:
    runs-on: ubuntu-latest
    needs: bookdown
@@ -149,7 +148,6 @@ jobs:
        with:
         build_dir: _book
         branch: gh-pages
-
 
 
 #  sending-email:
