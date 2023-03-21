@@ -54,7 +54,7 @@ jobs:
         run: Rscript -e "install.packages('foreach')"
       - name: Install maptools
         run: Rscript -e "install.packages('maptools')"
-      - name: Render Book
+      - name: Render email
         env:
           GOOGLE_AUTHENTICATION_CREDENTIALS: ${{ secrets.GOOGLE_AUTHENTICATION_CREDENTIALS }}
           MOVEBANK_USERNAME: ${{ secrets.MOVEBANK_USERNAME }}
@@ -65,6 +65,11 @@ jobs:
           name: email.html
           path: email.html
           
+      - name: Render page
+        env:
+          GOOGLE_AUTHENTICATION_CREDENTIALS: ${{ secrets.GOOGLE_AUTHENTICATION_CREDENTIALS }}
+          MOVEBANK_USERNAME: ${{ secrets.MOVEBANK_USERNAME }}
+          MOVEBANK_PASSWORD: ${{ secrets.MOVEBANK_PASSWORD }}
         run: Rscript -e 'bookdown::render_book("index.Rmd")'
       - uses: actions/upload-artifact@v2
         with:
