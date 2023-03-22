@@ -75,6 +75,11 @@ animals$animalName <- paste0(sub('\\_.*', '', animals$animalName), "_", sub('\\ 
 animals$name <- sub('\\_.*', '', animals$animalName)
 animals$name[animals$name=="Robin Hood"] <- "Robin.Hood"
 
+
+# Sort date objects
+animals$timestamp_start <- ymd_hms(animals$timestamp_start)
+animals$timestamp_end <- ymd_hms(animals$timestamp_end)
+
 # Get last 2 weeks
 t <- now("America/Costa_Rica")
 start_t <- t-as.difftime(14,units='days')
@@ -537,7 +542,7 @@ The following maps relate to just the last 48 hours of data.
 
 ```{r, echo=F, message=F, warning=F}
 # Subset to 48 hours
-tmp_cr_48 <- dat[dat$country=="costa_rica" & dat$timestamp > max(ymd_hms(animals$timestamp_end))-48*60*60,]
+tmp_cr_48 <- dat[dat$country=="costa_rica" & dat$timestamp > max(ymd_hms(animals$timestamp_end), na.rm=T)-48*60*60,]
 tmp_cr_48$name <- as.character(tmp_cr_48$name)
 
 # Remake shapefiles
@@ -621,7 +626,7 @@ m
 
 ```{r, echo=F, message=F, warning=F}
 # Subset to 48 hours
-tmp_peru_48 <- dat[dat$country=="peru" & dat$timestamp > max(ymd_hms(animals$timestamp_end))-48*60*60,]
+tmp_peru_48 <- dat[dat$country=="peru" & dat$timestamp > max(ymd_hms(animals$timestamp_end), na.rm=T)-48*60*60,]
 
 tmp_peru_48$name <- as.character(tmp_peru_48$name)
 
