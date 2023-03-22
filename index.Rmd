@@ -36,8 +36,6 @@ library(geosphere)
 library(foreach)
 library(maptools)
 
-options(googledrive_quiet = TRUE)
-
 # For when the trapping effort file is sorted
 # googledrive::drive_auth(path = Sys.getenv("GOOGLE_AUTHENTICATION_CREDENTIALS"))
 # 
@@ -81,13 +79,16 @@ animals$name[animals$name=="Robin Hood"] <- "Robin.Hood"
 # Sort date objects
 animals$timestamp_start <- ymd_hms(animals$timestamp_start)
 animals$timestamp_end <- ymd_hms(animals$timestamp_end)
+```
 
 
-drive_auth()
+```{r}
+
+#drive_auth()
 ## Authenticate into googledrive service account ----
 ## 'GOOGLE_APPLICATION_CREDENTIALS' is what we named the Github Secret that 
 ## contains the credential JSON file
-googledrive::drive_auth(path = Sys.getenv("GOOGLE_APPLICATION_CREDENTIALS"))
+googledrive::drive_auth(path = Sys.getenv("GOOGLE_AUTHENTICATION_CREDENTIALS"))
 
 
 data_folder <- drive_ls(path = "08 Databases + Analysis")
