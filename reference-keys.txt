@@ -1,1 +1,5 @@
 device-status
+database-changes-last-7-days
+capture-data-checks
+processing-time
+morphometrics

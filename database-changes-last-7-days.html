@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1.1 Database changes (last 7 days) | Osa Conservation: Movement data audit</title>
+  <meta name="description" content="1.1 Database changes (last 7 days) | Osa Conservation: Movement data audit" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1.1 Database changes (last 7 days) | Osa Conservation: Movement data audit" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1.1 Database changes (last 7 days) | Osa Conservation: Movement data audit" />
+  
+  
+  
+
+<meta name="author" content="Chris Beirne" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="capture-data-checks.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.10.1/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+
+
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Osa Conservation: Tracker Checker</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Device Status</a><ul>
+<li class="chapter" data-level="1.1" data-path="database-changes-last-7-days.html"><a href="database-changes-last-7-days.html"><i class="fa fa-check"></i><b>1.1</b> Database changes (last 7 days)</a></li>
+<li class="chapter" data-level="1.2" data-path="capture-data-checks.html"><a href="capture-data-checks.html"><i class="fa fa-check"></i><b>1.2</b> Capture data checks</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="capture-data-checks.html"><a href="capture-data-checks.html#processing-time"><i class="fa fa-check"></i><b>1.2.1</b> Processing time</a></li>
+<li class="chapter" data-level="1.2.2" data-path="capture-data-checks.html"><a href="capture-data-checks.html#morphometrics"><i class="fa fa-check"></i><b>1.2.2</b> Morphometrics</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/ChrisBeirne/test_report/" target="blank">Osa Conservation: Tracker Checker</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Osa Conservation: Movement data audit</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="database-changes-last-7-days" class="section level2 hasAnchor">
+<h2><span class="header-section-number">1.1</span> Database changes (last 7 days)<a href="database-changes-last-7-days.html#database-changes-last-7-days" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The following table shows total number of observations in each database (from)left) and the new records from the last 7 days (right). The green numbers show where records have been added.</p>
+<pre><code>## `summarise()` has grouped output by &#39;NEW&#39;. You can override using the `.groups`
+## argument.
+## `summarise()` has grouped output by &#39;NEW&#39;. You can override using the `.groups`
+## argument.
+## `summarise()` has grouped output by &#39;NEW&#39;. You can override using the `.groups`
+## argument.
+## `summarise()` has grouped output by &#39;NEW&#39;. You can override using the `.groups`
+## argument.
+## `summarise()` has grouped output by &#39;NEW&#39;. You can override using the `.groups`
+## argument.</code></pre>
+<pre><code>##                                  name total_rows new_rows CR_total CR_new
+## 1            vulture_capture_database        155        5      141      5
+## 2            vulture_trap_deployments         55        0       47      0
+## 3                  biological_samples        857       61      857     61
+## 4 tracking_device_deployment_database         35        1       25      1
+## 5       cluster_observations_database         15        0       15      0
+##   PE_total PE_new
+## 1       14      0
+## 2        7      0
+## 3        0      0
+## 4       10      0
+## 5        0      0</code></pre>
+<pre><code>## &#39;data.frame&#39;:    5 obs. of  7 variables:
+##  $ name      : chr  &quot;vulture_capture_database&quot; &quot;vulture_trap_deployments&quot; &quot;biological_samples&quot; &quot;tracking_device_deployment_database&quot; ...
+##  $ total_rows: int  155 55 857 35 15
+##  $ new_rows  : num  5 0 61 1 0
+##  $ CR_total  : int  141 47 857 25 15
+##  $ CR_new    : num  5 0 61 1 0
+##  $ PE_total  : int  14 7 0 10 0
+##  $ PE_new    : num  0 0 0 0 0</code></pre>
+<table class=" lightable-classic" style='font-family: "Arial Narrow", "Source Sans Pro", sans-serif; margin-left: auto; margin-right: auto;'>
+<thead>
+<tr>
+<th style="empty-cells: hide;" colspan="1">
+</th>
+<th style="padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #111111; margin-bottom: -1px; ">
+All locations
+</div>
+</th>
+<th style="padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #111111; margin-bottom: -1px; ">
+Costa Rica
+</div>
+</th>
+<th style="padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #111111; margin-bottom: -1px; ">
+Peru
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+name
+</th>
+<th style="text-align:right;">
+total
+</th>
+<th style="text-align:left;">
+new
+</th>
+<th style="text-align:right;">
+total
+</th>
+<th style="text-align:left;">
+new
+</th>
+<th style="text-align:right;">
+total
+</th>
+<th style="text-align:left;">
+new
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;border-right:1px solid;">
+vulture_capture_database
+</td>
+<td style="text-align:right;">
+155
+</td>
+<td style="text-align:left;border-right:1px solid;">
+<span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: lightgreen !important;">5</span>
+</td>
+<td style="text-align:right;">
+141
+</td>
+<td style="text-align:left;border-right:1px solid;">
+<span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: lightgreen !important;">5</span>
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:left;border-right:1px solid;">
+<span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-right:1px solid;">
+vulture_trap_deployments
+</td>
+<td style="text-align:right;">
+55
+</td>
+<td style="text-align:left;border-right:1px solid;">
+<span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:right;">
+47
+</td>
+<td style="text-align:left;border-right:1px solid;">
+<span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;border-right:1px solid;">
+<span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-right:1px solid;">
+biological_samples
+</td>
+<td style="text-align:right;">
+857
+</td>
+<td style="text-align:left;border-right:1px solid;">
+<span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: lightgreen !important;">61</span>
+</td>
+<td style="text-align:right;">
+857
+</td>
+<td style="text-align:left;border-right:1px solid;">
+<span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: lightgreen !important;">61</span>
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;border-right:1px solid;">
+<span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-right:1px solid;">
+tracking_device_deployment_database
+</td>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:left;border-right:1px solid;">
+<span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: lightgreen !important;">1</span>
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:left;border-right:1px solid;">
+<span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: lightgreen !important;">1</span>
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;border-right:1px solid;">
+<span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-right:1px solid;">
+cluster_observations_database
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:left;border-right:1px solid;">
+<span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:left;border-right:1px solid;">
+<span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;border-right:1px solid;">
+<span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="capture-data-checks.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["Osa Conservation: Tracker Checker.pdf", "Osa Conservation: Tracker Checker.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
