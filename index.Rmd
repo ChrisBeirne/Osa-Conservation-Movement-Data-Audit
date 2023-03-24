@@ -47,8 +47,6 @@ library(maptools)
 #                path="data/2_vulture_trap_deployments.xlsx")
 #capture_dat <- read_excel("data/2_vulture_trap_deployments.xlsx")
 
-
-
 # Import passcodes
 MOVE_PASS <- Sys.getenv("MOVEBANK_PASSWORD")
 MOVE_USE  <- Sys.getenv("MOVEBANK_USERNAME")
@@ -79,33 +77,335 @@ animals$name[animals$name=="Robin Hood"] <- "Robin.Hood"
 # Sort date objects
 animals$timestamp_start <- ymd_hms(animals$timestamp_start)
 animals$timestamp_end <- ymd_hms(animals$timestamp_end)
-```
 
-
-```{r}
 
 #drive_auth()
 ## Authenticate into googledrive service account ----
 ## 'GOOGLE_APPLICATION_CREDENTIALS' is what we named the Github Secret that 
 ## contains the credential JSON file
 googledrive::drive_auth(path = Sys.getenv("GOOGLE_AUTHENTICATION_CREDENTIALS"))
-
-
 data_folder <- drive_ls(path = "08 Databases + Analysis")
-
 data_path <- "data"
 dir.create(data_path) 
-## dir.create will fail if folder already exists so not great for scripts on local but as GHA is 
-## creating a new environment every time it runs we won't have that problem here
-# normally i prefer using fs::dir_create(data_path)
-drive_download(file = as_id("1Q8ir4HNvP2zBFwItINhc1rmBvW2MdHnJ-mUULh_Z_oc"), path = paste0("data/cap_database"), overwrite = TRUE)
-
-cap_db <- read_excel("data/cap_database.xlsx", sheet="database")
 ```
 
 
 ```{r}
-kbl(cap_db)
+
+
+
+#Capture_database
+drive_download(file = as_id("1Q8ir4HNvP2zBFwItINhc1rmBvW2MdHnJ-mUULh_Z_oc"), path = paste0("data/cap_database"), overwrite = TRUE)
+cap_db <- read_excel("data/cap_database.xlsx", sheet="database")  
+# Convert the times to minutes
+cap_db$total_time_processing <- as.numeric(cap_db$total_time_processing)*24*60
+cap_db$delay <- as.numeric(cap_db$delay)*24*60
+# Replace VALUE with NA
+cap_db$individual_weight[cap_db$individual_weight=="#VALUE!"] <- NA
+cap_db$individual_weight <- as.numeric(cap_db$individual_weight)
+
+# Head
+cap_db$head_length<- as.numeric(cap_db$head_length)
+cap_db$head_width <- as.numeric(cap_db$head_width)
+
+# Bill
+cap_db$bill_length <- as.numeric(cap_db$bill_length)
+cap_db$bill_width  <- as.numeric(cap_db$bill_width)
+cap_db$bill_depth  <- as.numeric(cap_db$bill_depth)
+
+cap_db$wing_chord  <- as.numeric(cap_db$wing_chord)
+cap_db$wing_flat   <- as.numeric(cap_db$wing_flat)
+cap_db$wing_span   <- as.numeric(cap_db$wing_span)
+cap_db$tail_length <- as.numeric(cap_db$tail_length)
+
+cap_db$tarsus_length <- as.numeric(cap_db$tarsus_length)
+cap_db$body_length <- as.numeric(cap_db$body_length)
+cap_db$MTO_length <- as.numeric(cap_db$MTO_length)
+# Remove empty rows
+cap_db <- cap_db[is.na(cap_db$date)==F & is.na(cap_db$country)==F,]
+
+#trap_deployments
+###################################
+## THIS MAY NOT BE THE RIGHT ONE ##
+
+drive_download(file = as_id("14hLi94W4WbDn6jdXahJMnxllOgLpZh-PpIBOWqt9jlc"), path = paste0("data/trap_database"), overwrite = TRUE)
+trap_db <- read_excel("data/trap_database.xlsx")
+trap_db <- trap_db[trap_db$deployment_id!="_",]
+# Add a country code
+trap_db$country <- NA
+trap_db$country[trap_db$latitude>0] <- "CR"
+trap_db$country[trap_db$latitude<0] <- "PE"
+
+
+#biological samples
+drive_download(file = as_id("1kx5BYcbbDYZLnWMp1IxQySaLRQ2I4AJhTNjZfn7m4U8"), path = paste0("data/bio_database"), overwrite = TRUE)
+bio_db <- read_excel("data/bio_database.xlsx", sheet="biological_samples")
+
+#device_database
+drive_download(file = as_id("1_oa67Po8Hpmp4VH8jqlD_Sm25Fn2GPctqp7rC5EXSuo"), path = paste0("data/track_database"), overwrite = TRUE)
+track_db <- read_excel("data/track_database.xlsx")
+
+# Make one that is just the first of each unique code
+track_db_1 <- track_db[!duplicated(track_db$transmitor_identifier) & is.na(track_db$deployment_start)==F,]
+
+
+#pittag_database
+drive_download(file = as_id("1oDWd3QYUxpSFRKkkwNLgRJmMJrxuMwqNfAM8tkN-UII"), path = paste0("data/pit_database"), overwrite = TRUE)
+pit_db <- read_excel("data/pit_database.xlsx")
+colnames(pit_db)[5:8] <- pit_db[1,5:8]
+pit_db <- pit_db[is.na(pit_db$pit_tag_id)==F,]
+# Remove blanks
+pit_db <- pit_db[,1:9]
+
+#cluster observations
+drive_download(file = as_id("1KvZ2jEfv97eAJLatlw-rEic-kPitFPiUvjXcrrX7jiQ"), path = paste0("data/clus_database"), overwrite = TRUE)
+clus_db <- read_excel("data/clus_database.xlsx", sheet="Data sheet")
+
+
+# Get current time and last 7 days
+t <- now("America/Costa_Rica")
+start_t <- t-as.difftime(7,units='days')
+
 ```
+
+## Database changes (last 7 days)
+
+The following table shows total number of observations in each database (from)left) and the new records from the last 7 days (right). The green numbers show where records have been added.
+
+```{r}
+cap_db$NEW   <- difftime(cap_db$date,t)>-7
+trap_db$NEW  <- difftime(trap_db$date,t)>-7
+bio_db$NEW   <- difftime(bio_db$capture_date,t)>-7
+track_db_1$NEW <- difftime(track_db_1$deployment_start,t)>-7
+clus_db$NEW   <- difftime(clus_db$visit_date,t)>-7
+
+list_db <- list(cap_db, trap_db, bio_db, track_db_1, clus_db)
+names(list_db) <- c("vulture_capture_database",
+                                    "vulture_trap_deployments",
+                                    "biological_samples",
+                                    "tracking_device_deployment_database",
+                                    "cluster_observations_database")
+
+
+# Blank dataframe to store the output
+change_dat <- data.frame(name=names(list_db),
+                         total_rows = NA,
+                         new_rows = NA,
+                         CR_total = NA,
+                         CR_new = NA,
+                         PE_total =NA,
+                         PE_new=NA)
+i <- 2
+for(i in 1:length(names(list_db)))
+{
+   #Overall
+   tmp <- list_db[[i]] %>% group_by(NEW) %>% summarize(n=n())
+   change_dat$total_rows[i] <- sum(tmp$n)
+   # If you have new rows
+   if(nrow(tmp)>1)
+   {
+     change_dat$new_rows[i] <- tmp$n[2]
+   } else(change_dat$new_rows[i] <- 0)
+   #Country specific
+   tmp <- list_db[[i]] %>% group_by(NEW, country) %>% summarize(n=n())
+   # Filter any NA;s
+   tmp<- tmp[is.na(tmp$country)==F,]
+   # CR
+   tmp_cr <- tmp[tmp$country=="CR",]
+   change_dat$CR_total[i] <- sum(tmp_cr$n)
+   # If you have new rows
+   if(nrow(tmp_cr)>1)
+   {
+     change_dat$CR_new[i] <- tmp_cr$n[2]
+   } else(change_dat$CR_new[i] <- 0)
+   # PE
+   tmp_pe <- tmp[tmp$country=="PE",]
+   change_dat$PE_total[i] <- sum(tmp_pe$n)
+   # If you have new rows
+   if(nrow(tmp_pe)>1)
+   {
+     change_dat$PE_new[i] <- tmp_pe$n[2]
+   } else(change_dat$PE_new[i] <- 0)
+
+  
+}
+
+change_dat 
+
+str(change_dat)
+```
+
+```{r}
+table_dat <- change_dat
+
+# Setup highlights
+
+table_dat$new_rows = cell_spec(table_dat$new_rows, background = ifelse(table_dat$new_rows == 0, "white", "lightgreen"))
+table_dat$CR_new = cell_spec(table_dat$CR_new, background = ifelse(table_dat$CR_new == 0, "white", "lightgreen"))
+table_dat$PE_new = cell_spec(table_dat$PE_new, background = ifelse(table_dat$PE_new == 0, "white", "lightgreen"))
+
+
+# Setup column names 
+colnames(table_dat)[2:7] <- c("total", "new", "total", "new", "total", "new") 
+
+kbl(table_dat, escape = F) %>%
+  kable_classic(full_width = T) %>%
+  add_header_above(c(" " = 1, "All locations" = 2, "Costa Rica" = 2, "Peru" = 2)) %>% 
+  column_spec (c(1,3,5,7),border_left = F, border_right = T) 
+
+```
+
+## Capture data checks
+
+To date we have captured vultures `r nrow(cap_db)` times, deployed `r length(unique(cap_db$transmitor_identifier))` tracking devices and `r length(unique(cap_db$pit_tag_id[nchar(cap_db$pit_tag_id)>10]))` pit tags. 
+
+The following section provides a summary of the data taken during animal captures
+
+### Processing time
+
+```{r}
+# Sensors deploy and sensorys not deployed
+
+plot(cap_db$total_time_processing, ylab="Processing time (mins)")
+
+fig <- plot_ly(data = cap_db, x = 1:nrow(cap_db), y = ~total_time_processing, color = ~species,
+               hoverinfo = 'text',
+               text = ~paste(date,pit_tag_id,sep = "<br>")) %>% 
+              layout(title = 'Vulture processing time', 
+                      xaxis = list(title = 'Vulture capture order'), 
+                      yaxis = list(title = 'Processing time (minutes)'), 
+                      legend = list(title=list(text='<b> Species </b>')))
+fig
+
+```
+
+### Morphometrics
+
+*Weight* Of `r nrow(cap_db)` captures we have *`r length(cap_db$individual_weight[is.na(cap_db$individual_weight)==T])` missing weight data*.
+
+Of the weights recorded the distributions are as follows:
+
+```{r}
+# Weight
+
+f1 <- plot_ly(data=cap_db, y = ~head_length, color = ~species, 
+               type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
+               hoverinfo = 'text',
+               text = ~paste(date,pit_tag_id,sep = "<br>")) %>% 
+              layout(title = 'Head Length', 
+                      xaxis = list(title = 'Species'), 
+                      yaxis = list(title = 'Length (g)'))
+
+fig
+
+
+```
+
+
+Other:
+
+Head traits
+
+```{r}
+f1 <- plot_ly(data=cap_db, y = ~head_length, color = ~species, 
+               type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
+               hoverinfo = 'text',
+               text = ~paste(date,pit_tag_id,sep = "<br>")) %>% 
+              layout( xaxis = list(title = 'Species'), 
+                      yaxis = list(title = 'Head length (mm)'),
+                     showlegend=F)
+
+f2 <- plot_ly(data=cap_db, y = ~head_width, color = ~species, 
+               type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
+               hoverinfo = 'text',
+               text = ~paste(date,pit_tag_id,sep = "<br>")) %>% 
+              layout(xaxis = list(title = 'Species'), 
+                      yaxis = list(title = 'Head length (mm)'),
+                     showlegend=F)
+
+
+annotations = list( 
+                    list(x = 0.2, y = 1.0,   text = "Head length (mm)",
+                         xref = "paper",  yref = "paper",  xanchor = "center", yanchor = "bottom", 
+                         showarrow = FALSE),
+                    list(x = 0.8, y = 1,text = "Head width (mm)",
+                         xref = "paper",yref = "paper", xanchor = "center", yanchor = "bottom",  
+                         showarrow = FALSE)
+                  )
+
+fig <- subplot(f1, f2) 
+fig <- fig %>%layout(annotations = annotations) 
+fig
+```
+
+Bill traits
+
+```{r}
+f1 <- plot_ly(data=cap_db, y = ~bill_length, color = ~species, 
+               type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
+               hoverinfo = 'text',
+               text = ~paste(date,pit_tag_id,sep = "<br>")) %>% 
+              layout( xaxis = list(title = 'Species'), 
+                      yaxis = list(title = 'Head length (mm)'),
+                     showlegend=F)
+
+f2 <- plot_ly(data=cap_db, y = ~bill_width, color = ~species, 
+               type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
+               hoverinfo = 'text',
+               text = ~paste(date,pit_tag_id,sep = "<br>")) %>% 
+              layout(xaxis = list(title = 'Species'), 
+                      yaxis = list(title = 'Head length (mm)'),
+                     showlegend=F)
+
+f3 <- plot_ly(data=cap_db, y = ~bill_depth, color = ~species, 
+               type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
+               hoverinfo = 'text',
+               text = ~paste(date,pit_tag_id,sep = "<br>")) %>% 
+              layout(xaxis = list(title = 'Species'), 
+                      yaxis = list(title = 'Head length (mm)'),
+                     showlegend=F)
+
+
+annotations = list( 
+                    list(x = 0.1, y = 1.0,   text = "Bill length (mm)",
+                         xref = "paper",  yref = "paper",  xanchor = "center", yanchor = "bottom", 
+                         showarrow = FALSE),
+                    list(x = 0.5, y = 1,text = "Bill width (mm)",
+                         xref = "paper",yref = "paper", xanchor = "center", yanchor = "bottom",  
+                         showarrow = FALSE),
+                    list(x = 0.9, y = 1,text = "Bill depth (mm)",
+                         xref = "paper",yref = "paper", xanchor = "center", yanchor = "bottom",  
+                         showarrow = FALSE)
+                  )
+
+fig <- subplot(f1, f2, f3) 
+fig <- fig %>%layout(annotations = annotations) 
+fig
+
+
+
+
+# cap_db$wing_chord  <- as.numeric(cap_db$wing_chord)
+# cap_db$wing_flat   <- as.numeric(cap_db$wing_flat)
+# cap_db$wing_span   <- as.numeric(cap_db$wing_span)
+# cap_db$tail_length <- as.numeric(cap_db$tail_length)
+# 
+# cap_db$tarsus_length <- as.numeric(cap_db$tarsus_length)
+# cap_db$body_length <- as.numeric(cap_db$body_length)
+# cap_db$MTO_length <- as.numeric(cap_db$MTO_length)
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
 
 
