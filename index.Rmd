@@ -121,6 +121,8 @@ cap_db$MTO_length <- as.numeric(cap_db$MTO_length)
 
 # Sort bological samples
 cap_db$biological_sample <- as.numeric(cap_db$biological_sample)
+# Setup the categories
+cap_db$species <- as.factor(cap_db$species)
 
 
 # Remove empty rows
@@ -172,13 +174,7 @@ start_t <- t-as.difftime(7,units='days')
 
 ### Database changes (last 7 days)
 
-
-
 The following table shows total number of observations in each database (left) and the new records from the last 7 days (right). The green numbers show where records have been added.
-
-`r t`
-
-`r start_t`
 
 ```{r, include=F}
 cap_db$NEW   <- difftime(cap_db$date,t)>-7
@@ -238,9 +234,7 @@ for(i in 1:length(names(list_db)))
   
 }
 
-change_dat 
 
-str(change_dat)
 ```
 
 ```{r}
@@ -260,7 +254,6 @@ kbl(table_dat, escape = F) %>%
   kable_classic(full_width = T) %>%
   add_header_above(c(" " = 1, "All locations" = 2, "Costa Rica" = 2, "Peru" = 2)) %>% 
   column_spec (c(1,3,5,7),border_left = F, border_right = T) 
-
 ```
 
 ### Database linkage check
@@ -277,14 +270,25 @@ tmp3 <- data.frame("yes" = nrow(tmp), "no"=nrow(tmp2))
 
 tmp3$no <- as.numeric(tmp3$no)
 
-tmp3$no <-  cell_spec(tmp3$no, background = ifelse(table_dat$PE_new == 0, "white", "lightred"))
-
-kbl(tmp3, excape=F)  %>%
+kbl(tmp3, escape=F)  %>%
   kable_classic(full_width = F)
 
 ```
 
-**Do all captures with biological samples have linked data in the `biological_samples` database?**
+The dates and locations when we captured vultures which are not in the database are as follows:
+
+```{r}
+tmp3 <- tmp2 %>% group_by(location_code, date) %>% summarize("vultures captured"=n())
+
+kbl(tmp3, escape=F)  %>%
+  kable_classic(full_width = F)
+```
+
+
+
+
+
+**Do all captures with biological samples have data in the `biological_samples` database?**
 
 ```{r}
 tmp <- cap_db[cap_db$biological_sample>0 & is.na(cap_db$biological_sample)==F,]
@@ -311,7 +315,7 @@ kbl(tmp[,c("local_identifier", "pit_tag_id", "date")])  %>%
   kable_classic(full_width = F)
 ```
 
-**Do all vulture captures with a device deployed have data in `device_deployment_database`?**
+**Do all vulture captures where a device was deployed have data in `device_deployment_database`?**
 
 ```{r}
 tmp <- cap_db[cap_db$transmitor_installation==1,]
@@ -352,7 +356,7 @@ To date we have had
 tmp <- cap_db[duplicated(cap_db$pit_tag_id)==T,]
 tmp2 <- cap_db[cap_db$pit_tag_id %in% tmp$pit_tag_id,]
 tmp2 <- tmp2[order(tmp2$pit_tag_id, tmp2$date),]
-tmp <- tmp2[, c("local_identifier", "species",  "pit_tag_id", "date", "location_id")]
+tmp <- tmp2[, c("local_identifier", "species",  "pit_tag_id", "date", "location_code")]
 
 kbl(tmp)  %>%
   kable_classic(full_width = F)
@@ -369,6 +373,18 @@ The following section provides a summary of the data taken during animal capture
 
 ### Processing time
 
+Our average processing times for the different species are as follows:
+
+```{r}
+tmp <-cap_db %>% group_by(species) %>% summarise("Mean processing time (mins)" = round(mean(total_time_processing, na.rm=T),0))
+
+kbl(tmp)  %>%
+  kable_classic(full_width = F)
+
+```
+
+
+
 ```{r}
 # Sensors deploy and sensorys not deployed
 
@@ -381,6 +397,10 @@ fig <- plot_ly(data = cap_db, x = 1:nrow(cap_db), y = ~total_time_processing, co
                       xaxis = list(title = 'Vulture capture order'), 
                       yaxis = list(title = 'Processing time (minutes)'), 
                       legend = list(title=list(text='<b> Species </b>')))
+
+
+
+
 fig
 
 ```
@@ -603,6 +623,38 @@ fig <- subplot(f1, f2, f3)
 fig <- fig %>%layout(annotations = annotations) 
 fig
 ```
+
+# Trap deployment
+
+To date we have deployed vulture traps in `r  length(unique(trap_db$location_code)) ` different locations.
+
+The trapping locations are as follows:
+
+```{r}
+tmp <- trap_db[,c("location_code", "latitude", "longitude")]
+tmp <- tmp[duplicated(tmp)==F,]
+tmp
+m <- leaflet() %>%
+      # Add a satellite image layer
+      addProviderTiles(providers$Stamen.TonerLite, group="Simple") %>%
+      addProviderTiles(providers$Esri.WorldImagery, group="Satellite") %>%
+      addProviderTiles(providers$OpenStreetMap.Mapnik, group="OS") %>%     
+      addCircleMarkers(lng=tmp$longitude,
+                         lat=tmp$latitude, 
+                         popup=paste(tmp$location_code)) %>%
+      addScaleBar(position="topleft", 
+                  options=scaleBarOptions(maxWidth = 100, metric = TRUE, imperial = FALSE, updateWhenIdle = TRUE)) %>%
+      addLayersControl(
+        baseGroups = c("OS", "Simple", "Satellite"),
+        options = layersControlOptions(collapsed = FALSE)
+      ) 
+  
+m 
+
+```
+
+
+
 
 
 
