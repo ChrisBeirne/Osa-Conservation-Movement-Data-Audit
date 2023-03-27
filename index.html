@@ -30,7 +30,7 @@
   
   
 
-<link rel="next" href="database-changes-last-7-days.html"/>
+<link rel="next" href="capture-data-checks.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -48,7 +48,6 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
@@ -79,18 +78,22 @@
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">Osa Conservation: Tracker Checker</a></li>
+<li><a href="./">Osa Conservation: Movement data audit</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Device Status</a><ul>
-<li class="chapter" data-level="1.1" data-path="database-changes-last-7-days.html"><a href="database-changes-last-7-days.html"><i class="fa fa-check"></i><b>1.1</b> Database changes (last 7 days)</a></li>
-<li class="chapter" data-level="1.2" data-path="capture-data-checks.html"><a href="capture-data-checks.html"><i class="fa fa-check"></i><b>1.2</b> Capture data checks</a><ul>
-<li class="chapter" data-level="1.2.1" data-path="capture-data-checks.html"><a href="capture-data-checks.html#processing-time"><i class="fa fa-check"></i><b>1.2.1</b> Processing time</a></li>
-<li class="chapter" data-level="1.2.2" data-path="capture-data-checks.html"><a href="capture-data-checks.html#morphometrics"><i class="fa fa-check"></i><b>1.2.2</b> Morphometrics</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Database changes</a>
+<ul>
+<li class="chapter" data-level="1.0.1" data-path="index.html"><a href="index.html#database-changes-last-7-days"><i class="fa fa-check"></i><b>1.0.1</b> Database changes (last 7 days)</a></li>
+<li class="chapter" data-level="1.0.2" data-path="index.html"><a href="index.html#database-linkage-check"><i class="fa fa-check"></i><b>1.0.2</b> Database linkage check</a></li>
+<li class="chapter" data-level="1.0.3" data-path="index.html"><a href="index.html#recaptures"><i class="fa fa-check"></i><b>1.0.3</b> Recaptures</a></li>
 </ul></li>
+<li class="chapter" data-level="2" data-path="capture-data-checks.html"><a href="capture-data-checks.html"><i class="fa fa-check"></i><b>2</b> Capture data checks</a>
+<ul>
+<li class="chapter" data-level="2.0.1" data-path="capture-data-checks.html"><a href="capture-data-checks.html#processing-time"><i class="fa fa-check"></i><b>2.0.1</b> Processing time</a></li>
+<li class="chapter" data-level="2.0.2" data-path="capture-data-checks.html"><a href="capture-data-checks.html#morphometrics"><i class="fa fa-check"></i><b>2.0.2</b> Morphometrics</a></li>
 </ul></li>
 <li class="divider"></li>
-<li><a href="https://github.com/ChrisBeirne/test_report/" target="blank">Osa Conservation: Tracker Checker</a></li>
+<li><a href="https://github.com/ChrisBeirne/test_report/" target="blank">Osa Conservation: Movement data audit</a></li>
 
 </ul>
 
@@ -113,71 +116,285 @@
 <h1 class="title">Osa Conservation: Movement data audit</h1>
 <p class="author"><em>Chris Beirne</em></p>
 </div>
-<div id="device-status" class="section level1 hasAnchor">
-<h1><span class="header-section-number">Part 1</span> Device Status<a href="index.html#device-status" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="database-changes" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">Part 1</span> Database changes<a href="index.html#database-changes" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>This document summarizes the movement locations for all active devices within Osa Conservation’s movement ecology project.</p>
-<pre><code>## File downloaded:</code></pre>
-<pre><code>## • &#39;1_vulture_capture_database&#39;
-##   &lt;id: 1Q8ir4HNvP2zBFwItINhc1rmBvW2MdHnJ-mUULh_Z_oc&gt;</code></pre>
-<pre><code>## Saved locally as:</code></pre>
-<pre><code>## • &#39;data/cap_database.xlsx&#39;</code></pre>
-<pre><code>## New names:
-## • `other` -&gt; `other...13`
-## • `other` -&gt; `other...34`
-## • `other` -&gt; `other...62`
-## • `` -&gt; `...65`
-## • `` -&gt; `...66`
-## • `` -&gt; `...67`</code></pre>
-<pre><code>## Warning: NAs introduced by coercion
-
-## Warning: NAs introduced by coercion
-
-## Warning: NAs introduced by coercion
-
-## Warning: NAs introduced by coercion
-
-## Warning: NAs introduced by coercion
-
-## Warning: NAs introduced by coercion
-
-## Warning: NAs introduced by coercion
-
-## Warning: NAs introduced by coercion
-
-## Warning: NAs introduced by coercion
-
-## Warning: NAs introduced by coercion
-
-## Warning: NAs introduced by coercion
-
-## Warning: NAs introduced by coercion
-
-## Warning: NAs introduced by coercion
-
-## Warning: NAs introduced by coercion</code></pre>
-<pre><code>## File downloaded:
-## • &#39;2_vulture_trap_deployments&#39;
-##   &lt;id: 14hLi94W4WbDn6jdXahJMnxllOgLpZh-PpIBOWqt9jlc&gt;
-## Saved locally as:
-## • &#39;data/trap_database.xlsx&#39;
-## File downloaded:
-## • &#39;3_biological_samples&#39; &lt;id: 1kx5BYcbbDYZLnWMp1IxQySaLRQ2I4AJhTNjZfn7m4U8&gt;
-## Saved locally as:
-## • &#39;data/bio_database.xlsx&#39;
-## File downloaded:
-## • &#39;4_tracking_device_deployment_database&#39;
-##   &lt;id: 1_oa67Po8Hpmp4VH8jqlD_Sm25Fn2GPctqp7rC5EXSuo&gt;
-## Saved locally as:
-## • &#39;data/track_database.xlsx&#39;
-## New names:File downloaded:
-## • &#39;7_vulture_pit_tag_id&#39; &lt;id: 1oDWd3QYUxpSFRKkkwNLgRJmMJrxuMwqNfAM8tkN-UII&gt;
-## Saved locally as:
-## • &#39;data/pit_database.xlsx&#39;
-## New names:File downloaded:
-## • &#39;9_cluster_observations_database&#39;
-##   &lt;id: 1KvZ2jEfv97eAJLatlw-rEic-kPitFPiUvjXcrrX7jiQ&gt;
-## Saved locally as:
-## • &#39;data/clus_database.xlsx&#39;</code></pre>
+<div id="database-changes-last-7-days" class="section level3 hasAnchor" number="1.0.1">
+<h3><span class="header-section-number">1.0.1</span> Database changes (last 7 days)<a href="index.html#database-changes-last-7-days" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The following table shows total number of observations in each database (from)left) and the new records from the last 7 days (right). The green numbers show where records have been added.</p>
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="empty-cells: hide;" colspan="1">
+</th>
+<th style="padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #111111; margin-bottom: -1px; ">
+All locations
+</div>
+</th>
+<th style="padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #111111; margin-bottom: -1px; ">
+Costa Rica
+</div>
+</th>
+<th style="padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #111111; margin-bottom: -1px; ">
+Peru
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+name
+</th>
+<th style="text-align:right;">
+total
+</th>
+<th style="text-align:left;">
+new
+</th>
+<th style="text-align:right;">
+total
+</th>
+<th style="text-align:left;">
+new
+</th>
+<th style="text-align:right;">
+total
+</th>
+<th style="text-align:left;">
+new
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;border-right:1px solid;">
+vulture_capture_database
+</td>
+<td style="text-align:right;">
+155
+</td>
+<td style="text-align:left;border-right:1px solid;">
+<span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:right;">
+141
+</td>
+<td style="text-align:left;border-right:1px solid;">
+<span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:left;border-right:1px solid;">
+<span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-right:1px solid;">
+vulture_trap_deployments
+</td>
+<td style="text-align:right;">
+55
+</td>
+<td style="text-align:left;border-right:1px solid;">
+<span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:right;">
+47
+</td>
+<td style="text-align:left;border-right:1px solid;">
+<span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;border-right:1px solid;">
+<span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-right:1px solid;">
+biological_samples
+</td>
+<td style="text-align:right;">
+857
+</td>
+<td style="text-align:left;border-right:1px solid;">
+<span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:right;">
+857
+</td>
+<td style="text-align:left;border-right:1px solid;">
+<span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;border-right:1px solid;">
+<span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-right:1px solid;">
+tracking_device_deployment_database
+</td>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:left;border-right:1px solid;">
+<span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:left;border-right:1px solid;">
+<span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;border-right:1px solid;">
+<span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-right:1px solid;">
+cluster_observations_database
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:left;border-right:1px solid;">
+<span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:left;border-right:1px solid;">
+<span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;border-right:1px solid;">
+<span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: white !important;">0</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="database-linkage-check" class="section level3 hasAnchor" number="1.0.2">
+<h3><span class="header-section-number">1.0.2</span> Database linkage check<a href="index.html#database-linkage-check" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>There are several important checks to ensure our data integrity.</p>
+<p>Do all vulture captures have corresponding trap deployment data:</p>
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+yes
+</th>
+<th style="text-align:right;">
+no
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+37
+</td>
+<td style="text-align:right;">
+118
+</td>
+</tr>
+</tbody>
+</table>
+<p>Do all captures with biological samples have linked data in the <code>biological_samples</code> database?</p>
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+yes
+</th>
+<th style="text-align:right;">
+no
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+132
+</td>
+</tr>
+</tbody>
+</table>
+<p>Do all vulture captures with a device deployed have data in <code>device_deployment_database</code></p>
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+yes
+</th>
+<th style="text-align:right;">
+no
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+</tbody>
+</table>
+<pre><code>## # A tibble: 0 × 68
+## # ℹ 68 variables: local_identifier &lt;chr&gt;, pit_tag_id &lt;chr&gt;, date &lt;dttm&gt;,
+## #   country &lt;chr&gt;, location_id &lt;chr&gt;, trap_id &lt;chr&gt;, deployment_id &lt;chr&gt;,
+## #   specific_id &lt;chr&gt;, sampler &lt;chr&gt;, recorder &lt;chr&gt;, handler &lt;chr&gt;,
+## #   assistant &lt;chr&gt;, other...13 &lt;chr&gt;, processing_start &lt;chr&gt;,
+## #   processing_end &lt;chr&gt;, total_time_processing &lt;dbl&gt;,
+## #   release_floor_time &lt;chr&gt;, release_flight_time &lt;chr&gt;, delay &lt;dbl&gt;,
+## #   code_sp &lt;chr&gt;, species &lt;chr&gt;, total_weight &lt;chr&gt;, bag_weight &lt;chr&gt;, …</code></pre>
+<p>Do all vultures with pit-tags have an entry in the <code>vulture_pit_tag</code> database?</p>
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+yes
+</th>
+<th style="text-align:right;">
+no
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+129
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="recaptures" class="section level3 hasAnchor" number="1.0.3">
+<h3><span class="header-section-number">1.0.3</span> Recaptures<a href="index.html#recaptures" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To date we have had
+4 vulture recaptures. The ID’s and dates are as follows:</p>
+</div>
 </div>
             </section>
 
@@ -185,7 +402,7 @@
         </div>
       </div>
 
-<a href="database-changes-last-7-days.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="capture-data-checks.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -227,7 +444,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["Osa Conservation: Tracker Checker.pdf", "Osa Conservation: Tracker Checker.epub"],
+"download": ["Osa Conservation: Movement data audit.pdf", "Osa Conservation: Movement data audit.epub"],
 "search": {
 "engine": "fuse",
 "options": null

@@ -1,5 +1,7 @@
-device-status
+database-changes
 database-changes-last-7-days
+database-linkage-check
+recaptures
 capture-data-checks
 processing-time
 morphometrics
