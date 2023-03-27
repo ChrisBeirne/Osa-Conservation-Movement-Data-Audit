@@ -1,7 +1,7 @@
-title: "Osa Conservation: Tracker Checker"
+title: "Osa Conservation: Movement data audit"
 author: ".."
 date: "`r Sys.Date()`"
-book_filename: "Osa Conservation: Tracker Checker"
+book_filename: "Osa Conservation: Movement data audit"
 language:
   ui:
     chapter_name: "Part "

@@ -11,12 +11,12 @@ biblio-style: apalike
 link-citations: yes
 ---
 
-# Device Status
+# Database changes
 
 This document summarizes the movement locations for all active devices within Osa Conservation's movement ecology project. 
 
 ```{r c01, echo=F, message=F, include=F}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, message=F, warning=F)
 
 library(rgdal) 
 library(move)
@@ -49,7 +49,7 @@ library(maptools)
 
 # Import passcodes
 MOVE_PASS <- Sys.getenv("MOVEBANK_PASSWORD")
-MOVE_USE  <- Sys.getenv("MOVEBANK_USERNAME")
+#MOVE_USE  <- Sys.getenv("MOVEBANK_USERNAME")
 
 loginStored <- movebankLogin(username=MOVE_USE, 
                              password=MOVE_PASS)
@@ -90,10 +90,7 @@ dir.create(data_path)
 ```
 
 
-```{r}
-
-
-
+```{r, include=F}
 #Capture_database
 drive_download(file = as_id("1Q8ir4HNvP2zBFwItINhc1rmBvW2MdHnJ-mUULh_Z_oc"), path = paste0("data/cap_database"), overwrite = TRUE)
 cap_db <- read_excel("data/cap_database.xlsx", sheet="database")  
@@ -168,11 +165,11 @@ start_t <- t-as.difftime(7,units='days')
 
 ```
 
-## Database changes (last 7 days)
+### Database changes (last 7 days)
 
 The following table shows total number of observations in each database (from)left) and the new records from the last 7 days (right). The green numbers show where records have been added.
 
-```{r}
+```{r, include=F}
 cap_db$NEW   <- difftime(cap_db$date,t)>-7
 trap_db$NEW  <- difftime(trap_db$date,t)>-7
 bio_db$NEW   <- difftime(bio_db$capture_date,t)>-7
@@ -255,7 +252,7 @@ kbl(table_dat, escape = F) %>%
 
 ```
 
-## Capture data checks
+# Capture data checks
 
 To date we have captured vultures `r nrow(cap_db)` times, deployed `r length(unique(cap_db$transmitor_identifier))` tracking devices and `r length(unique(cap_db$pit_tag_id[nchar(cap_db$pit_tag_id)>10]))` pit tags. 
 
@@ -266,7 +263,7 @@ The following section provides a summary of the data taken during animal capture
 ```{r}
 # Sensors deploy and sensorys not deployed
 
-plot(cap_db$total_time_processing, ylab="Processing time (mins)")
+#plot(cap_db$total_time_processing, ylab="Processing time (mins)")
 
 fig <- plot_ly(data = cap_db, x = 1:nrow(cap_db), y = ~total_time_processing, color = ~species,
                hoverinfo = 'text',
@@ -288,15 +285,15 @@ Of the weights recorded the distributions are as follows:
 ```{r}
 # Weight
 
-f1 <- plot_ly(data=cap_db, y = ~head_length, color = ~species, 
+f1 <- plot_ly(data=cap_db, y = ~individual_weight, color = ~species, 
                type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
                hoverinfo = 'text',
                text = ~paste(date,pit_tag_id,sep = "<br>")) %>% 
-              layout(title = 'Head Length', 
+              layout(title = 'Individual weight (g)', 
                       xaxis = list(title = 'Species'), 
-                      yaxis = list(title = 'Length (g)'))
+                      yaxis = list(title = 'Weight (g)'))
 
-fig
+f1
 
 
 ```
@@ -385,20 +382,116 @@ fig
 
 
 
-# cap_db$wing_chord  <- as.numeric(cap_db$wing_chord)
-# cap_db$wing_flat   <- as.numeric(cap_db$wing_flat)
-# cap_db$wing_span   <- as.numeric(cap_db$wing_span)
-# cap_db$tail_length <- as.numeric(cap_db$tail_length)
-# 
-# cap_db$tarsus_length <- as.numeric(cap_db$tarsus_length)
-# cap_db$body_length <- as.numeric(cap_db$body_length)
-# cap_db$MTO_length <- as.numeric(cap_db$MTO_length)
 
 
 ```
 
+Wing traits:
+
+```{r}
+f1 <- plot_ly(data=cap_db, y = ~wing_chord, color = ~species, 
+               type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
+               hoverinfo = 'text',
+               text = ~paste(date,pit_tag_id,sep = "<br>")) %>% 
+              layout( xaxis = list(title = 'Species'), 
+                      yaxis = list(title = ''),
+                     showlegend=F)
+
+f2 <- plot_ly(data=cap_db, y = ~wing_flat, color = ~species, 
+               type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
+               hoverinfo = 'text',
+               text = ~paste(date,pit_tag_id,sep = "<br>")) %>% 
+              layout(xaxis = list(title = 'Species'), 
+                      yaxis = list(title = ''),
+                     showlegend=F)
+
+f3 <- plot_ly(data=cap_db, y = ~wing_span, color = ~species, 
+               type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
+               hoverinfo = 'text',
+               text = ~paste(date,pit_tag_id,sep = "<br>")) %>% 
+              layout(xaxis = list(title = 'Species'), 
+                      yaxis = list(title = ''),
+                     showlegend=F)
+
+f4 <- plot_ly(data=cap_db, y = ~tail_length, color = ~species, 
+               type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
+               hoverinfo = 'text',
+               text = ~paste(date,pit_tag_id,sep = "<br>")) %>% 
+              layout(xaxis = list(title = 'Species'), 
+                      yaxis = list(title = ''),
+                     showlegend=F)
 
 
+annotations = list( 
+                    list(x = 0.1, y = 1.0,   text = "Wing chord (cm)",
+                         xref = "paper",  yref = "paper",  xanchor = "center", yanchor = "bottom", 
+                         showarrow = FALSE),
+                    list(x = 0.35, y = 1,text = "Wing flat (cm)",
+                         xref = "paper",yref = "paper", xanchor = "center", yanchor = "bottom",  
+                         showarrow = FALSE),
+                    list(x = 0.65, y = 1,text = "Wing span (cm)",
+                         xref = "paper",yref = "paper", xanchor = "center", yanchor = "bottom",  
+                         showarrow = FALSE),
+                    list(x = 0.9, y = 1,text = "Tail length (cm)",
+                         xref = "paper",yref = "paper", xanchor = "center", yanchor = "bottom",  
+                         showarrow = FALSE)
+                  )
+
+fig <- subplot(f1, f2, f3, f4) 
+fig <- fig %>%layout(annotations = annotations) 
+fig
+
+
+# cap_db$tarsus_length <- as.numeric(cap_db$tarsus_length)
+# cap_db$body_length <- as.numeric(cap_db$body_length)
+# cap_db$MTO_length <- as.numeric(cap_db$MTO_length)
+
+```
+
+Size traits
+
+```{r}
+f1 <- plot_ly(data=cap_db, y = ~tarsus_length, color = ~species, 
+               type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
+               hoverinfo = 'text',
+               text = ~paste(date,pit_tag_id,sep = "<br>")) %>% 
+              layout( xaxis = list(title = 'Species'), 
+                      yaxis = list(title = 'Head length (mm)'),
+                     showlegend=F)
+
+f2 <- plot_ly(data=cap_db, y = ~body_length, color = ~species, 
+               type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
+               hoverinfo = 'text',
+               text = ~paste(date,pit_tag_id,sep = "<br>")) %>% 
+              layout(xaxis = list(title = 'Species'), 
+                      yaxis = list(title = 'Head length (mm)'),
+                     showlegend=F)
+
+f3 <- plot_ly(data=cap_db, y = ~MTO_length, color = ~species, 
+               type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
+               hoverinfo = 'text',
+               text = ~paste(date,pit_tag_id,sep = "<br>")) %>% 
+              layout(xaxis = list(title = 'Species'), 
+                      yaxis = list(title = 'Head length (mm)'),
+                     showlegend=F)
+
+
+annotations = list( 
+                    list(x = 0.1, y = 1.0,   text = "Tarsus length (mm)",
+                         xref = "paper",  yref = "paper",  xanchor = "center", yanchor = "bottom", 
+                         showarrow = FALSE),
+                    list(x = 0.5, y = 1,text = "Body length (cm)",
+                         xref = "paper",yref = "paper", xanchor = "center", yanchor = "bottom",  
+                         showarrow = FALSE),
+                    list(x = 0.9, y = 1,text = "Middle toe length (mm)",
+                         xref = "paper",yref = "paper", xanchor = "center", yanchor = "bottom",  
+                         showarrow = FALSE)
+                  )
+
+fig <- subplot(f1, f2, f3) 
+fig <- fig %>%layout(annotations = annotations) 
+fig
+```
 
 
 
