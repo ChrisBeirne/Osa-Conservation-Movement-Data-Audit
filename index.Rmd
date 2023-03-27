@@ -49,7 +49,7 @@ library(maptools)
 
 # Import passcodes
 MOVE_PASS <- Sys.getenv("MOVEBANK_PASSWORD")
-#MOVE_USE  <- Sys.getenv("MOVEBANK_USERNAME")
+MOVE_USE  <- Sys.getenv("MOVEBANK_USERNAME")
 
 loginStored <- movebankLogin(username=MOVE_USE, 
                              password=MOVE_PASS)
@@ -251,6 +251,44 @@ kbl(table_dat, escape = F) %>%
   column_spec (c(1,3,5,7),border_left = F, border_right = T) 
 
 ```
+
+### Database linkage check
+
+There are several important checks to ensure our data integrity.
+
+Do all vulture captures have corresponding trap deployment data:
+
+```{r}
+tmp <- cap_db[cap_db$date %in% trap_db$date,]
+tmp2 <- cap_db[!(cap_db$date %in% trap_db$date),]
+
+tmp3 <- data.frame("yes" = nrow(tmp), "no"=nrow(tmp2))
+
+kbl(tmp3)  %>%
+  kable_classic(full_width = F)
+
+```
+
+Do all captures with biological samples have linked data in the `biological_samples` database?
+
+```{r}
+tmp <- cap_db[cap_db$date %in% trap_db$date,]
+tmp2 <- cap_db[!(cap_db$date %in% trap_db$date),]
+
+tmp3 <- data.frame("yes" = nrow(tmp), "no"=nrow(tmp2))
+
+kbl(tmp3)  %>%
+  kable_classic(full_width = F)
+
+```
+
+
+Do all vulture captures with a device deployed have data in `device_deployment_database`
+
+Do all vultures with pittags have an entry in the `vulture_pit_tag` databse?
+
+
+
 
 # Capture data checks
 
