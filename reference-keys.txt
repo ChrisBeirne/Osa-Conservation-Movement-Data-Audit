@@ -5,3 +5,4 @@ recaptures
 capture-data-checks
 processing-time
 morphometrics
+trap-deployment
