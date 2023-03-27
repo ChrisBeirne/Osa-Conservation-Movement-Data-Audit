@@ -172,7 +172,13 @@ start_t <- t-as.difftime(7,units='days')
 
 ### Database changes (last 7 days)
 
-The following table shows total number of observations in each database (from)left) and the new records from the last 7 days (right). The green numbers show where records have been added.
+
+
+The following table shows total number of observations in each database (left) and the new records from the last 7 days (right). The green numbers show where records have been added.
+
+`r t`
+
+`r start_t`
 
 ```{r, include=F}
 cap_db$NEW   <- difftime(cap_db$date,t)>-7
@@ -261,7 +267,7 @@ kbl(table_dat, escape = F) %>%
 
 There are several important checks to ensure our data integrity.
 
-Do all vulture captures have corresponding trap deployment data:
+**Do all vulture captures have corresponding trap deployment data?**
 
 ```{r}
 tmp <- cap_db[cap_db$date %in% trap_db$date,]
@@ -269,12 +275,16 @@ tmp2 <- cap_db[!(cap_db$date %in% trap_db$date),]
 
 tmp3 <- data.frame("yes" = nrow(tmp), "no"=nrow(tmp2))
 
-kbl(tmp3)  %>%
+tmp3$no <- as.numeric(tmp3$no)
+
+tmp3$no <-  cell_spec(tmp3$no, background = ifelse(table_dat$PE_new == 0, "white", "lightred"))
+
+kbl(tmp3, excape=F)  %>%
   kable_classic(full_width = F)
 
 ```
 
-Do all captures with biological samples have linked data in the `biological_samples` database?
+**Do all captures with biological samples have linked data in the `biological_samples` database?**
 
 ```{r}
 tmp <- cap_db[cap_db$biological_sample>0 & is.na(cap_db$biological_sample)==F,]
@@ -283,17 +293,25 @@ tmp2 <- bio_db
 
 # Make a key variable
 tmp$link <- paste(tmp$pit_tag_id, tmp$date, sep="_")
-tmp2$link <- paste(tmp2$pit_tag_id, tmp2$date, sep="_")
+tmp2$link <- paste(tmp2$pit_tag_id, tmp2$capture_date, sep="_")
 
 tmp3 <- data.frame("yes" = nrow(tmp[tmp$link %in% tmp2$link,]), "no"=nrow(tmp[!(tmp$link %in% tmp2$link),]))
 
 kbl(tmp3)  %>%
   kable_classic(full_width = F)
 
+tmp <- tmp[!(tmp$link %in% tmp2$link),]
+
 ```
 
+The captures whose biological samples are not currently in the database are:
 
-Do all vulture captures with a device deployed have data in `device_deployment_database`
+```{r}
+kbl(tmp[,c("local_identifier", "pit_tag_id", "date")])  %>%
+  kable_classic(full_width = F)
+```
+
+**Do all vulture captures with a device deployed have data in `device_deployment_database`?**
 
 ```{r}
 tmp <- cap_db[cap_db$transmitor_installation==1,]
@@ -306,11 +324,11 @@ kbl(tmp3)  %>%
   kable_classic(full_width = F)
 
 
-tmp[!(tmp$transmitor_identifier %in% tmp2$transmitor_identifier),]
+#tmp[!(tmp$transmitor_identifier %in% tmp2$transmitor_identifier),]
 
 ```
 
-Do all vultures with pit-tags have an entry in the `vulture_pit_tag` database?
+**Do all vultures with pit-tags have an entry in the `vulture_pit_tag` database?**
 
 ```{r}
 tmp <- cap_db[nchar(cap_db$pit_tag_id)>10,]
@@ -332,12 +350,15 @@ To date we have had
 ```{r}
 
 tmp <- cap_db[duplicated(cap_db$pit_tag_id)==T,]
+tmp2 <- cap_db[cap_db$pit_tag_id %in% tmp$pit_tag_id,]
+tmp2 <- tmp2[order(tmp2$pit_tag_id, tmp2$date),]
+tmp <- tmp2[, c("local_identifier", "species",  "pit_tag_id", "date", "location_id")]
 
-
-
+kbl(tmp)  %>%
+  kable_classic(full_width = F)
 ```
 
-
+Are these expected?
 
 
 # Capture data checks
@@ -366,7 +387,9 @@ fig
 
 ### Morphometrics
 
-*Weight* Of `r nrow(cap_db)` captures we have *`r length(cap_db$individual_weight[is.na(cap_db$individual_weight)==T])` missing weight data*.
+*Weight* 
+
+Of `r nrow(cap_db)` captures we have *`r length(cap_db$individual_weight[is.na(cap_db$individual_weight)==T])`* captures where weight was not assessed.
 
 Of the weights recorded the distributions are as follows:
 
@@ -389,7 +412,7 @@ f1
 
 Other:
 
-Head traits
+**Head traits**
 
 ```{r}
 f1 <- plot_ly(data=cap_db, y = ~head_length, color = ~species, 
@@ -423,7 +446,7 @@ fig <- fig %>%layout(annotations = annotations)
 fig
 ```
 
-Bill traits
+**Bill traits**
 
 ```{r}
 f1 <- plot_ly(data=cap_db, y = ~bill_length, color = ~species, 
@@ -474,7 +497,7 @@ fig
 
 ```
 
-Wing traits:
+**Wing traits**
 
 ```{r}
 f1 <- plot_ly(data=cap_db, y = ~wing_chord, color = ~species, 
@@ -536,7 +559,7 @@ fig
 
 ```
 
-Size traits
+**Size traits**
 
 ```{r}
 f1 <- plot_ly(data=cap_db, y = ~tarsus_length, color = ~species, 
