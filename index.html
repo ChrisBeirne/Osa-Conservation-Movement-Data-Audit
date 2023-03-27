@@ -121,7 +121,9 @@
 <p>This document summarizes the movement locations for all active devices within Osa Conservation’s movement ecology project.</p>
 <div id="database-changes-last-7-days" class="section level3 hasAnchor" number="1.0.1">
 <h3><span class="header-section-number">1.0.1</span> Database changes (last 7 days)<a href="index.html#database-changes-last-7-days" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The following table shows total number of observations in each database (from)left) and the new records from the last 7 days (right). The green numbers show where records have been added.</p>
+<p>The following table shows total number of observations in each database (left) and the new records from the last 7 days (right). The green numbers show where records have been added.</p>
+<p>2023-03-27 14:15:06</p>
+<p>2023-03-20 14:15:06</p>
 <table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -289,14 +291,14 @@ cluster_observations_database
 <div id="database-linkage-check" class="section level3 hasAnchor" number="1.0.2">
 <h3><span class="header-section-number">1.0.2</span> Database linkage check<a href="index.html#database-linkage-check" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>There are several important checks to ensure our data integrity.</p>
-<p>Do all vulture captures have corresponding trap deployment data:</p>
+<p><strong>Do all vulture captures have corresponding trap deployment data?</strong></p>
 <table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:right;">
 yes
 </th>
-<th style="text-align:right;">
+<th style="text-align:left;">
 no
 </th>
 </tr>
@@ -306,13 +308,13 @@ no
 <td style="text-align:right;">
 37
 </td>
-<td style="text-align:right;">
-118
+<td style="text-align:left;">
+&lt;span style=” border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: !important;” &gt;118&lt;/span&gt;
 </td>
 </tr>
 </tbody>
 </table>
-<p>Do all captures with biological samples have linked data in the <code>biological_samples</code> database?</p>
+<p><strong>Do all captures with biological samples have linked data in the <code>biological_samples</code> database?</strong></p>
 <table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -327,15 +329,297 @@ no
 <tbody>
 <tr>
 <td style="text-align:right;">
-0
+108
 </td>
 <td style="text-align:right;">
-132
+24
 </td>
 </tr>
 </tbody>
 </table>
-<p>Do all vulture captures with a device deployed have data in <code>device_deployment_database</code></p>
+<p>The captures whose biological samples are not currently in the database are:</p>
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+local_identifier
+</th>
+<th style="text-align:left;">
+pit_tag_id
+</th>
+<th style="text-align:left;">
+date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+OC8
+</td>
+<td style="text-align:left;">
+NP0001
+</td>
+<td style="text-align:left;">
+2021-06-10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OC6
+</td>
+<td style="text-align:left;">
+NP0002
+</td>
+<td style="text-align:left;">
+2021-06-10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OC3
+</td>
+<td style="text-align:left;">
+NP0003
+</td>
+<td style="text-align:left;">
+2021-06-19
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OC4
+</td>
+<td style="text-align:left;">
+NP0004
+</td>
+<td style="text-align:left;">
+2021-07-03
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NP0005
+</td>
+<td style="text-align:left;">
+2021-07-03
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OC5
+</td>
+<td style="text-align:left;">
+NP0006
+</td>
+<td style="text-align:left;">
+2021-07-05
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OC7
+</td>
+<td style="text-align:left;">
+NP0007
+</td>
+<td style="text-align:left;">
+2021-07-05
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NP0008
+</td>
+<td style="text-align:left;">
+2021-07-08
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NP0009
+</td>
+<td style="text-align:left;">
+2021-07-08
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OC9
+</td>
+<td style="text-align:left;">
+NP0011
+</td>
+<td style="text-align:left;">
+2021-07-10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NP0010
+</td>
+<td style="text-align:left;">
+2021-07-11
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OC2
+</td>
+<td style="text-align:left;">
+NP0012
+</td>
+<td style="text-align:left;">
+2021-08-09
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OC1
+</td>
+<td style="text-align:left;">
+NP0013
+</td>
+<td style="text-align:left;">
+2021-08-09
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OC10
+</td>
+<td style="text-align:left;">
+NP0014
+</td>
+<td style="text-align:left;">
+2021-08-09
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Attenborough
+</td>
+<td style="text-align:left;">
+NP1001
+</td>
+<td style="text-align:left;">
+2022-02-16
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Ugalde
+</td>
+<td style="text-align:left;">
+NP1002
+</td>
+<td style="text-align:left;">
+2022-03-02
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NA (Sub-Adult)
+</td>
+<td style="text-align:left;">
+NP1003
+</td>
+<td style="text-align:left;">
+2022-03-02
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Forsyth
+</td>
+<td style="text-align:left;">
+NP1004
+</td>
+<td style="text-align:left;">
+2022-03-03
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Fossey
+</td>
+<td style="text-align:left;">
+NP1005
+</td>
+<td style="text-align:left;">
+2022-03-07
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NA (Loco)
+</td>
+<td style="text-align:left;">
+NP1006
+</td>
+<td style="text-align:left;">
+2022-03-09
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Goodall
+</td>
+<td style="text-align:left;">
+NP1007
+</td>
+<td style="text-align:left;">
+2022-03-09
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Carson
+</td>
+<td style="text-align:left;">
+NP1008
+</td>
+<td style="text-align:left;">
+2022-03-10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Wilson
+</td>
+<td style="text-align:left;">
+NP1009
+</td>
+<td style="text-align:left;">
+2022-03-24
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NP1011
+</td>
+<td style="text-align:left;">
+2023-01-23
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Do all vulture captures with a device deployed have data in <code>device_deployment_database</code>?</strong></p>
 <table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -358,15 +642,7 @@ no
 </tr>
 </tbody>
 </table>
-<pre><code>## # A tibble: 0 × 68
-## # ℹ 68 variables: local_identifier &lt;chr&gt;, pit_tag_id &lt;chr&gt;, date &lt;dttm&gt;,
-## #   country &lt;chr&gt;, location_id &lt;chr&gt;, trap_id &lt;chr&gt;, deployment_id &lt;chr&gt;,
-## #   specific_id &lt;chr&gt;, sampler &lt;chr&gt;, recorder &lt;chr&gt;, handler &lt;chr&gt;,
-## #   assistant &lt;chr&gt;, other...13 &lt;chr&gt;, processing_start &lt;chr&gt;,
-## #   processing_end &lt;chr&gt;, total_time_processing &lt;dbl&gt;,
-## #   release_floor_time &lt;chr&gt;, release_flight_time &lt;chr&gt;, delay &lt;dbl&gt;,
-## #   code_sp &lt;chr&gt;, species &lt;chr&gt;, total_weight &lt;chr&gt;, bag_weight &lt;chr&gt;, …</code></pre>
-<p>Do all vultures with pit-tags have an entry in the <code>vulture_pit_tag</code> database?</p>
+<p><strong>Do all vultures with pit-tags have an entry in the <code>vulture_pit_tag</code> database?</strong></p>
 <table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -394,6 +670,166 @@ no
 <h3><span class="header-section-number">1.0.3</span> Recaptures<a href="index.html#recaptures" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>To date we have had
 4 vulture recaptures. The ID’s and dates are as follows:</p>
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+local_identifier
+</th>
+<th style="text-align:left;">
+species
+</th>
+<th style="text-align:left;">
+pit_tag_id
+</th>
+<th style="text-align:left;">
+date
+</th>
+<th style="text-align:left;">
+location_id
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+coragyps_atratus
+</td>
+<td style="text-align:left;">
+A0000000900209000079169
+</td>
+<td style="text-align:left;">
+2023-01-17
+</td>
+<td style="text-align:left;">
+CERROOSA02
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+coragyps_atratus
+</td>
+<td style="text-align:left;">
+A0000000900209000079169
+</td>
+<td style="text-align:left;">
+2023-02-06
+</td>
+<td style="text-align:left;">
+CERROOSA02
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+coragyps_atratus
+</td>
+<td style="text-align:left;">
+A0000000900209000079195
+</td>
+<td style="text-align:left;">
+2023-01-23
+</td>
+<td style="text-align:left;">
+CERROOSA02
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+coragyps_atratus
+</td>
+<td style="text-align:left;">
+A0000000900209000079195
+</td>
+<td style="text-align:left;">
+2023-02-06
+</td>
+<td style="text-align:left;">
+CERROOSA02
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+coragyps_atratus
+</td>
+<td style="text-align:left;">
+A0000000900209000079222
+</td>
+<td style="text-align:left;">
+2023-01-17
+</td>
+<td style="text-align:left;">
+CERROOSA02
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+coragyps_atratus
+</td>
+<td style="text-align:left;">
+A0000000900209000079222
+</td>
+<td style="text-align:left;">
+2023-02-04
+</td>
+<td style="text-align:left;">
+CERROOSA02
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+coragyps_atratus
+</td>
+<td style="text-align:left;">
+A0000000900209000079235
+</td>
+<td style="text-align:left;">
+2023-01-16
+</td>
+<td style="text-align:left;">
+CERROOSA02
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+coragyps_atratus
+</td>
+<td style="text-align:left;">
+A0000000900209000079235
+</td>
+<td style="text-align:left;">
+2023-01-23
+</td>
+<td style="text-align:left;">
+CERROOSA02
+</td>
+</tr>
+</tbody>
+</table>
+<p>Are these expected?</p>
 </div>
 </div>
             </section>
