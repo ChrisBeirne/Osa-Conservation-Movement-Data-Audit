@@ -118,6 +118,11 @@ cap_db$tail_length <- as.numeric(cap_db$tail_length)
 cap_db$tarsus_length <- as.numeric(cap_db$tarsus_length)
 cap_db$body_length <- as.numeric(cap_db$body_length)
 cap_db$MTO_length <- as.numeric(cap_db$MTO_length)
+
+# Sort bological samples
+cap_db$biological_sample <- as.numeric(cap_db$biological_sample)
+
+
 # Remove empty rows
 cap_db <- cap_db[is.na(cap_db$date)==F & is.na(cap_db$country)==F,]
 
@@ -272,10 +277,15 @@ kbl(tmp3)  %>%
 Do all captures with biological samples have linked data in the `biological_samples` database?
 
 ```{r}
-tmp <- cap_db[cap_db$date %in% trap_db$date,]
-tmp2 <- cap_db[!(cap_db$date %in% trap_db$date),]
+tmp <- cap_db[cap_db$biological_sample>0 & is.na(cap_db$biological_sample)==F,]
+tmp2 <- bio_db
 
-tmp3 <- data.frame("yes" = nrow(tmp), "no"=nrow(tmp2))
+
+# Make a key variable
+tmp$link <- paste(tmp$pit_tag_id, tmp$date, sep="_")
+tmp2$link <- paste(tmp2$pit_tag_id, tmp2$date, sep="_")
+
+tmp3 <- data.frame("yes" = nrow(tmp[tmp$link %in% tmp2$link,]), "no"=nrow(tmp[!(tmp$link %in% tmp2$link),]))
 
 kbl(tmp3)  %>%
   kable_classic(full_width = F)
@@ -285,7 +295,47 @@ kbl(tmp3)  %>%
 
 Do all vulture captures with a device deployed have data in `device_deployment_database`
 
-Do all vultures with pittags have an entry in the `vulture_pit_tag` databse?
+```{r}
+tmp <- cap_db[cap_db$transmitor_installation==1,]
+tmp2 <- track_db
+
+
+tmp3 <- data.frame("yes" = nrow(tmp[tmp$transmitor_identifier %in% tmp2$transmitor_identifier,]), "no"=nrow(tmp[!(tmp$transmitor_identifier %in% tmp2$transmitor_identifier),]))
+
+kbl(tmp3)  %>%
+  kable_classic(full_width = F)
+
+
+tmp[!(tmp$transmitor_identifier %in% tmp2$transmitor_identifier),]
+
+```
+
+Do all vultures with pit-tags have an entry in the `vulture_pit_tag` database?
+
+```{r}
+tmp <- cap_db[nchar(cap_db$pit_tag_id)>10,]
+tmp2 <- pit_db
+
+
+tmp3 <- data.frame("yes" = nrow(tmp[tmp$pit_tag_id %in% tmp2$pit_tag_id,]), 
+                   "no"  = nrow(tmp[!(tmp$pit_tag_id %in% tmp2$pit_tag_id),]))
+
+kbl(tmp3)  %>%
+  kable_classic(full_width = F)
+```
+
+### Recaptures
+
+To date we have had 
+`r nrow(cap_db[duplicated(cap_db$pit_tag_id)==T,])` vulture recaptures. The ID's and dates are as follows:
+
+```{r}
+
+tmp <- cap_db[duplicated(cap_db$pit_tag_id)==T,]
+
+
+
+```
 
 
 
