@@ -2,14 +2,14 @@ name: scheduleRenderbook
 on:     
   push:
   schedule:     
-     - cron: "10 * * * *"  
+     - cron: "* 5 * * *"  
 
 
 
 jobs:
   bookdown:
     name: Render-Book
-    runs-on:   macos-11 # macos-latest # ubuntu-latest #  macos USES 10 TIMES THE MINUTES
+    runs-on:  macos-latest #macos-11 # ubuntu-latest #  macos USES 10 TIMES THE MINUTES
     steps:
       - uses: actions/checkout@v2
       # More detail here, https://github.com/r-lib/actions
