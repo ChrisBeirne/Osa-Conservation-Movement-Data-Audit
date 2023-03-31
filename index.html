@@ -30,7 +30,7 @@
   
   
 
-<link rel="next" href="capture-data-checks.html"/>
+<link rel="next" href="capture-database.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -96,12 +96,17 @@
 <li class="chapter" data-level="1.0.2" data-path="index.html"><a href="index.html#database-linkage-check"><i class="fa fa-check"></i><b>1.0.2</b> Database linkage check</a></li>
 <li class="chapter" data-level="1.0.3" data-path="index.html"><a href="index.html#recaptures"><i class="fa fa-check"></i><b>1.0.3</b> Recaptures</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="capture-data-checks.html"><a href="capture-data-checks.html"><i class="fa fa-check"></i><b>2</b> Capture data checks</a>
+<li class="chapter" data-level="2" data-path="capture-database.html"><a href="capture-database.html"><i class="fa fa-check"></i><b>2</b> Capture database</a>
 <ul>
-<li class="chapter" data-level="2.0.1" data-path="capture-data-checks.html"><a href="capture-data-checks.html#processing-time"><i class="fa fa-check"></i><b>2.0.1</b> Processing time</a></li>
-<li class="chapter" data-level="2.0.2" data-path="capture-data-checks.html"><a href="capture-data-checks.html#morphometrics"><i class="fa fa-check"></i><b>2.0.2</b> Morphometrics</a></li>
+<li class="chapter" data-level="2.0.1" data-path="capture-database.html"><a href="capture-database.html#processing-time"><i class="fa fa-check"></i><b>2.0.1</b> Processing time</a></li>
+<li class="chapter" data-level="2.0.2" data-path="capture-database.html"><a href="capture-database.html#morphometrics"><i class="fa fa-check"></i><b>2.0.2</b> Morphometrics</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="trap-deployment.html"><a href="trap-deployment.html"><i class="fa fa-check"></i><b>3</b> Trap deployment</a></li>
+<li class="chapter" data-level="3" data-path="trap-deployment-database.html"><a href="trap-deployment-database.html"><i class="fa fa-check"></i><b>3</b> Trap deployment database</a></li>
+<li class="chapter" data-level="4" data-path="biological-samples-database.html"><a href="biological-samples-database.html"><i class="fa fa-check"></i><b>4</b> Biological samples database</a></li>
+<li class="chapter" data-level="5" data-path="tracking-device-deployment-database.html"><a href="tracking-device-deployment-database.html"><i class="fa fa-check"></i><b>5</b> Tracking device deployment database</a>
+<ul>
+<li class="chapter" data-level="5.0.1" data-path="tracking-device-deployment-database.html"><a href="tracking-device-deployment-database.html#do-all-the-current-settings-match"><i class="fa fa-check"></i><b>5.0.1</b> Do all the current settings match?</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/ChrisBeirne/test_report/" target="blank">Osa Conservation: Movement data audit</a></li>
 
@@ -128,7 +133,7 @@
 </div>
 <div id="database-changes" class="section level1 hasAnchor" number="1">
 <h1><span class="header-section-number">Part 1</span> Database changes<a href="index.html#database-changes" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>This document summarizes the movement locations for all active devices within Osa Conservation’s movement ecology project.</p>
+<p>This document summarizes data contained with the movement ecology database as of 2023-03-31.</p>
 <div id="database-changes-last-7-days" class="section level3 hasAnchor" number="1.0.1">
 <h3><span class="header-section-number">1.0.1</span> Database changes (last 7 days)<a href="index.html#database-changes-last-7-days" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The following table shows total number of observations in each database (left) and the new records from the last 7 days (right). The green numbers show where records have been added.</p>
@@ -821,6 +826,323 @@ NP1011
 </tr>
 </tbody>
 </table>
+<p><strong>Do any biological sample have duplicated codes?</strong></p>
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+no
+</th>
+<th style="text-align:right;">
+yes
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+855
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+</tbody>
+</table>
+<p>If there are any present, the samples with duplicated <code>sample_codes</code> are as follows:</p>
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+country
+</th>
+<th style="text-align:left;">
+capture_date
+</th>
+<th style="text-align:left;">
+code_sp
+</th>
+<th style="text-align:left;">
+pit_tag_id
+</th>
+<th style="text-align:left;">
+tissue
+</th>
+<th style="text-align:left;">
+sample_code
+</th>
+<th style="text-align:left;">
+storage_box
+</th>
+<th style="text-align:left;">
+storage_grid
+</th>
+<th style="text-align:left;">
+volume
+</th>
+<th style="text-align:left;">
+volume_units
+</th>
+<th style="text-align:left;">
+notes
+</th>
+<th style="text-align:right;">
+amount of samples
+</th>
+<th style="text-align:left;">
+NEW
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+CR
+</td>
+<td style="text-align:left;">
+2023-01-07
+</td>
+<td style="text-align:left;">
+BV
+</td>
+<td style="text-align:left;">
+A0000000900209000079216
+</td>
+<td style="text-align:left;">
+RNA_blood
+</td>
+<td style="text-align:left;">
+b_0045
+</td>
+<td style="text-align:left;">
+RNA_blood_box_001
+</td>
+<td style="text-align:left;">
+44.0
+</td>
+<td style="text-align:left;">
+15.0
+</td>
+<td style="text-align:left;">
+drop_number
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CR
+</td>
+<td style="text-align:left;">
+2023-01-07
+</td>
+<td style="text-align:left;">
+BV
+</td>
+<td style="text-align:left;">
+A0000000900209000079258
+</td>
+<td style="text-align:left;">
+RNA_blood
+</td>
+<td style="text-align:left;">
+b_0045
+</td>
+<td style="text-align:left;">
+RNA_blood_box_001
+</td>
+<td style="text-align:left;">
+45.0
+</td>
+<td style="text-align:left;">
+15.0
+</td>
+<td style="text-align:left;">
+drop_number
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CR
+</td>
+<td style="text-align:left;">
+2023-01-17
+</td>
+<td style="text-align:left;">
+KV
+</td>
+<td style="text-align:left;">
+A0000000900209000079221
+</td>
+<td style="text-align:left;">
+hemogram
+</td>
+<td style="text-align:left;">
+h_0025
+</td>
+<td style="text-align:left;">
+fauna_vet_lab
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+1.5
+</td>
+<td style="text-align:left;">
+ml
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CR
+</td>
+<td style="text-align:left;">
+2023-01-23
+</td>
+<td style="text-align:left;">
+KV
+</td>
+<td style="text-align:left;">
+A0000000900209000079257
+</td>
+<td style="text-align:left;">
+hemogram
+</td>
+<td style="text-align:left;">
+h_0025
+</td>
+<td style="text-align:left;">
+fauna_vet_lab
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+1.0
+</td>
+<td style="text-align:left;">
+ml
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CR
+</td>
+<td style="text-align:left;">
+2023-01-16
+</td>
+<td style="text-align:left;">
+KV
+</td>
+<td style="text-align:left;">
+A0000000900209000079164
+</td>
+<td style="text-align:left;">
+cloacal
+</td>
+<td style="text-align:left;">
+sc_0055
+</td>
+<td style="text-align:left;">
+cloacal_box_001
+</td>
+<td style="text-align:left;">
+55.0
+</td>
+<td style="text-align:left;">
+1.0
+</td>
+<td style="text-align:left;">
+swab_number
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CR
+</td>
+<td style="text-align:left;">
+2023-01-17
+</td>
+<td style="text-align:left;">
+KV
+</td>
+<td style="text-align:left;">
+A0000000900209000079221
+</td>
+<td style="text-align:left;">
+cloacal
+</td>
+<td style="text-align:left;">
+sc_0055
+</td>
+<td style="text-align:left;">
+cloacal_box_001
+</td>
+<td style="text-align:left;">
+55.0
+</td>
+<td style="text-align:left;">
+1.0
+</td>
+<td style="text-align:left;">
+swab_number
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+</tbody>
+</table>
 <p><strong>Do all vulture captures where a device was deployed have data in <code>device_deployment_database</code>?</strong></p>
 <table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
@@ -1040,7 +1362,7 @@ CERROOSA02
         </div>
       </div>
 
-<a href="capture-data-checks.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="capture-database.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

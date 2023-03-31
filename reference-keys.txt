@@ -2,7 +2,10 @@ database-changes
 database-changes-last-7-days
 database-linkage-check
 recaptures
-capture-data-checks
+capture-database
 processing-time
 morphometrics
-trap-deployment
+trap-deployment-database
+biological-samples-database
+tracking-device-deployment-database
+do-all-the-current-settings-match

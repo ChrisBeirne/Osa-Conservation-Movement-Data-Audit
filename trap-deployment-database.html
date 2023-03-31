@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Part 3 Trap deployment | Osa Conservation: Movement data audit</title>
-  <meta name="description" content="Part 3 Trap deployment | Osa Conservation: Movement data audit" />
+  <title>Part 3 Trap deployment database | Osa Conservation: Movement data audit</title>
+  <meta name="description" content="Part 3 Trap deployment database | Osa Conservation: Movement data audit" />
   <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Part 3 Trap deployment | Osa Conservation: Movement data audit" />
+  <meta property="og:title" content="Part 3 Trap deployment database | Osa Conservation: Movement data audit" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Part 3 Trap deployment | Osa Conservation: Movement data audit" />
+  <meta name="twitter:title" content="Part 3 Trap deployment database | Osa Conservation: Movement data audit" />
   
   
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="capture-data-checks.html"/>
-
+<link rel="prev" href="capture-database.html"/>
+<link rel="next" href="biological-samples-database.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -96,12 +96,17 @@
 <li class="chapter" data-level="1.0.2" data-path="index.html"><a href="index.html#database-linkage-check"><i class="fa fa-check"></i><b>1.0.2</b> Database linkage check</a></li>
 <li class="chapter" data-level="1.0.3" data-path="index.html"><a href="index.html#recaptures"><i class="fa fa-check"></i><b>1.0.3</b> Recaptures</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="capture-data-checks.html"><a href="capture-data-checks.html"><i class="fa fa-check"></i><b>2</b> Capture data checks</a>
+<li class="chapter" data-level="2" data-path="capture-database.html"><a href="capture-database.html"><i class="fa fa-check"></i><b>2</b> Capture database</a>
 <ul>
-<li class="chapter" data-level="2.0.1" data-path="capture-data-checks.html"><a href="capture-data-checks.html#processing-time"><i class="fa fa-check"></i><b>2.0.1</b> Processing time</a></li>
-<li class="chapter" data-level="2.0.2" data-path="capture-data-checks.html"><a href="capture-data-checks.html#morphometrics"><i class="fa fa-check"></i><b>2.0.2</b> Morphometrics</a></li>
+<li class="chapter" data-level="2.0.1" data-path="capture-database.html"><a href="capture-database.html#processing-time"><i class="fa fa-check"></i><b>2.0.1</b> Processing time</a></li>
+<li class="chapter" data-level="2.0.2" data-path="capture-database.html"><a href="capture-database.html#morphometrics"><i class="fa fa-check"></i><b>2.0.2</b> Morphometrics</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="trap-deployment.html"><a href="trap-deployment.html"><i class="fa fa-check"></i><b>3</b> Trap deployment</a></li>
+<li class="chapter" data-level="3" data-path="trap-deployment-database.html"><a href="trap-deployment-database.html"><i class="fa fa-check"></i><b>3</b> Trap deployment database</a></li>
+<li class="chapter" data-level="4" data-path="biological-samples-database.html"><a href="biological-samples-database.html"><i class="fa fa-check"></i><b>4</b> Biological samples database</a></li>
+<li class="chapter" data-level="5" data-path="tracking-device-deployment-database.html"><a href="tracking-device-deployment-database.html"><i class="fa fa-check"></i><b>5</b> Tracking device deployment database</a>
+<ul>
+<li class="chapter" data-level="5.0.1" data-path="tracking-device-deployment-database.html"><a href="tracking-device-deployment-database.html#do-all-the-current-settings-match"><i class="fa fa-check"></i><b>5.0.1</b> Do all the current settings match?</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/ChrisBeirne/test_report/" target="blank">Osa Conservation: Movement data audit</a></li>
 
@@ -122,8 +127,8 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="trap-deployment" class="section level1 hasAnchor" number="3">
-<h1><span class="header-section-number">Part 3</span> Trap deployment<a href="trap-deployment.html#trap-deployment" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="trap-deployment-database" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Part 3</span> Trap deployment database<a href="trap-deployment-database.html#trap-deployment-database" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>To date we have deployed vulture traps in 6 different locations.</p>
 <p>The trapping locations are as follows:</p>
 <pre><code>## # A tibble: 6 × 3
@@ -135,17 +140,16 @@
 ## 4 AIRS02            8.40     -83.4
 ## 5 CERR02            8.42     -83.3
 ## 6 LOMAS01          NA         NA</code></pre>
-<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-38d54e37f19ea5496f72" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-38d54e37f19ea5496f72">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["Stamen.TonerLite",null,"Simple",{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addProviderTiles","args":["Esri.WorldImagery",null,"Satellite",{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addProviderTiles","args":["OpenStreetMap.Mapnik",null,"OS",{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addCircleMarkers","args":[[-12.58064,-12.56819,-12.55581,8.40259456280785,8.416142,null],[-70.09274,-70.079068,-70.081005,-83.3585232465699,-83.317929,null],10,null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2},null,null,["EBLA01","EBLA02","EBLA03","AIRS02","CERR02","LOMAS01"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addScaleBar","args":[{"maxWidth":100,"metric":true,"imperial":false,"updateWhenIdle":true,"position":"topleft"}]},{"method":"addLayersControl","args":[["OS","Simple","Satellite"],[],{"collapsed":false,"autoZIndex":true,"position":"topright"}]}],"limits":{"lat":[-12.58064,8.416142],"lng":[-83.3585232465699,-70.079068]}},"evals":[],"jsHooks":[]}</script>
-
+<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-1fbb9888929232c22722" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-1fbb9888929232c22722">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["Stamen.TonerLite",null,"Simple",{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addProviderTiles","args":["Esri.WorldImagery",null,"Satellite",{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addProviderTiles","args":["OpenStreetMap.Mapnik",null,"OS",{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addCircleMarkers","args":[[-12.58064,-12.56819,-12.55581,8.40259456280785,8.416142,null],[-70.09274,-70.079068,-70.081005,-83.3585232465699,-83.317929,null],10,null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2},null,null,["EBLA01","EBLA02","EBLA03","AIRS02","CERR02","LOMAS01"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addScaleBar","args":[{"maxWidth":100,"metric":true,"imperial":false,"updateWhenIdle":true,"position":"topleft"}]},{"method":"addLayersControl","args":[["OS","Simple","Satellite"],[],{"collapsed":false,"autoZIndex":true,"position":"topright"}]}],"limits":{"lat":[-12.58064,8.416142],"lng":[-83.3585232465699,-70.079068]}},"evals":[],"jsHooks":[]}</script>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="capture-data-checks.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="capture-database.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="biological-samples-database.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
