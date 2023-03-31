@@ -13,7 +13,7 @@ link-citations: yes
 
 # Database changes
 
-This document summarizes the movement locations for all active devices within Osa Conservation's movement ecology project. 
+This document summarizes data contained with the movement ecology database as of  `r Sys.Date()`.
 
 ```{r c01, echo=F, message=F, include=F}
 knitr::opts_chunk$set(echo = FALSE, message=F, warning=F)
@@ -285,9 +285,6 @@ kbl(tmp3, escape=F)  %>%
 ```
 
 
-
-
-
 **Do all captures with biological samples have data in the `biological_samples` database?**
 
 ```{r}
@@ -313,6 +310,29 @@ The captures whose biological samples are not currently in the database are:
 ```{r}
 kbl(tmp[,c("local_identifier", "pit_tag_id", "date")])  %>%
   kable_classic(full_width = F)
+```
+
+**Do any biological sample have duplicated codes?**
+
+```{r}
+tmp3 <- bio_db[duplicated(bio_db$sample_code)==T,]
+
+tmp2 <- data.frame("no" = nrow(tmp2)-nrow(tmp3), "yes"=nrow(tmp3))
+
+kbl(tmp2)  %>%
+  kable_classic(full_width = F)
+
+```
+
+If there are any present, the samples with duplicated `sample_codes` are as follows:
+
+```{r}
+tmp2 <- bio_db[bio_db$sample_code %in% tmp3$sample_code, ]
+tmp2 <- tmp2[order(tmp2$sample_code, tmp2$pit_tag_id),]
+
+kbl(tmp2[,colnames(tmp2)!="specific_id"])  %>%
+  kable_classic(full_width = F)
+
 ```
 
 **Do all vulture captures where a device was deployed have data in `device_deployment_database`?**
@@ -365,7 +385,7 @@ kbl(tmp)  %>%
 Are these expected?
 
 
-# Capture data checks
+# Capture database
 
 To date we have captured vultures `r nrow(cap_db)` times, deployed `r length(unique(cap_db$transmitor_identifier))` tracking devices and `r length(unique(cap_db$pit_tag_id[nchar(cap_db$pit_tag_id)>10]))` pit tags. 
 
@@ -624,7 +644,7 @@ fig <- fig %>%layout(annotations = annotations)
 fig
 ```
 
-# Trap deployment
+# Trap deployment database
 
 To date we have deployed vulture traps in `r  length(unique(trap_db$location_code)) ` different locations.
 
@@ -652,6 +672,63 @@ m <- leaflet() %>%
 m 
 
 ```
+
+# Biological samples database
+
+To date we have collected `r nrow(bio_db)` biological samples from `r length(unique(bio_db$pit_tag_id))` individuals. The species breakdown is as follows:
+
+```{r}
+# add a species column
+bio_db$species <- NA
+cap_db$species
+bio_db$species[bio_db$code_sp=="BV"] <- "coragyps_atratus"
+bio_db$species[bio_db$code_sp=="KV"] <- "sarcoramphus_papa"
+bio_db$species[bio_db$code_sp=="LP"] <- "leopards_pardalis"
+bio_db$species[bio_db$code_sp=="TV"] <- "cathartes_aura"
+
+tmp <- bio_db %>% group_by(species) %>% summarise(individuals=n_distinct(pit_tag_id), samples=n())
+
+kbl(tmp)  %>%
+  kable_classic(full_width = F)
+
+```
+
+Break down of the type of sample per species:
+
+```{r}
+tmp <- bio_db %>% group_by(species, tissue ) %>% summarise(individuals=n_distinct(pit_tag_id), samples=n())
+
+kbl(tmp[, colnames(tmp)!="species"])  %>%
+  kable_classic(full_width = F) %>%
+  pack_rows(index=table(tmp$species))
+
+```
+
+And the current locations of the samples:
+
+```{r}
+tmp <- bio_db %>% group_by(tissue, storage_box) %>% summarise(samples=n())
+
+kbl(tmp[, colnames(tmp)!="tissue"])  %>%
+  kable_classic(full_width = F) %>%
+  pack_rows(index=table(tmp$tissue))
+
+```
+
+# Tracking device deployment database
+
+To date we have deployed `r nrow(track_db_1)` tracking devices.
+
+### Do all the current settings match?
+
+It is important that all of our common tag types have the same settings. Is this currently the case in the database?
+
+We first subset to the most recent deployment settings for each tag, then compare them:
+
+```{r}
+
+```
+
 
 
 
