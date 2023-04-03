@@ -1,14 +1,14 @@
 ---
 title: "Osa Conservation: Movement data audit"
-
 author:
   - Chris Beirne
-
 site: bookdown::test-bookdown
 output: bookdown::gitbook
 documentclass: book
 biblio-style: apalike
 link-citations: yes
+editor_options: 
+  chunk_output_type: console
 ---
 
 # Database changes
@@ -338,7 +338,7 @@ kbl(tmp2[,colnames(tmp2)!="specific_id"])  %>%
 **Do all vulture captures where a device was deployed have data in `device_deployment_database`?**
 
 ```{r}
-tmp <- cap_db[cap_db$transmitor_installation==1,]
+tmp <- cap_db[cap_db$transmitor_installation==1 & is.na(cap_db$transmitor_installation)==F,]
 tmp2 <- track_db
 
 
@@ -346,9 +346,6 @@ tmp3 <- data.frame("yes" = nrow(tmp[tmp$transmitor_identifier %in% tmp2$transmit
 
 kbl(tmp3)  %>%
   kable_classic(full_width = F)
-
-
-#tmp[!(tmp$transmitor_identifier %in% tmp2$transmitor_identifier),]
 
 ```
 
@@ -680,7 +677,7 @@ To date we have collected `r nrow(bio_db)` biological samples from `r length(uni
 ```{r}
 # add a species column
 bio_db$species <- NA
-cap_db$species
+#cap_db$species
 bio_db$species[bio_db$code_sp=="BV"] <- "coragyps_atratus"
 bio_db$species[bio_db$code_sp=="KV"] <- "sarcoramphus_papa"
 bio_db$species[bio_db$code_sp=="LP"] <- "leopards_pardalis"
@@ -719,14 +716,46 @@ kbl(tmp[, colnames(tmp)!="tissue"])  %>%
 
 To date we have deployed `r nrow(track_db_1)` tracking devices.
 
-### Do all the current settings match?
+### Do all the current vital settings match?
 
 It is important that all of our common tag types have the same settings. Is this currently the case in the database?
 
-We first subset to the most recent deployment settings for each tag, then compare them:
+We first subset to the most recent deployment settings for each tag, then compare them the most important categories:
 
 ```{r}
+tmp <- track_db[is.na(track_db$deployment_start)==F,]
+tmp <- tmp[order(tmp$local_identifier,tmp$deployment_start, decreasing=T),]
 
+tmp_latest <- tmp[duplicated(tmp$local_identifier)==F,]
+
+# Convert times into something sensible
+tmp_latest$`ACC On From (HH:MM)` <- round((as.numeric(tmp_latest$`ACC On From (HH:MM)`)*24),2)
+tmp_latest$`ACC On Until (HH:MM)`<- round((as.numeric(tmp_latest$`ACC On Until (HH:MM)`)*24),2)
+
+tmp_latest$`GPS On From (HH:MM)` <- substr(tmp_latest$`GPS On From (HH:MM)`,12,16)
+tmp_latest$`GPS On Until (HH:MM)`<- substr(tmp_latest$`GPS On Until (HH:MM)`,12,16)
+
+tmp_latest$`Pinger On From (HH:MM)` <- round((as.numeric(tmp_latest$`Pinger On From (HH:MM)`)*24),2)
+
+tmp_latest$`Pinger On Until (HH:MM)` <- round((as.numeric(tmp_latest$`Pinger On Until (HH:MM)`)*24),2)
+
+
+tmp2 <- tmp_latest[, c("country", "transmitor_identifier", "local_identifier", 
+               "tag_model", "ACC On From (HH:MM)", "ACC On Until (HH:MM)",
+               "ACC Interval (s)",
+               "GPS On From (HH:MM)", "GPS On Until (HH:MM)",
+               "GPS LOW RES INTERVAL (s)", "GPS HIGH RES INTERVAL (s)",
+               "Pinger On From (HH:MM)", "Pinger On Until (HH:MM)",
+               "Freq. (MHz)",
+               "GPRS Time (HH:MM)", "GPRS Time 2 (HH:MM)"),
+           ]
+
+# Order by country and tag model
+tmp2 <- tmp2[order(tmp2$country, tmp2$tag_model, tmp2$local_identifier),]
+
+kbl(tmp2)  %>%
+  kable_classic(full_width = F) %>%
+  pack_rows(index=table(tmp2$country))
 ```
 
 
