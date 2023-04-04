@@ -105,7 +105,7 @@
 <li class="chapter" data-level="4" data-path="biological-samples-database.html"><a href="biological-samples-database.html"><i class="fa fa-check"></i><b>4</b> Biological samples database</a></li>
 <li class="chapter" data-level="5" data-path="tracking-device-deployment-database.html"><a href="tracking-device-deployment-database.html"><i class="fa fa-check"></i><b>5</b> Tracking device deployment database</a>
 <ul>
-<li class="chapter" data-level="5.0.1" data-path="tracking-device-deployment-database.html"><a href="tracking-device-deployment-database.html#do-all-the-current-settings-match"><i class="fa fa-check"></i><b>5.0.1</b> Do all the current settings match?</a></li>
+<li class="chapter" data-level="5.0.1" data-path="tracking-device-deployment-database.html"><a href="tracking-device-deployment-database.html#do-all-the-current-vital-settings-match"><i class="fa fa-check"></i><b>5.0.1</b> Do all the current vital settings match?</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/ChrisBeirne/test_report/" target="blank">Osa Conservation: Movement data audit</a></li>
@@ -129,60 +129,7 @@
             <section class="normal" id="section-">
 <div id="biological-samples-database" class="section level1 hasAnchor" number="4">
 <h1><span class="header-section-number">Part 4</span> Biological samples database<a href="biological-samples-database.html#biological-samples-database" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>To date we have collected 858 biological samples from 110 individuals. The species breakdown is as follows:</p>
-<pre><code>##   [1] cathartes_melambrotus cathartes_melambrotus sarcoramphus_papa    
-##   [4] sarcoramphus_papa     coragyps_atratus      sarcoramphus_papa    
-##   [7] sarcoramphus_papa     cathartes_melambrotus coragyps_atratus     
-##  [10] sarcoramphus_papa     cathartes_melambrotus cathartes_melambrotus
-##  [13] cathartes_melambrotus cathartes_melambrotus sarcoramphus_papa    
-##  [16] sarcoramphus_papa     sarcoramphus_papa     sarcoramphus_papa    
-##  [19] sarcoramphus_papa     sarcoramphus_papa     sarcoramphus_papa    
-##  [22] sarcoramphus_papa     sarcoramphus_papa     sarcoramphus_papa    
-##  [25] sarcoramphus_papa     sarcoramphus_papa     coragyps_atratus     
-##  [28] coragyps_atratus      coragyps_atratus      coragyps_atratus     
-##  [31] sarcoramphus_papa     sarcoramphus_papa     sarcoramphus_papa    
-##  [34] coragyps_atratus      coragyps_atratus      coragyps_atratus     
-##  [37] coragyps_atratus      coragyps_atratus      coragyps_atratus     
-##  [40] coragyps_atratus      coragyps_atratus      coragyps_atratus     
-##  [43] coragyps_atratus      coragyps_atratus      sarcoramphus_papa    
-##  [46] sarcoramphus_papa     sarcoramphus_papa     coragyps_atratus     
-##  [49] coragyps_atratus      coragyps_atratus      sarcoramphus_papa    
-##  [52] coragyps_atratus      coragyps_atratus      coragyps_atratus     
-##  [55] sarcoramphus_papa     sarcoramphus_papa     sarcoramphus_papa    
-##  [58] coragyps_atratus      coragyps_atratus      coragyps_atratus     
-##  [61] coragyps_atratus      coragyps_atratus      coragyps_atratus     
-##  [64] coragyps_atratus      coragyps_atratus      coragyps_atratus     
-##  [67] coragyps_atratus      coragyps_atratus      coragyps_atratus     
-##  [70] coragyps_atratus      coragyps_atratus      coragyps_atratus     
-##  [73] coragyps_atratus      coragyps_atratus      coragyps_atratus     
-##  [76] coragyps_atratus      coragyps_atratus      coragyps_atratus     
-##  [79] coragyps_atratus      coragyps_atratus      coragyps_atratus     
-##  [82] coragyps_atratus      coragyps_atratus      coragyps_atratus     
-##  [85] coragyps_atratus      coragyps_atratus      coragyps_atratus     
-##  [88] coragyps_atratus      coragyps_atratus      sarcoramphus_papa    
-##  [91] sarcoramphus_papa     sarcoramphus_papa     coragyps_atratus     
-##  [94] coragyps_atratus      coragyps_atratus      coragyps_atratus     
-##  [97] coragyps_atratus      coragyps_atratus      coragyps_atratus     
-## [100] coragyps_atratus      coragyps_atratus      coragyps_atratus     
-## [103] coragyps_atratus      coragyps_atratus      coragyps_atratus     
-## [106] coragyps_atratus      coragyps_atratus      coragyps_atratus     
-## [109] coragyps_atratus      coragyps_atratus      coragyps_atratus     
-## [112] coragyps_atratus      coragyps_atratus      coragyps_atratus     
-## [115] coragyps_atratus      coragyps_atratus      coragyps_atratus     
-## [118] coragyps_atratus      coragyps_atratus      coragyps_atratus     
-## [121] coragyps_atratus      coragyps_atratus      coragyps_atratus     
-## [124] coragyps_atratus      coragyps_atratus      coragyps_atratus     
-## [127] coragyps_atratus      coragyps_atratus      coragyps_atratus     
-## [130] coragyps_atratus      coragyps_atratus      coragyps_atratus     
-## [133] coragyps_atratus      coragyps_atratus      coragyps_atratus     
-## [136] coragyps_atratus      coragyps_atratus      coragyps_atratus     
-## [139] coragyps_atratus      coragyps_atratus      coragyps_atratus     
-## [142] coragyps_atratus      coragyps_atratus      cathartes_aura       
-## [145] sarcoramphus_papa     coragyps_atratus      coragyps_atratus     
-## [148] coragyps_atratus      coragyps_atratus      coragyps_atratus     
-## [151] cathartes_aura        sarcoramphus_papa     coragyps_atratus     
-## [154] coragyps_atratus      coragyps_atratus     
-## 4 Levels: cathartes_aura cathartes_melambrotus ... sarcoramphus_papa</code></pre>
+<p>To date we have collected 874 biological samples from 111 individuals. The species breakdown is as follows:</p>
 <table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -203,10 +150,10 @@ samples
 cathartes_aura
 </td>
 <td style="text-align:right;">
-2
+3
 </td>
 <td style="text-align:right;">
-34
+53
 </td>
 </tr>
 <tr>
@@ -239,7 +186,7 @@ sarcoramphus_papa
 18
 </td>
 <td style="text-align:right;">
-231
+228
 </td>
 </tr>
 </tbody>
@@ -270,10 +217,10 @@ samples
 DNA_card
 </td>
 <td style="text-align:right;">
-2
+3
 </td>
 <td style="text-align:right;">
-2
+4
 </td>
 </tr>
 <tr>
@@ -281,10 +228,10 @@ DNA_card
 RNA_blood
 </td>
 <td style="text-align:right;">
-2
+3
 </td>
 <td style="text-align:right;">
-6
+9
 </td>
 </tr>
 <tr>
@@ -292,51 +239,7 @@ RNA_blood
 body_feather
 </td>
 <td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-2
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-cloacal
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-6
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-hemogram
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-2
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-oral
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-6
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-serum
-</td>
-<td style="text-align:right;">
-2
+3
 </td>
 <td style="text-align:right;">
 3
@@ -344,10 +247,43 @@ serum
 </tr>
 <tr>
 <td style="text-align:left;padding-left: 2em;" indentlevel="1">
-smear
+cloacal
 </td>
 <td style="text-align:right;">
-2
+3
+</td>
+<td style="text-align:right;">
+9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+hemogram
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+oral
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+serum
+</td>
+<td style="text-align:right;">
+3
 </td>
 <td style="text-align:right;">
 5
@@ -355,13 +291,24 @@ smear
 </tr>
 <tr>
 <td style="text-align:left;padding-left: 2em;" indentlevel="1">
+smear
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 wing_feather
 </td>
 <td style="text-align:right;">
-2
+3
 </td>
 <td style="text-align:right;">
-2
+3
 </td>
 </tr>
 <tr grouplength="11">
@@ -615,10 +562,10 @@ ectoparasite
 hemogram
 </td>
 <td style="text-align:right;">
-17
+14
 </td>
 <td style="text-align:right;">
-17
+14
 </td>
 </tr>
 <tr>
@@ -691,7 +638,7 @@ samples
 </tr>
 </thead>
 <tbody>
-<tr grouplength="1">
+<tr grouplength="2">
 <td colspan="2" style="border-bottom: 0;">
 <strong>body_feather</strong>
 </td>
@@ -704,6 +651,14 @@ DNA_card_box_001
 76
 </td>
 </tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+DNA_card_box_002
+</td>
+<td style="text-align:right;">
+38
+</td>
+</tr>
 <tr grouplength="3">
 <td colspan="2" style="border-bottom: 0;">
 <strong>cloacal</strong>
@@ -711,10 +666,10 @@ DNA_card_box_001
 </tr>
 <tr>
 <td style="text-align:left;padding-left: 2em;" indentlevel="1">
-DNA_card_box_002
+NA
 </td>
 <td style="text-align:right;">
-37
+1
 </td>
 </tr>
 <tr>
@@ -733,7 +688,7 @@ RNA_blood_box_002
 81
 </td>
 </tr>
-<tr grouplength="2">
+<tr grouplength="3">
 <td colspan="2" style="border-bottom: 0;">
 <strong>DNA_card</strong>
 </td>
@@ -743,7 +698,7 @@ RNA_blood_box_002
 RNA_blood_box_003
 </td>
 <td style="text-align:right;">
-5
+8
 </td>
 </tr>
 <tr>
@@ -752,6 +707,14 @@ body_feather_box_001
 </td>
 <td style="text-align:right;">
 104
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+NA
+</td>
+<td style="text-align:right;">
+1
 </td>
 </tr>
 <tr grouplength="1">
@@ -780,7 +743,7 @@ cloacal_box_002
 81
 </td>
 </tr>
-<tr grouplength="2">
+<tr grouplength="1">
 <td colspan="2" style="border-bottom: 0;">
 <strong>hemogram</strong>
 </td>
@@ -790,7 +753,12 @@ cloacal_box_002
 cloacal_box_003
 </td>
 <td style="text-align:right;">
-10
+13
+</td>
+</tr>
+<tr grouplength="1">
+<td colspan="2" style="border-bottom: 0;">
+<strong>nasal</strong>
 </td>
 </tr>
 <tr>
@@ -801,9 +769,9 @@ ectoparasite_box_001
 9
 </td>
 </tr>
-<tr grouplength="1">
+<tr grouplength="2">
 <td colspan="2" style="border-bottom: 0;">
-<strong>nasal</strong>
+<strong>oral</strong>
 </td>
 </tr>
 <tr>
@@ -814,25 +782,12 @@ NA
 1
 </td>
 </tr>
-<tr grouplength="2">
-<td colspan="2" style="border-bottom: 0;">
-<strong>oral</strong>
-</td>
-</tr>
 <tr>
 <td style="text-align:left;padding-left: 2em;" indentlevel="1">
 fauna_vet_lab
 </td>
 <td style="text-align:right;">
 27
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-NA
-</td>
-<td style="text-align:right;">
-2
 </td>
 </tr>
 <tr grouplength="3">
@@ -861,20 +816,12 @@ oral_box_001
 oral_box_002
 </td>
 <td style="text-align:right;">
-8
+11
 </td>
 </tr>
-<tr grouplength="3">
+<tr grouplength="2">
 <td colspan="2" style="border-bottom: 0;">
 <strong>serum</strong>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-NA
-</td>
-<td style="text-align:right;">
-1
 </td>
 </tr>
 <tr>
@@ -882,18 +829,18 @@ NA
 bs_box_001
 </td>
 <td style="text-align:right;">
-40
+43
 </td>
 </tr>
 <tr>
 <td style="text-align:left;padding-left: 2em;" indentlevel="1">
-en la refri
+NA
 </td>
 <td style="text-align:right;">
 2
 </td>
 </tr>
-<tr grouplength="2">
+<tr grouplength="1">
 <td colspan="2" style="border-bottom: 0;">
 <strong>smear</strong>
 </td>
@@ -903,18 +850,10 @@ en la refri
 slides_box_001
 </td>
 <td style="text-align:right;">
-5
+18
 </td>
 </tr>
-<tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
-NA
-</td>
-<td style="text-align:right;">
-10
-</td>
-</tr>
-<tr grouplength="2">
+<tr grouplength="3">
 <td colspan="2" style="border-bottom: 0;">
 <strong>wing_feather</strong>
 </td>
@@ -933,6 +872,14 @@ wing_feather_box_002
 </td>
 <td style="text-align:right;">
 47
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+NA
+</td>
+<td style="text-align:right;">
+1
 </td>
 </tr>
 </tbody>

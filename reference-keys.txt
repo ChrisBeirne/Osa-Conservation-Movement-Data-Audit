@@ -8,4 +8,4 @@ morphometrics
 trap-deployment-database
 biological-samples-database
 tracking-device-deployment-database
-do-all-the-current-settings-match
+do-all-the-current-vital-settings-match
