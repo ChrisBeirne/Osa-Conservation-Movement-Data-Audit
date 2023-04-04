@@ -9,3 +9,7 @@ trap-deployment-database
 biological-samples-database
 tracking-device-deployment-database
 do-all-the-current-vital-settings-match
+laboratory-analyses
+sex
+blood-cell-counts
+results

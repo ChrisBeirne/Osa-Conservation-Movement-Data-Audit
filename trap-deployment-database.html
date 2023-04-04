@@ -107,6 +107,14 @@
 <ul>
 <li class="chapter" data-level="5.0.1" data-path="tracking-device-deployment-database.html"><a href="tracking-device-deployment-database.html#do-all-the-current-vital-settings-match"><i class="fa fa-check"></i><b>5.0.1</b> Do all the current vital settings match?</a></li>
 </ul></li>
+<li class="chapter" data-level="6" data-path="laboratory-analyses.html"><a href="laboratory-analyses.html"><i class="fa fa-check"></i><b>6</b> Laboratory analyses</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="sex.html"><a href="sex.html"><i class="fa fa-check"></i><b>6.1</b> Sex</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="sex.html"><a href="sex.html#blood-cell-counts"><i class="fa fa-check"></i><b>6.1.1</b> Blood cell counts</a></li>
+<li class="chapter" data-level="6.1.2" data-path="sex.html"><a href="sex.html#results"><i class="fa fa-check"></i><b>6.1.2</b> Results</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/ChrisBeirne/test_report/" target="blank">Osa Conservation: Movement data audit</a></li>
 
@@ -131,17 +139,91 @@
 <h1><span class="header-section-number">Part 3</span> Trap deployment database<a href="trap-deployment-database.html#trap-deployment-database" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>To date we have deployed vulture traps in 6 different locations.</p>
 <p>The trapping locations are as follows:</p>
-<pre><code>## # A tibble: 6 × 3
-##   location_code latitude longitude
-##   &lt;chr&gt;            &lt;dbl&gt;     &lt;dbl&gt;
-## 1 EBLA01          -12.6      -70.1
-## 2 EBLA02          -12.6      -70.1
-## 3 EBLA03          -12.6      -70.1
-## 4 AIRS02            8.40     -83.4
-## 5 CERR02            8.42     -83.3
-## 6 LOMAS01          NA         NA</code></pre>
-<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-f4206ab82a296c5625d1" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-f4206ab82a296c5625d1">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["Stamen.TonerLite",null,"Simple",{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addProviderTiles","args":["Esri.WorldImagery",null,"Satellite",{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addProviderTiles","args":["OpenStreetMap.Mapnik",null,"OS",{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addCircleMarkers","args":[[-12.58064,-12.56819,-12.55581,8.40259456280785,8.416142,null],[-70.09274,-70.079068,-70.081005,-83.3585232465699,-83.317929,null],10,null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2},null,null,["EBLA01","EBLA02","EBLA03","AIRS02","CERR02","LOMAS01"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addScaleBar","args":[{"maxWidth":100,"metric":true,"imperial":false,"updateWhenIdle":true,"position":"topleft"}]},{"method":"addLayersControl","args":[["OS","Simple","Satellite"],[],{"collapsed":false,"autoZIndex":true,"position":"topright"}]}],"limits":{"lat":[-12.58064,8.416142],"lng":[-83.3585232465699,-70.079068]}},"evals":[],"jsHooks":[]}</script>
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+location_code
+</th>
+<th style="text-align:right;">
+latitude
+</th>
+<th style="text-align:right;">
+longitude
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+EBLA01
+</td>
+<td style="text-align:right;">
+-12.580640
+</td>
+<td style="text-align:right;">
+-70.09274
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EBLA02
+</td>
+<td style="text-align:right;">
+-12.568190
+</td>
+<td style="text-align:right;">
+-70.07907
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EBLA03
+</td>
+<td style="text-align:right;">
+-12.555810
+</td>
+<td style="text-align:right;">
+-70.08101
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AIRS02
+</td>
+<td style="text-align:right;">
+8.402595
+</td>
+<td style="text-align:right;">
+-83.35852
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CERR02
+</td>
+<td style="text-align:right;">
+8.416142
+</td>
+<td style="text-align:right;">
+-83.31793
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+LOMAS01
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+</tr>
+</tbody>
+</table>
+<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-c780abdc5f605fcaa052" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-c780abdc5f605fcaa052">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["Stamen.TonerLite",null,"Simple",{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addProviderTiles","args":["Esri.WorldImagery",null,"Satellite",{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addProviderTiles","args":["OpenStreetMap.Mapnik",null,"OS",{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addCircleMarkers","args":[[-12.58064,-12.56819,-12.55581,8.40259456280785,8.416142,null],[-70.09274,-70.079068,-70.081005,-83.3585232465699,-83.317929,null],10,null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2},null,null,["EBLA01","EBLA02","EBLA03","AIRS02","CERR02","LOMAS01"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addScaleBar","args":[{"maxWidth":100,"metric":true,"imperial":false,"updateWhenIdle":true,"position":"topleft"}]},{"method":"addLayersControl","args":[["OS","Simple","Satellite"],[],{"collapsed":false,"autoZIndex":true,"position":"topright"}]}],"limits":{"lat":[-12.58064,8.416142],"lng":[-83.3585232465699,-70.079068]}},"evals":[],"jsHooks":[]}</script>
 </div>
             </section>
 
