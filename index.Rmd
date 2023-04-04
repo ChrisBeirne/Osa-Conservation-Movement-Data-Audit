@@ -128,6 +128,13 @@ cap_db$species <- as.factor(cap_db$species)
 # Remove empty rows
 cap_db <- cap_db[is.na(cap_db$date)==F & is.na(cap_db$country)==F,]
 
+unique_db <- cap_db[,c("pit_tag_id", "local_identifier", "code_sp")]
+# Remove NA's
+unique_db <- unique_db[unique_db$local_identifier!="NA",]
+# Remove duplicates
+unique_db <- unique_db[duplicated(unique_db)==F,]
+table(unique_db$local_identifier)
+
 #trap_deployments
 ###################################
 ## THIS MAY NOT BE THE RIGHT ONE ##
@@ -144,6 +151,13 @@ trap_db$country[trap_db$latitude<0] <- "PE"
 #biological samples
 drive_download(file = as_id("1kx5BYcbbDYZLnWMp1IxQySaLRQ2I4AJhTNjZfn7m4U8"), path = paste0("data/bio_database"), overwrite = TRUE)
 bio_db <- read_excel("data/bio_database.xlsx", sheet="biological_samples")
+# Remove NA's
+bio_db <- bio_db[is.na(bio_db$capture_date)==F,]
+
+# Laboratory results
+drive_download(file = as_id("1GYcqjqLG2SUKMF_s4f7JMGtgOt6snzEzHtFCsiwFiiQ"), path = paste0("data/lab_database"), overwrite = TRUE)
+lab_db <- read_excel("data/lab_database.xlsx", sheet="Results")
+
 
 #device_database
 drive_download(file = as_id("1_oa67Po8Hpmp4VH8jqlD_Sm25Fn2GPctqp7rC5EXSuo"), path = paste0("data/track_database"), overwrite = TRUE)
@@ -650,7 +664,17 @@ The trapping locations are as follows:
 ```{r}
 tmp <- trap_db[,c("location_code", "latitude", "longitude")]
 tmp <- tmp[duplicated(tmp)==F,]
-tmp
+
+
+kbl(tmp)  %>%
+  kable_classic(full_width = F)
+
+
+```
+
+
+```{r}
+
 m <- leaflet() %>%
       # Add a satellite image layer
       addProviderTiles(providers$Stamen.TonerLite, group="Simple") %>%
@@ -706,9 +730,8 @@ And the current locations of the samples:
 ```{r}
 tmp <- bio_db %>% group_by(tissue, storage_box) %>% summarise(samples=n())
 
-kbl(tmp[, colnames(tmp)!="tissue"])  %>%
-  kable_classic(full_width = F) %>%
-  pack_rows(index=table(tmp$tissue))
+kbl(tmp)  %>%
+  kable_classic(full_width = F) 
 
 ```
 
@@ -755,7 +778,120 @@ tmp2 <- tmp2[order(tmp2$country, tmp2$tag_model, tmp2$local_identifier),]
 
 kbl(tmp2)  %>%
   kable_classic(full_width = F) %>%
-  pack_rows(index=table(tmp2$country))
+  pack_rows(index=table(tmp2$country))%>%
+    scroll_box(width = "100%")
+
+
+
+```
+
+# Laboratory analyses
+
+We first need to check if all biological samples have associated pit-tag codes, and then add in the `local_identifier` information, if it is available.
+
+**Do all biological samples have associated pit-tag codes?**
+
+```{r}
+# Add in the pittag code
+lab_full <- left_join(lab_db, bio_db[,c("sample_code", "pit_tag_id", "code_sp")])
+# And if individuals have a unique ID - add it
+lab_full <- left_join(lab_full, unique_db)
+
+kbl(table(is.na(lab_full$pit_tag_id)==F)) %>%
+  kable_classic(full_width = F)
+
+```
+
+To date we have processed samples with the following methodologies:
+
+```{r}
+
+tmp <- lab_full %>% group_by(assay) %>% summarise(total_assays=n(), individuals=n_distinct(pit_tag_id))
+
+kbl(tmp) %>%
+  kable_classic(full_width = F)
+
+```
+
+## Sex
+
+So far we have sexed the following vultures:
+
+```{r}
+tmp <- lab_full[lab_full$assay=="sex",]
+tmp <- tmp[,c("local_identifier", "result", "code_sp")]
+tmp <- tmp[order(tmp$code_sp,tmp$result, tmp$local_identifier),]
+kbl(tmp) %>%
+  kable_classic(full_width = F) 
+```
+
+### Blood cell counts
+
+```{r}
+tmp <- lab_full[lab_full$assay=="blood",]
+```
+
+We have blood cell parameters quantified for `r length(unique(tmp$pit_tag_id))` individuals and `r length(unique(tmp$code_sp))` species. 
+
+```{r}
+tmp2 <- tmp %>% group_by(code_sp) %>% summarise(individuals=n_distinct(pit_tag_id))
+
+kbl(tmp2) %>%
+  kable_classic(full_width = F) 
+```
+
+### Results
+
+Differentials first:
+
+```{r}
+#table(tmp$units)
+tmp$result <- as.numeric(tmp$result)
+
+
+tmp2 <- tmp[tmp$assay_target %in% c("basophils", "eosinophils", "Hematocrit", "heterophils", "lymphocytes", "monocytes"),]
+tmp2 <- tmp2[tmp2$units=="%",]
+#length(unique(dat$local_identifier))
+#boxplot(dat$result~dat$assay_target, las=1, ylab=dat$units[1],
+#        xlab="Contaminant")
+# Make the local identifier name blank is NA
+tmp2$local_identifier[is.na(tmp2$local_identifier)==T] <- tmp2$pit_tag_id[is.na(tmp2$local_identifier)==T]
+
+params <- tmp2$assay_target
+tmp2$units
+fig <- plot_ly(y =tmp2$result,x=tmp2$assay_target, color=tmp2$code_sp, 
+               type = "box", boxpoints = "all", jitter = 0.1,
+        pointpos = 0, hovertext=paste(tmp2$local_identifier, tmp2$pit_tag_id)) %>% 
+  layout(yaxis = list(title = '"% composition"'), boxmode="group")
+
+fig
+```
+
+And the other parameters:
+
+```{r}
+dat <- tmp[tmp$method=="Cell Count" & is.na(tmp$method)==F & tmp$units!="%" & !(tmp$assay_target %in% params),]
+dat$local_identifier[is.na(dat$local_identifier)==T] <- dat$pit_tag_id[is.na(dat$local_identifier)==T]
+dat$result <- as.numeric(dat$result)
+#boxplot(dat$result~dat$assay_target, las=1, ylab=dat$units[1],
+#        xlab="Contaminant")
+tmp2 <- dat[dat$assay_target%in% c("Erythrocytes","proportion_H:L", "thrombocytes", "leucocytes", "Hemoglobin") ,]
+
+fig1 <- plot_ly(y =tmp2$result,x=tmp2$assay_target, color=tmp2$code_sp,
+                 type = "box", boxpoints = "all", jitter = 0.2,
+        pointpos = 0, hovertext=tmp2$local_identifier) %>% 
+  layout(yaxis = list(title = "units", rangemode="tozero"), boxmode="group")
+
+fig1
+
+tmp2 <- dat[!(dat$assay_target%in% c("Erythrocytes","proportion_H:L", "thrombocytes", "leucocytes", "Hemoglobin")) ,]
+
+fig1 <- plot_ly(y =tmp2$result,x=tmp2$assay_target, color=tmp2$code_sp,
+                 type = "box", boxpoints = "all", jitter = 0.2,
+        pointpos = 0, hovertext=tmp2$local_identifier) %>% 
+  layout(yaxis = list(title = "units", rangemode="tozero"), boxmode="group")
+
+fig1
 ```
 
 
