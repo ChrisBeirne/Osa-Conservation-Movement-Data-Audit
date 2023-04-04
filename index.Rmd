@@ -145,6 +145,11 @@ trap_db$country[trap_db$latitude<0] <- "PE"
 drive_download(file = as_id("1kx5BYcbbDYZLnWMp1IxQySaLRQ2I4AJhTNjZfn7m4U8"), path = paste0("data/bio_database"), overwrite = TRUE)
 bio_db <- read_excel("data/bio_database.xlsx", sheet="biological_samples")
 
+# Laboratory results
+drive_download(file = as_id("1GYcqjqLG2SUKMF_s4f7JMGtgOt6snzEzHtFCsiwFiiQ"), path = paste0("data/lab_database"), overwrite = TRUE)
+lab_db <- read_excel("data/lab_database.xlsx", sheet="Results")
+
+
 #device_database
 drive_download(file = as_id("1_oa67Po8Hpmp4VH8jqlD_Sm25Fn2GPctqp7rC5EXSuo"), path = paste0("data/track_database"), overwrite = TRUE)
 track_db <- read_excel("data/track_database.xlsx")
@@ -650,7 +655,17 @@ The trapping locations are as follows:
 ```{r}
 tmp <- trap_db[,c("location_code", "latitude", "longitude")]
 tmp <- tmp[duplicated(tmp)==F,]
-tmp
+
+
+kbl(tmp)  %>%
+  kable_classic(full_width = F)
+
+
+```
+
+
+```{r}
+
 m <- leaflet() %>%
       # Add a satellite image layer
       addProviderTiles(providers$Stamen.TonerLite, group="Simple") %>%
@@ -706,9 +721,8 @@ And the current locations of the samples:
 ```{r}
 tmp <- bio_db %>% group_by(tissue, storage_box) %>% summarise(samples=n())
 
-kbl(tmp[, colnames(tmp)!="tissue"])  %>%
-  kable_classic(full_width = F) %>%
-  pack_rows(index=table(tmp$tissue))
+kbl(tmp)  %>%
+  kable_classic(full_width = F) 
 
 ```
 
@@ -758,6 +772,250 @@ kbl(tmp2)  %>%
   pack_rows(index=table(tmp2$country))
 ```
 
+# Laboratory analyses
+
+To date we have provcess samples with the following methodologies:
+
+```{r}
+
+```
+
+
+
+## Contamination - Voltammetry and atomic absorbtion (Peru)
+
+We processed samples from 10 individuals in Peru - specifically looking for mercury and lead contamination. Assay details are scant, and we have only a single reading per individual.
+
+The assays were performed by MC Quimicalab, and the equipment looked fairly ancient.
+
+### Results
+
+```{r, warning=FALSE, message=FALSE}
+
+dat <- labs[labs$method=="voltammetry and atomic absorption" & is.na(labs$method)==F,]
+
+dat$result <- as.numeric(dat$result)
+#boxplot(dat$result~dat$assay_target, las=1, ylab=dat$units[1],
+#        xlab="Contaminant")
+
+
+fig <- plot_ly(y =dat$result,x=dat$assay_target, color=dat$assay_target, 
+               type = "box", boxpoints = "all", jitter = 0.3,
+        pointpos = -1.8, hovertext=dat$local_identifier) %>% 
+  layout(yaxis = list(title = 'mg_kg'))
+
+fig
+```
+
+So this analysis looks interesting - no mercury detected on feather samples, however 5 of 10 individuals having lead contamination. Levels of >1.5 mg_kg are associated with acute exposure (see Cardiel 2011 below).
+
+The three vultures with the highest contamination levels (OC6, OC4,and OC2) are no longer returning GPS fixes. This could represent a death of the individual or the tracking device. OC1 and OC10 are still functioning (4th and 5th values). 
+
+Splitting the lead results by species gives us:
+
+```{r, message=F, warning=F}
+fig <- plot_ly(y =dat$result[dat$assay_target=="lead"],x=dat$species[dat$assay_target=="lead"], color=dat$species[dat$assay_target=="lead"], 
+               type = "box", boxpoints = "all", jitter = 0.3,
+        pointpos = -1.8, hovertext=dat$local_identifier[dat$assay_target=="lead"]) %>% 
+  layout(yaxis = list(title = 'mg_kg'))
+
+fig
+```
+
+Which suggests the bulk of the contamination is in Greater-yellow headed vultures (Cathartes melambrotus) rather than king vultures (Sarcoramphus). 
+
+**However** I have not found may other examples of this methodology in the literature. Other details of the assay were not provided, although we have some nice photos: [link](https://docs.google.com/document/d/1UezGQGasLwwy5mSU0N-JRzSgxDtR1MlY/edit?usp=sharing&ouid=101375399114641236572&rtpof=true&sd=true).
+
+Assay detection limit unknown... so zeros perhaps do not have much value? 
+
+**Questions** 
+
+- How much faith can we put in this assay?
+
+- What other information would we need from this lab to have "publishable" results?
+
+
+Cardiel, Iris E., Mark A. Taggart, and Rafael Mateo. "Using Pb–Al ratios to discriminate between internal and external deposition of Pb in feathers." Ecotoxicology and Environmental Safety 74.4 (2011): 911-917.
+
+## Contamination - Electron miscroscope (Costa Rica)
+
+We processed samples from seven individuals from Costa Rica - all of which were king vultures. Here we have multiple replicates per individual (between three and five).
+
+Method: The machine used was a "Scanning Electron Microscope, MEB, Brand: Hitachi, Model: S-3700N." with the samples processed by the Centro de Investigación en Estructuras Microscópicas (CIEMic) de la Universidad de Costa. 
+
+### Results
+
+We had a bunch of different elements analysed:
+
+```{r}
+dat <- labs[labs$method=="Scanning Electron Microscope, MEB, Brand: Hitachi, Model: S-3700N." & is.na(labs$method)==F,]
+
+#length(unique(dat$local_identifier))
+
+dat$result <- as.numeric(dat$result)
+#boxplot(dat$result~dat$assay_target, las=1, ylab=dat$units[1],
+#        xlab="Contaminant")
+
+
+fig <- plot_ly(y =dat$result,x=dat$assay_target, color=dat$assay_target, 
+               type = "box", boxpoints = "all", jitter = 0.3,
+        pointpos = -1.8, hovertext=dat$local_identifier) %>% 
+  layout(yaxis = list(title = 'mg_kg'))
+
+
+fig
+```
+
+Lets zoom in on the individual specific results for lead and mercury. The points are mean values and the lines standard deviations:
+
+```{r}
+res <- dat %>%  group_by(local_identifier, assay_target) %>% summarize(mean=mean(result), sd=sd(result))
+
+tmp <- res[res$assay_target=="Lead_Pb",]
+
+fig1 <- plot_ly(data = tmp, x = ~local_identifier, y = ~mean, type = 'scatter', mode = 'markers',
+
+        name = tmp$assay_target[1],
+
+        error_y = ~list(array = sd,
+
+                        color = '#000000'))%>% 
+  layout(yaxis = list(title = 'Percentage composition'))
+
+
+tmp <- res[res$assay_target=="Mercury_Hg",]
+
+fig2 <- plot_ly(data = tmp, x = ~local_identifier, y = ~mean, type = 'scatter', mode = 'markers',
+
+        name = tmp$assay_target[1],
+
+        error_y = ~list(array = sd,
+
+                        color = '#000000'))%>% 
+  layout(yaxis = list(title = 'Percentage composition'))
+
+
+subplot(fig1, fig2, shareY=T)
+
+
+```
+
+Attenborough is still alive and well! Interestingly, the patterns look the same between both elements. The value of repeated measures through time here would be clear.
+
+**Questions** 
+
+- Is it possible to calculate the magnitude of contamination using molecular weights? (convert from percentages)
+
+- Are any of the other elements of interest?
+
+- Is it an issue that we are not using the (more complex) total and methyl-mercury assays?
+
+
+## Blood cell counts
+
+We had blood cell parameters quantified for 5 individuals in Costa Rica. 
+
+### Results
+
+Differentials first:
+
+```{r}
+dat <- labs[labs$method=="Cell Count" & is.na(labs$method)==F & labs$units=="%",]
+table(dat$units)
+#length(unique(dat$local_identifier))
+
+dat$result <- as.numeric(dat$result)
+#boxplot(dat$result~dat$assay_target, las=1, ylab=dat$units[1],
+#        xlab="Contaminant")
+params <- dat$assay_target
+
+fig <- plot_ly(y =dat$result,x=dat$assay_target, color=dat$assay_target, 
+               type = "box", boxpoints = "all", jitter = 0.3,
+        pointpos = -1.8, hovertext=dat$local_identifier) %>% 
+  layout(yaxis = list(title = 'mg_kg'))
+
+
+fig
+```
+
+Attenborough has a thrombocyte percentage outside of the range of the other data - this vulture also had high Pb and Hg levels. 
+
+Others:
+
+```{r}
+dat <- labs[labs$method=="Cell Count" & is.na(labs$method)==F & labs$units!="%" & !(labs$assay_target %in% params),]
+
+dat$result <- as.numeric(dat$result)
+#boxplot(dat$result~dat$assay_target, las=1, ylab=dat$units[1],
+#        xlab="Contaminant")
+tmp <- dat[dat$assay_target=="Erythrocytes",]
+fig1 <- plot_ly(y =tmp$result,x=tmp$assay_target,
+                name=paste(tmp$assay_target[1], tmp$units[1]),
+               type = "box", boxpoints = "all", jitter = 0.3,
+        pointpos = -1.8, hovertext=tmp$local_identifier) %>% 
+  layout(yaxis = list(title = tmp$units[1], rangemode="tozero"))
+
+tmp <- dat[dat$assay_target=="Hemoglobin",]
+fig2 <- plot_ly(y =tmp$result,x=tmp$assay_target,
+                name=paste(tmp$assay_target[1], tmp$units[1]), 
+               type = "box", boxpoints = "all", jitter = 0.3,
+        pointpos = -1.8, hovertext=tmp$local_identifier) %>% 
+  layout(yaxis = list(title = tmp$units[1], rangemode="tozero"))
+
+tmp <- dat[dat$assay_target=="VCM",]
+fig3 <- plot_ly(y =tmp$result,x=tmp$assay_target,
+                name=paste(tmp$assay_target[1], tmp$units[1]), 
+               type = "box", boxpoints = "all", jitter = 0.3,
+        pointpos = -1.8, hovertext=tmp$local_identifier) %>% 
+  layout(yaxis = list(title = tmp$units[1], rangemode="tozero"))
+
+tmp <- dat[dat$assay_target=="MCC",]
+fig4 <- plot_ly(y =tmp$result,x=tmp$assay_target, 
+                name=paste(tmp$assay_target[1], tmp$units[1]),
+               type = "box", boxpoints = "all", jitter = 0.3,
+        pointpos = -1.8, hovertext=tmp$local_identifier) %>% 
+  layout(yaxis = list(title = tmp$units[1], rangemode="tozero"))
+
+tmp <- dat[dat$assay_target=="HMC",]
+fig5 <- plot_ly(y =tmp$result,x=tmp$assay_target, 
+                name=paste(tmp$assay_target[1], tmp$units[1]),
+               type = "box", boxpoints = "all", jitter = 0.3,
+        pointpos = -1.8, hovertext=tmp$local_identifier) %>% 
+  layout(yaxis = list(title = tmp$units[1], rangemode="tozero"))
+
+
+tmp <- dat[dat$assay_target=="leucocytes",]
+fig6 <- plot_ly(y =tmp$result,x=tmp$assay_target, 
+                name=paste(tmp$assay_target[1], tmp$units[1]),
+               type = "box", boxpoints = "all", jitter = 0.3,
+        pointpos = -1.8, hovertext=tmp$local_identifier) %>% 
+  layout(yaxis = list(title = tmp$units[1], rangemode="tozero"))
+
+tmp <- dat[dat$assay_target=="thrombocytes",]
+fig7 <- plot_ly(y =tmp$result,x=tmp$assay_target, 
+                name=paste(tmp$assay_target[1], tmp$units[1]), 
+               type = "box", boxpoints = "all", jitter = 0.3,
+        pointpos = -1.8, hovertext=tmp$local_identifier) %>% 
+  layout(yaxis = list(title = tmp$units[1], rangemode="tozero"))
+tmp <- dat[dat$assay_target=="protein_total",]
+fig8 <- plot_ly(y =tmp$result,x=tmp$assay_target,
+                name=paste(tmp$assay_target[1], tmp$units[1]), 
+               type = "box", boxpoints = "all", jitter = 0.3,
+        pointpos = -1.8, hovertext=tmp$local_identifier) %>% 
+  layout(yaxis = list(title = tmp$units[1], rangemode="tozero"))
+
+
+subplot(fig1,fig2,fig3,fig4,
+        fig5,fig6,fig7,fig8, nrows=2)
+
+```
+
+Interestingly, Attenborough again also has elevated leucocytes and thrombocytes. The others all seems to be in a reasonable range. Could this be a cost of an exposure event? 
+
+
+**Question** Are there any specific categories we should keep an eye on?
+
+**Question** Is there a database for other bird species?
 
 
 
