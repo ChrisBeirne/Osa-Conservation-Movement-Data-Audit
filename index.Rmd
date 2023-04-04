@@ -159,6 +159,11 @@ drive_download(file = as_id("1GYcqjqLG2SUKMF_s4f7JMGtgOt6snzEzHtFCsiwFiiQ"), pat
 lab_db <- read_excel("data/lab_database.xlsx", sheet="Results")
 
 
+# Laboratory results
+drive_download(file = as_id("1GYcqjqLG2SUKMF_s4f7JMGtgOt6snzEzHtFCsiwFiiQ"), path = paste0("data/lab_database"), overwrite = TRUE)
+lab_db <- read_excel("data/lab_database.xlsx", sheet="Results")
+
+
 #device_database
 drive_download(file = as_id("1_oa67Po8Hpmp4VH8jqlD_Sm25Fn2GPctqp7rC5EXSuo"), path = paste0("data/track_database"), overwrite = TRUE)
 track_db <- read_excel("data/track_database.xlsx")
@@ -893,14 +898,6 @@ fig1 <- plot_ly(y =tmp2$result,x=tmp2$assay_target, color=tmp2$code_sp,
 
 fig1
 ```
-
-
-
-
-
-
-
-
 
 
 
