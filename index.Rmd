@@ -439,7 +439,7 @@ tmp$country <- as.factor(tmp$country)
 tmp$location <- as.numeric(tmp$country)
 tmp$local_identifier[tmp$local_identifier=="NA"] <- tmp$pit_tag_id[tmp$local_identifier=="NA"] 
 plot_ly(data = tmp, x = tmp$date, y=tmp$location, color = ~species,
-               hoverinfo = 'text',
+               hoverinfo = 'text',height=200,
                text = ~paste(date,local_identifier,sep = "<br>")) %>% 
               layout(title = 'Vulture processing time', 
                       xaxis = list(title = 'Vulture capture date'), 
@@ -976,6 +976,27 @@ plot_ly(data = clus_db, x = clus_db$visit_date, y=clus_db$location,
 
 
 
+```
+
+Where are these clusters?
+
+```{r}
+m <- leaflet() %>%
+      # Add a satellite image layer
+      addProviderTiles(providers$Stamen.TonerLite, group="Simple") %>%
+      addProviderTiles(providers$Esri.WorldImagery, group="Satellite") %>%
+      addProviderTiles(providers$OpenStreetMap.Mapnik, group="OS") %>%     
+      addCircleMarkers(lng=clus_db$cluster_longitude,
+                         lat=clus_db$cluster_latitude, 
+                         popup=paste(clus_db$visit_date)) %>%
+      addScaleBar(position="topleft", 
+                  options=scaleBarOptions(maxWidth = 100, metric = TRUE, imperial = FALSE, updateWhenIdle = TRUE)) %>%
+      addLayersControl(
+        baseGroups = c("OS", "Simple", "Satellite"),
+        options = layersControlOptions(collapsed = FALSE)
+      ) 
+  
+m 
 ```
 
 Of the clusters visited so far, the type of carrion found was as follows (note NA's = no carcass).
