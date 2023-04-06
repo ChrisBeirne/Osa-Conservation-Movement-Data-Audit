@@ -93,13 +93,14 @@
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Database changes</a>
 <ul>
 <li class="chapter" data-level="1.0.1" data-path="index.html"><a href="index.html#database-changes-last-7-days"><i class="fa fa-check"></i><b>1.0.1</b> Database changes (last 7 days)</a></li>
-<li class="chapter" data-level="1.0.2" data-path="index.html"><a href="index.html#database-linkage-check"><i class="fa fa-check"></i><b>1.0.2</b> Database linkage check</a></li>
+<li class="chapter" data-level="1.0.2" data-path="index.html"><a href="index.html#database-linkage-checks"><i class="fa fa-check"></i><b>1.0.2</b> Database linkage checks</a></li>
 <li class="chapter" data-level="1.0.3" data-path="index.html"><a href="index.html#recaptures"><i class="fa fa-check"></i><b>1.0.3</b> Recaptures</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="capture-database.html"><a href="capture-database.html"><i class="fa fa-check"></i><b>2</b> Capture database</a>
 <ul>
 <li class="chapter" data-level="2.0.1" data-path="capture-database.html"><a href="capture-database.html#processing-time"><i class="fa fa-check"></i><b>2.0.1</b> Processing time</a></li>
-<li class="chapter" data-level="2.0.2" data-path="capture-database.html"><a href="capture-database.html#morphometrics"><i class="fa fa-check"></i><b>2.0.2</b> Morphometrics</a></li>
+<li class="chapter" data-level="2.0.2" data-path="capture-database.html"><a href="capture-database.html#crop-size"><i class="fa fa-check"></i><b>2.0.2</b> Crop size</a></li>
+<li class="chapter" data-level="2.0.3" data-path="capture-database.html"><a href="capture-database.html#morphometrics"><i class="fa fa-check"></i><b>2.0.3</b> Morphometrics</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="trap-deployment-database.html"><a href="trap-deployment-database.html"><i class="fa fa-check"></i><b>3</b> Trap deployment database</a></li>
 <li class="chapter" data-level="4" data-path="biological-samples-database.html"><a href="biological-samples-database.html"><i class="fa fa-check"></i><b>4</b> Biological samples database</a></li>
@@ -109,12 +110,10 @@
 </ul></li>
 <li class="chapter" data-level="6" data-path="laboratory-analyses.html"><a href="laboratory-analyses.html"><i class="fa fa-check"></i><b>6</b> Laboratory analyses</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="sex.html"><a href="sex.html"><i class="fa fa-check"></i><b>6.1</b> Sex</a>
-<ul>
-<li class="chapter" data-level="6.1.1" data-path="sex.html"><a href="sex.html#blood-cell-counts"><i class="fa fa-check"></i><b>6.1.1</b> Blood cell counts</a></li>
-<li class="chapter" data-level="6.1.2" data-path="sex.html"><a href="sex.html#results"><i class="fa fa-check"></i><b>6.1.2</b> Results</a></li>
+<li class="chapter" data-level="6.0.1" data-path="laboratory-analyses.html"><a href="laboratory-analyses.html#sex"><i class="fa fa-check"></i><b>6.0.1</b> Sex</a></li>
+<li class="chapter" data-level="6.0.2" data-path="laboratory-analyses.html"><a href="laboratory-analyses.html#blood-cell-counts"><i class="fa fa-check"></i><b>6.0.2</b> Blood cell counts</a></li>
 </ul></li>
-</ul></li>
+<li class="chapter" data-level="7" data-path="cluster-visits.html"><a href="cluster-visits.html"><i class="fa fa-check"></i><b>7</b> Cluster visits</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/ChrisBeirne/test_report/" target="blank">Osa Conservation: Movement data audit</a></li>
 
@@ -145,6 +144,7 @@
 <div id="database-changes-last-7-days" class="section level3 hasAnchor" number="1.0.1">
 <h3><span class="header-section-number">1.0.1</span> Database changes (last 7 days)<a href="index.html#database-changes-last-7-days" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The following table shows total number of observations in each database (left) and the new records from the last 7 days (right). The green numbers show where records have been added.</p>
+<p><em>Note</em> the changes are from when the data were collected, not when they were entered in Google Drive. If they were entered a long time after the collection date they may not be shown here.</p>
 <table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -309,9 +309,9 @@ cluster_observations_database
 </tbody>
 </table>
 </div>
-<div id="database-linkage-check" class="section level3 hasAnchor" number="1.0.2">
-<h3><span class="header-section-number">1.0.2</span> Database linkage check<a href="index.html#database-linkage-check" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>There are several important checks to ensure our data integrity.</p>
+<div id="database-linkage-checks" class="section level3 hasAnchor" number="1.0.2">
+<h3><span class="header-section-number">1.0.2</span> Database linkage checks<a href="index.html#database-linkage-checks" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>There are several important checks to ensure our data integrity - each data entry sheet links to others (e.g. capture data to biological samples).</p>
 <p><strong>Do all vulture captures have corresponding trap deployment data?</strong></p>
 <table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
@@ -540,6 +540,7 @@ PLAYA01
 </tr>
 </tbody>
 </table>
+<p> </p>
 <p><strong>Do all captures with biological samples have data in the <code>biological_samples</code> database?</strong></p>
 <table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
@@ -647,7 +648,8 @@ NP1011
 </tr>
 </tbody>
 </table>
-<p><strong>Do any biological sample have duplicated codes?</strong></p>
+<p> </p>
+<p><strong>Do any biological samples have duplicated codes?</strong></p>
 <table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -670,56 +672,9 @@ yes
 </tr>
 </tbody>
 </table>
-<p>If there are any present, the samples with duplicated <code>sample_codes</code> are as follows:</p>
-<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-country
-</th>
-<th style="text-align:left;">
-capture_date
-</th>
-<th style="text-align:left;">
-code_sp
-</th>
-<th style="text-align:left;">
-pit_tag_id
-</th>
-<th style="text-align:left;">
-tissue
-</th>
-<th style="text-align:left;">
-sample_code
-</th>
-<th style="text-align:left;">
-storage_box
-</th>
-<th style="text-align:left;">
-storage_grid
-</th>
-<th style="text-align:left;">
-volume
-</th>
-<th style="text-align:left;">
-volume_units
-</th>
-<th style="text-align:left;">
-notes
-</th>
-<th style="text-align:right;">
-amount of samples
-</th>
-<th style="text-align:left;">
-NEW
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-</tr>
-</tbody>
-</table>
+<p>If there are any present, the samples with duplicated <code>sample_codes</code> are shown below:</p>
+<pre><code>## [1] &quot;No samples duplicated&quot;</code></pre>
+<p> </p>
 <p><strong>Do all vulture captures where a device was deployed have data in <code>device_deployment_database</code>?</strong></p>
 <table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
@@ -743,6 +698,7 @@ no
 </tr>
 </tbody>
 </table>
+<p> </p>
 <p><strong>Do all vultures with pit-tags have an entry in the <code>vulture_pit_tag</code> database?</strong></p>
 <table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
@@ -766,6 +722,41 @@ no
 </tr>
 </tbody>
 </table>
+<p> </p>
+<p><strong>Are all vultures in the <code>device_deployment_database</code> represented in Movebank?</strong></p>
+<p>And if any are not, what are their names?</p>
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Var1
+</th>
+<th style="text-align:right;">
+Freq
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:right;">
+34
+</td>
+</tr>
+</tbody>
+</table>
+<pre><code>## [1] &quot;Wenceslas&quot;</code></pre>
+<p> </p>
 </div>
 <div id="recaptures" class="section level3 hasAnchor" number="1.0.3">
 <h3><span class="header-section-number">1.0.3</span> Recaptures<a href="index.html#recaptures" class="anchor-section" aria-label="Anchor link to header"></a></h3>

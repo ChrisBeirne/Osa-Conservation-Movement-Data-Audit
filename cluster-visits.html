@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Part 3 Trap deployment database | Osa Conservation: Movement data audit</title>
-  <meta name="description" content="Part 3 Trap deployment database | Osa Conservation: Movement data audit" />
+  <title>Part 7 Cluster visits | Osa Conservation: Movement data audit</title>
+  <meta name="description" content="Part 7 Cluster visits | Osa Conservation: Movement data audit" />
   <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Part 3 Trap deployment database | Osa Conservation: Movement data audit" />
+  <meta property="og:title" content="Part 7 Cluster visits | Osa Conservation: Movement data audit" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Part 3 Trap deployment database | Osa Conservation: Movement data audit" />
+  <meta name="twitter:title" content="Part 7 Cluster visits | Osa Conservation: Movement data audit" />
   
   
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="capture-database.html"/>
-<link rel="next" href="biological-samples-database.html"/>
+<link rel="prev" href="laboratory-analyses.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -134,103 +134,183 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="trap-deployment-database" class="section level1 hasAnchor" number="3">
-<h1><span class="header-section-number">Part 3</span> Trap deployment database<a href="trap-deployment-database.html#trap-deployment-database" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>To date we have deployed vulture traps in 6 different locations.</p>
-<p>The trapping locations are as follows:</p>
+<div id="cluster-visits" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">Part 7</span> Cluster visits<a href="cluster-visits.html#cluster-visits" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>To date we have visited `r nrow(clus_db)’ cluster sites.</p>
+<p>The visits dates are as follows, each point represents a visit:</p>
+<pre><code>## tibble [16 × 28] (S3: tbl_df/tbl/data.frame)
+##  $ cluster_date        : chr [1:16] &quot;NA&quot; &quot;NA&quot; &quot;NA&quot; &quot;NA&quot; ...
+##  $ country             : chr [1:16] &quot;CR&quot; &quot;CR&quot; &quot;CR&quot; &quot;CR&quot; ...
+##  $ cluster_code        : chr [1:16] &quot;NA&quot; &quot;NA&quot; &quot;NA&quot; &quot;NA&quot; ...
+##  $ cluster_longitude   : num [1:16] -83.3 -83.3 -83.4 -83.3 -83.4 ...
+##  $ cluster_latitude    : num [1:16] 8.41 8.41 8.42 8.49 8.4 ...
+##  $ bird_id             : chr [1:16] &quot;Forsyth&quot; &quot;UID&quot; &quot;UID&quot; &quot;UID&quot; ...
+##  $ visit_date          : POSIXct[1:16], format: &quot;2022-03-03&quot; &quot;2022-04-17&quot; ...
+##  $ cluster_observer    : chr [1:16] &quot;EF&quot; &quot;MT&quot; &quot;MT&quot; &quot;MT&quot; ...
+##  $ visit_time          : chr [1:16] &quot;0.5173611111111112&quot; &quot;0.4597222222222222&quot; &quot;0.4479166666666667&quot; &quot;0.4375&quot; ...
+##  $ carcass_id          : chr [1:16] &quot;snake&quot; &quot;NA&quot; &quot;NA&quot; &quot;cow_calf&quot; ...
+##  $ carcass_longitude   : chr [1:16] NA NA NA NA ...
+##  $ cracass_latitude    : chr [1:16] NA NA NA NA ...
+##  $ habitat_type        : chr [1:16] &quot;road&quot; &quot;NA&quot; &quot;NA&quot; &quot;finca&quot; ...
+##  $ focal_bird_observed : chr [1:16] &quot;yes&quot; &quot;no&quot; &quot;no&quot; &quot;no&quot; ...
+##  $ focal_bird_behavior : chr [1:16] &quot;feeding&quot; &quot;NA&quot; &quot;NA&quot; &quot;feeding&quot; ...
+##  $ behaviour_start_time: chr [1:16] &quot;NA&quot; &quot;NA&quot; &quot;NA&quot; &quot;NA&quot; ...
+##  $ behaviour_end_time  : chr [1:16] &quot;NA&quot; &quot;NA&quot; &quot;NA&quot; &quot;NA&quot; ...
+##  $ other_kv_observed   : num [1:16] 1 0 0 0 0 0 0 0 0 0 ...
+##  $ bv_observed         : chr [1:16] &quot;0.0&quot; &quot;0.0&quot; &quot;0.0&quot; &quot;1.0&quot; ...
+##  $ tv_observed         : num [1:16] 0 1 0 0 0 0 0 0 0 0 ...
+##  $ nest_position       : chr [1:16] &quot;NA&quot; &quot;NA&quot; &quot;NA&quot; &quot;NA&quot; ...
+##  $ nest_waste          : chr [1:16] &quot;NA&quot; &quot;NA&quot; &quot;NA&quot; &quot;NA&quot; ...
+##  $ nest_description    : chr [1:16] &quot;NA&quot; &quot;NA&quot; &quot;NA&quot; &quot;NA&quot; ...
+##  $ images_taken        : chr [1:16] &quot;yes&quot; &quot;no&quot; &quot;no&quot; &quot;yes&quot; ...
+##  $ image_code          : chr [1:16] &quot;001&quot; &quot;NA&quot; &quot;NA&quot; &quot;002 + 002_1&quot; ...
+##  $ image_link          : chr [1:16] &quot;NA&quot; &quot;NA&quot; &quot;NA&quot; &quot;NA&quot; ...
+##  $ comments            : chr [1:16] &quot;This was &#39;Forsyth&#39;, just released and one without tag&quot; &quot;Arrived but no sight of KV, however, there were TV flying over. I waited but nothing happened&quot; &quot;Arrived but couldn&#39;t see KV, no birds flying over but small perch where it could have been resting.&quot; &quot;Arrived and KV and BV in tree. Carrion on ground.&quot; ...
+##  $ NEW                 : logi [1:16] FALSE FALSE FALSE FALSE FALSE FALSE ...</code></pre>
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-1f9eb7453a269f6a6426" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-1f9eb7453a269f6a6426">{"x":{"visdat":{"19123f6025d":["function () ","plotlyVisDat"]},"cur_data":"19123f6025d","attrs":{"19123f6025d":{"x":["2022-03-03 00:00:00.000000","2022-04-17 00:00:00.000000","2022-04-27 00:00:00.000000","2022-04-28 00:00:00.000000","2022-04-28 00:00:00.000000","2022-05-22 00:00:00.000000","2022-05-22 00:00:00.000000","2022-05-25 00:00:00.000000","2022-05-30 00:00:00.000000","2023-02-16 00:00:00.000000","2023-02-16 00:00:00.000000","2023-02-22 00:00:00.000000","2023-02-09 00:00:00.000000","2023-02-26 00:00:00.000000","2023-03-15 00:00:00.000000","2023-03-28 00:00:00.000000"],"y":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"hoverinfo":"text","text":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20]}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Cluster visits","xaxis":{"domain":[0,1],"automargin":true,"title":"Dates"},"yaxis":{"domain":[0,1],"automargin":true,"title":"","ticktext":["Costa Rica","Peru"],"tickvals":[1,2]},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":["2022-03-03 00:00:00.000000","2022-04-17 00:00:00.000000","2022-04-27 00:00:00.000000","2022-04-28 00:00:00.000000","2022-04-28 00:00:00.000000","2022-05-22 00:00:00.000000","2022-05-22 00:00:00.000000","2022-05-25 00:00:00.000000","2022-05-30 00:00:00.000000","2023-02-16 00:00:00.000000","2023-02-16 00:00:00.000000","2023-02-22 00:00:00.000000","2023-02-09 00:00:00.000000","2023-02-26 00:00:00.000000","2023-03-15 00:00:00.000000","2023-03-28 00:00:00.000000"],"y":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"hoverinfo":["text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text"],"text":["2022-03-03<br>Forsyth","2022-04-17<br>UID","2022-04-27<br>UID","2022-04-28<br>UID","2022-04-28<br>UID","2022-05-22<br>Attenborough","2022-05-22<br>Carson","2022-05-25<br>UID","2022-05-30<br>Attenborough","2023-02-16<br>Attenborough","2023-02-16<br>Attenborough","2023-02-22<br>Wilson","2023-02-09<br>Forsyth","2023-02-26<br>Santa, Attenborough, Messi, Jatayu","2023-03-15<br>Frosty","2023-03-28<br>Attenborough, Elvis"],"type":"scatter","mode":"markers","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p>Of the clusters visited so far, the type of carrion found was as follows (note NA’s = no carcass).</p>
 <table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
-location_code
+Var1
 </th>
 <th style="text-align:right;">
-latitude
-</th>
-<th style="text-align:right;">
-longitude
+Freq
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
-EBLA01
+cow
 </td>
 <td style="text-align:right;">
--12.580640
-</td>
-<td style="text-align:right;">
--70.09274
+3
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-EBLA02
+cow_calf
 </td>
 <td style="text-align:right;">
--12.568190
-</td>
-<td style="text-align:right;">
--70.07907
+3
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-EBLA03
+horse
 </td>
 <td style="text-align:right;">
--12.555810
-</td>
-<td style="text-align:right;">
--70.08101
+1
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-AIRS02
-</td>
-<td style="text-align:right;">
-8.402595
-</td>
-<td style="text-align:right;">
--83.35852
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-CERR02
-</td>
-<td style="text-align:right;">
-8.416142
-</td>
-<td style="text-align:right;">
--83.31793
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-LOMAS01
-</td>
-<td style="text-align:right;">
 NA
 </td>
 <td style="text-align:right;">
-NA
+8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+snake
+</td>
+<td style="text-align:right;">
+1
 </td>
 </tr>
 </tbody>
 </table>
-<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-93b6c70100dfcf54be14" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-93b6c70100dfcf54be14">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["Stamen.TonerLite",null,"Simple",{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addProviderTiles","args":["Esri.WorldImagery",null,"Satellite",{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addProviderTiles","args":["OpenStreetMap.Mapnik",null,"OS",{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addCircleMarkers","args":[[-12.58064,-12.56819,-12.55581,8.40259456280785,8.416142,null],[-70.09274,-70.079068,-70.081005,-83.3585232465699,-83.317929,null],10,null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2},null,null,["EBLA01","EBLA02","EBLA03","AIRS02","CERR02","LOMAS01"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addScaleBar","args":[{"maxWidth":100,"metric":true,"imperial":false,"updateWhenIdle":true,"position":"topleft"}]},{"method":"addLayersControl","args":[["OS","Simple","Satellite"],[],{"collapsed":false,"autoZIndex":true,"position":"topright"}]}],"limits":{"lat":[-12.58064,8.416142],"lng":[-83.3585232465699,-70.079068]}},"evals":[],"jsHooks":[]}</script>
+<p>On how many occasions have we observed a bird with a GPS device feeding?</p>
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Var1
+</th>
+<th style="text-align:right;">
+Freq
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+no
+</td>
+<td style="text-align:right;">
+11
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+yes
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+</tbody>
+</table>
+<p>Who were the birds observed?</p>
+<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Var1
+</th>
+<th style="text-align:right;">
+Freq
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Attenborough
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Carson
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Forsyth
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+</tbody>
+</table>
+
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="capture-database.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="biological-samples-database.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="laboratory-analyses.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
