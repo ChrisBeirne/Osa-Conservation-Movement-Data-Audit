@@ -195,6 +195,8 @@ start_t <- t-as.difftime(7,units='days')
 
 The following table shows total number of observations in each database (left) and the new records from the last 7 days (right). The green numbers show where records have been added.
 
+*Note* the changes are from when the data were collected, not when they were entered in Google Drive. If they were entered a long time after the collection date they may not be shown here. 
+
 ```{r, include=F}
 cap_db$NEW   <- difftime(cap_db$date,t)>-7
 trap_db$NEW  <- difftime(trap_db$date,t)>-7
@@ -275,9 +277,9 @@ kbl(table_dat, escape = F) %>%
   column_spec (c(1,3,5,7),border_left = F, border_right = T) 
 ```
 
-### Database linkage check
+### Database linkage checks
 
-There are several important checks to ensure our data integrity.
+There are several important checks to ensure our data integrity - each data entry sheet links to others (e.g. capture data to biological samples).
 
 **Do all vulture captures have corresponding trap deployment data?**
 
@@ -303,6 +305,7 @@ kbl(tmp3, escape=F)  %>%
   kable_classic(full_width = F)
 ```
 
+&nbsp;
 
 **Do all captures with biological samples have data in the `biological_samples` database?**
 
@@ -330,8 +333,9 @@ The captures whose biological samples are not currently in the database are:
 kbl(tmp[,c("local_identifier", "pit_tag_id", "date")])  %>%
   kable_classic(full_width = F)
 ```
+&nbsp;
 
-**Do any biological sample have duplicated codes?**
+**Do any biological samples have duplicated codes?**
 
 ```{r}
 tmp3 <- bio_db[duplicated(bio_db$sample_code)==T,]
@@ -341,18 +345,20 @@ tmp2 <- data.frame("no" = nrow(tmp2)-nrow(tmp3), "yes"=nrow(tmp3))
 kbl(tmp2)  %>%
   kable_classic(full_width = F)
 
-```
-
-If there are any present, the samples with duplicated `sample_codes` are as follows:
-
-```{r}
 tmp2 <- bio_db[bio_db$sample_code %in% tmp3$sample_code, ]
 tmp2 <- tmp2[order(tmp2$sample_code, tmp2$pit_tag_id),]
 
+```
+
+If there are any present, the samples with duplicated `sample_codes` are shown below:
+
+```{r}
+if(nrow(tmp2)>0){
 kbl(tmp2[,colnames(tmp2)!="specific_id"])  %>%
   kable_classic(full_width = F)
-
+}else{print("No samples duplicated")}
 ```
+&nbsp;
 
 **Do all vulture captures where a device was deployed have data in `device_deployment_database`?**
 
@@ -367,6 +373,7 @@ kbl(tmp3)  %>%
   kable_classic(full_width = F)
 
 ```
+&nbsp;
 
 **Do all vultures with pit-tags have an entry in the `vulture_pit_tag` database?**
 
@@ -381,6 +388,24 @@ tmp3 <- data.frame("yes" = nrow(tmp[tmp$pit_tag_id %in% tmp2$pit_tag_id,]),
 kbl(tmp3)  %>%
   kable_classic(full_width = F)
 ```
+&nbsp;
+
+**Are all vultures in the `device_deployment_database` represented in Movebank?**
+
+And if any are not, what are their names?
+
+```{r}
+tmp <- unique(track_db$local_identifier) 
+tmp <- tmp[is.na(tmp)==F] 
+tmp2 <- table(tmp %in% animals$local_identifier)
+
+kbl(tmp2)  %>%
+  kable_classic(full_width = F)
+
+print(tmp[!(tmp %in% animals$local_identifier)])
+
+```
+&nbsp;
 
 ### Recaptures
 
@@ -404,6 +429,27 @@ Are these expected?
 # Capture database
 
 To date we have captured vultures `r nrow(cap_db)` times, deployed `r length(unique(cap_db$transmitor_identifier))` tracking devices and `r length(unique(cap_db$pit_tag_id[nchar(cap_db$pit_tag_id)>10]))` pit tags. 
+
+These captures occurred on the following dates:
+
+```{r}
+str(cap_db)
+tmp <- cap_db
+tmp$country <- as.factor(tmp$country)
+tmp$location <- as.numeric(tmp$country)
+tmp$local_identifier[tmp$local_identifier=="NA"] <- tmp$pit_tag_id[tmp$local_identifier=="NA"] 
+plot_ly(data = tmp, x = tmp$date, y=tmp$location, color = ~species,
+               hoverinfo = 'text',
+               text = ~paste(date,local_identifier,sep = "<br>")) %>% 
+              layout(title = 'Vulture processing time', 
+                      xaxis = list(title = 'Vulture capture date'), 
+                      yaxis = list(title = "",
+                                   ticktext=c("Costa Rica", "Peru"),
+                                   tickvals=list(1,2)), 
+                      legend = list(title=list(text='<b> Species </b>')))
+
+```
+
 
 The following section provides a summary of the data taken during animal captures
 
@@ -438,6 +484,17 @@ fig <- plot_ly(data = cap_db, x = 1:nrow(cap_db), y = ~total_time_processing, co
 
 
 fig
+
+```
+
+### Crop size
+
+```{r}
+cap_db$crop <- as.numeric(cap_db$crop)
+tmp <- as.data.frame.matrix(table(cap_db$species,cap_db$crop))
+
+kbl(tmp) %>%
+  kable_classic(full_width = F) %>%   add_header_above(header = c("Species" = 1, "crop" = 3))
 
 ```
 
@@ -818,9 +875,9 @@ kbl(tmp) %>%
 
 ```
 
-## Sex
+### Sex
 
-So far we have sexed the following vultures:
+So far we have sexed `r nrow(lab_full[lab_full$assay=="sex",])` vultures:
 
 ```{r}
 tmp <- lab_full[lab_full$assay=="sex",]
@@ -844,8 +901,6 @@ tmp2 <- tmp %>% group_by(code_sp) %>% summarise(individuals=n_distinct(pit_tag_i
 kbl(tmp2) %>%
   kable_classic(full_width = F) 
 ```
-
-### Results
 
 Differentials first:
 
@@ -899,8 +954,49 @@ fig1 <- plot_ly(y =tmp2$result,x=tmp2$assay_target, color=tmp2$code_sp,
 fig1
 ```
 
+# Cluster visits
+
+To date we have visited `r nrow(clus_db)' cluster sites.
+
+The visits dates are as follows, each point represents a visit:
+
+```{r}
+str(clus_db)
+
+clus_db$country <- as.factor(clus_db$country)
+clus_db$location <- as.numeric(clus_db$country)
+
+plot_ly(data = clus_db, x = clus_db$visit_date, y=clus_db$location,
+               hoverinfo = 'text',
+               text = ~paste(visit_date,bird_id,sep = "<br>")) %>% 
+              layout(title = 'Cluster visits', 
+                      xaxis = list(title = 'Dates'), 
+                      yaxis = list(title = "",
+                                   ticktext=c("Costa Rica", "Peru"),
+                                   tickvals=list(1,2)))
 
 
 
+```
 
+Of the clusters visited so far, the type of carrion found was as follows (note NA's = no carcass).
 
+```{r}
+kbl(table(clus_db$carcass_id))%>%
+  kable_classic(full_width = F) 
+```
+
+On how many occasions have we observed a bird with a GPS device feeding?
+
+```{r}
+kbl(table(clus_db$focal_bird_observed))%>%
+  kable_classic(full_width = F) 
+
+```
+
+Who were the birds observed?
+
+```{r}
+kbl(table(clus_db$bird_id[clus_db$focal_bird_observed=="yes"]))%>%
+  kable_classic(full_width = F) 
+```
