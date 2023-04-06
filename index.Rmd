@@ -433,7 +433,7 @@ To date we have captured vultures `r nrow(cap_db)` times, deployed `r length(uni
 These captures occurred on the following dates:
 
 ```{r}
-str(cap_db)
+
 tmp <- cap_db
 tmp$country <- as.factor(tmp$country)
 tmp$location <- as.numeric(tmp$country)
@@ -738,6 +738,7 @@ kbl(tmp)  %>%
 ```{r}
 
 m <- leaflet() %>%
+      fitBounds(-70,-12.8,-84,8.8) %>% 
       # Add a satellite image layer
       addProviderTiles(providers$Stamen.TonerLite, group="Simple") %>%
       addProviderTiles(providers$Esri.WorldImagery, group="Satellite") %>%
@@ -918,7 +919,7 @@ tmp2 <- tmp2[tmp2$units=="%",]
 tmp2$local_identifier[is.na(tmp2$local_identifier)==T] <- tmp2$pit_tag_id[is.na(tmp2$local_identifier)==T]
 
 params <- tmp2$assay_target
-tmp2$units
+
 fig <- plot_ly(y =tmp2$result,x=tmp2$assay_target, color=tmp2$code_sp, 
                type = "box", boxpoints = "all", jitter = 0.1,
         pointpos = 0, hovertext=paste(tmp2$local_identifier, tmp2$pit_tag_id)) %>% 
@@ -961,14 +962,12 @@ To date we have visited `r nrow(clus_db)' cluster sites.
 The visits dates are as follows, each point represents a visit:
 
 ```{r}
-str(clus_db)
-
 clus_db$country <- as.factor(clus_db$country)
 clus_db$location <- as.numeric(clus_db$country)
 
 plot_ly(data = clus_db, x = clus_db$visit_date, y=clus_db$location,
                hoverinfo = 'text',
-               text = ~paste(visit_date,bird_id,sep = "<br>")) %>% 
+               text = ~paste(visit_date,bird_id,sep = "<br>"), height=200) %>% 
               layout(title = 'Cluster visits', 
                       xaxis = list(title = 'Dates'), 
                       yaxis = list(title = "",
