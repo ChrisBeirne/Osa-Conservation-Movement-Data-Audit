@@ -441,7 +441,7 @@ tmp$local_identifier[tmp$local_identifier=="NA"] <- tmp$pit_tag_id[tmp$local_ide
 plot_ly(data = tmp, x = tmp$date, y=tmp$location, color = ~species,
                hoverinfo = 'text',height=200,
                text = ~paste(date,local_identifier,sep = "<br>")) %>% 
-              layout(title = 'Vulture processing time', 
+              layout(title = '', 
                       xaxis = list(title = 'Vulture capture date'), 
                       yaxis = list(title = "",
                                    ticktext=c("Costa Rica", "Peru"),
@@ -922,7 +922,7 @@ params <- tmp2$assay_target
 
 fig <- plot_ly(y =tmp2$result,x=tmp2$assay_target, color=tmp2$code_sp, 
                type = "box", boxpoints = "all", jitter = 0.1,
-        pointpos = 0, hovertext=paste(tmp2$local_identifier, tmp2$pit_tag_id)) %>% 
+        pointpos = 0, hovertext=paste(tmp2$local_identifier)) %>% 
   layout(yaxis = list(title = '"% composition"'), boxmode="group")
 
 fig

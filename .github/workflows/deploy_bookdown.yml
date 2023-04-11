@@ -2,7 +2,7 @@ name: scheduleRenderbook
 on:     
   push:
   schedule:     
-     - cron: "* 5 * * *"  
+     - cron: "0 5 * * *"  
 
 
 
