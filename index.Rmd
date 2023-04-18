@@ -474,7 +474,7 @@ kbl(tmp)  %>%
 
 fig <- plot_ly(data = cap_db, x = 1:nrow(cap_db), y = ~total_time_processing, color = ~species,
                hoverinfo = 'text',
-               text = ~paste(date,pit_tag_id,sep = "<br>")) %>% 
+               text = ~paste(date,pit_tag_id,total_time_processing,sep = "<br>")) %>% 
               layout(title = 'Vulture processing time', 
                       xaxis = list(title = 'Vulture capture order'), 
                       yaxis = list(title = 'Processing time (minutes)'), 
@@ -512,7 +512,7 @@ Of the weights recorded the distributions are as follows:
 f1 <- plot_ly(data=cap_db, y = ~individual_weight, color = ~species, 
                type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
                hoverinfo = 'text',
-               text = ~paste(date,pit_tag_id,sep = "<br>")) %>% 
+               text = ~paste(date,pit_tag_id,individual_weight,sep = "<br>")) %>% 
               layout(title = 'Individual weight (g)', 
                       xaxis = list(title = 'Species'), 
                       yaxis = list(title = 'Weight (g)'))
@@ -531,7 +531,7 @@ Other:
 f1 <- plot_ly(data=cap_db, y = ~head_length, color = ~species, 
                type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
                hoverinfo = 'text',
-               text = ~paste(date,pit_tag_id,sep = "<br>")) %>% 
+               text = ~paste(date,pit_tag_id,head_length,sep = "<br>")) %>% 
               layout( xaxis = list(title = 'Species'), 
                       yaxis = list(title = 'Head length (mm)'),
                      showlegend=F)
@@ -539,7 +539,7 @@ f1 <- plot_ly(data=cap_db, y = ~head_length, color = ~species,
 f2 <- plot_ly(data=cap_db, y = ~head_width, color = ~species, 
                type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
                hoverinfo = 'text',
-               text = ~paste(date,pit_tag_id,sep = "<br>")) %>% 
+               text = ~paste(date,pit_tag_id,head_width,sep = "<br>")) %>% 
               layout(xaxis = list(title = 'Species'), 
                       yaxis = list(title = 'Head length (mm)'),
                      showlegend=F)
@@ -565,7 +565,7 @@ fig
 f1 <- plot_ly(data=cap_db, y = ~bill_length, color = ~species, 
                type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
                hoverinfo = 'text',
-               text = ~paste(date,pit_tag_id,sep = "<br>")) %>% 
+               text = ~paste(date,pit_tag_id,bill_length,sep = "<br>")) %>% 
               layout( xaxis = list(title = 'Species'), 
                       yaxis = list(title = 'Head length (mm)'),
                      showlegend=F)
@@ -573,7 +573,7 @@ f1 <- plot_ly(data=cap_db, y = ~bill_length, color = ~species,
 f2 <- plot_ly(data=cap_db, y = ~bill_width, color = ~species, 
                type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
                hoverinfo = 'text',
-               text = ~paste(date,pit_tag_id,sep = "<br>")) %>% 
+               text = ~paste(date,pit_tag_id,bill_width,sep = "<br>")) %>% 
               layout(xaxis = list(title = 'Species'), 
                       yaxis = list(title = 'Head length (mm)'),
                      showlegend=F)
@@ -581,7 +581,7 @@ f2 <- plot_ly(data=cap_db, y = ~bill_width, color = ~species,
 f3 <- plot_ly(data=cap_db, y = ~bill_depth, color = ~species, 
                type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
                hoverinfo = 'text',
-               text = ~paste(date,pit_tag_id,sep = "<br>")) %>% 
+               text = ~paste(date,pit_tag_id,bill_depth,sep = "<br>")) %>% 
               layout(xaxis = list(title = 'Species'), 
                       yaxis = list(title = 'Head length (mm)'),
                      showlegend=F)
@@ -616,7 +616,7 @@ fig
 f1 <- plot_ly(data=cap_db, y = ~wing_chord, color = ~species, 
                type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
                hoverinfo = 'text',
-               text = ~paste(date,pit_tag_id,sep = "<br>")) %>% 
+               text = ~paste(date,pit_tag_id,wing_chord,sep = "<br>")) %>% 
               layout( xaxis = list(title = 'Species'), 
                       yaxis = list(title = ''),
                      showlegend=F)
@@ -624,7 +624,7 @@ f1 <- plot_ly(data=cap_db, y = ~wing_chord, color = ~species,
 f2 <- plot_ly(data=cap_db, y = ~wing_flat, color = ~species, 
                type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
                hoverinfo = 'text',
-               text = ~paste(date,pit_tag_id,sep = "<br>")) %>% 
+               text = ~paste(date,pit_tag_id,wing_flat,sep = "<br>")) %>% 
               layout(xaxis = list(title = 'Species'), 
                       yaxis = list(title = ''),
                      showlegend=F)
@@ -632,7 +632,7 @@ f2 <- plot_ly(data=cap_db, y = ~wing_flat, color = ~species,
 f3 <- plot_ly(data=cap_db, y = ~wing_span, color = ~species, 
                type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
                hoverinfo = 'text',
-               text = ~paste(date,pit_tag_id,sep = "<br>")) %>% 
+               text = ~paste(date,pit_tag_id,wing_span,sep = "<br>")) %>% 
               layout(xaxis = list(title = 'Species'), 
                       yaxis = list(title = ''),
                      showlegend=F)
@@ -640,7 +640,7 @@ f3 <- plot_ly(data=cap_db, y = ~wing_span, color = ~species,
 f4 <- plot_ly(data=cap_db, y = ~tail_length, color = ~species, 
                type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
                hoverinfo = 'text',
-               text = ~paste(date,pit_tag_id,sep = "<br>")) %>% 
+               text = ~paste(date,pit_tag_id,tail_length,sep = "<br>")) %>% 
               layout(xaxis = list(title = 'Species'), 
                       yaxis = list(title = ''),
                      showlegend=F)
@@ -678,12 +678,12 @@ fig
 f1 <- plot_ly(data=cap_db, y = ~tarsus_length, color = ~species, 
                type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
                hoverinfo = 'text',
-               text = ~paste(date,pit_tag_id,sep = "<br>")) %>% 
+               text = ~paste(date,pit_tag_id,tarsus_length,sep = "<br>")) %>% 
               layout( xaxis = list(title = 'Species'), 
                       yaxis = list(title = 'Head length (mm)'),
                      showlegend=F)
 
-f2 <- plot_ly(data=cap_db, y = ~body_length, color = ~species, 
+f2 <- plot_ly(data=cap_db, y = ~body_length,body_length, color = ~species, 
                type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
                hoverinfo = 'text',
                text = ~paste(date,pit_tag_id,sep = "<br>")) %>% 
@@ -694,7 +694,7 @@ f2 <- plot_ly(data=cap_db, y = ~body_length, color = ~species,
 f3 <- plot_ly(data=cap_db, y = ~MTO_length, color = ~species, 
                type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
                hoverinfo = 'text',
-               text = ~paste(date,pit_tag_id,sep = "<br>")) %>% 
+               text = ~paste(date,pit_tag_id,MTO_length,sep = "<br>")) %>% 
               layout(xaxis = list(title = 'Species'), 
                       yaxis = list(title = 'Head length (mm)'),
                      showlegend=F)
