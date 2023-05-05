@@ -35,6 +35,7 @@ library(readxl)
 library(geosphere)
 library(foreach)
 library(maptools)
+library(MetBrewer)
 
 # For when the trapping effort file is sorted
 # googledrive::drive_auth(path = Sys.getenv("GOOGLE_AUTHENTICATION_CREDENTIALS"))
@@ -182,7 +183,7 @@ pit_db <- pit_db[,1:9]
 
 #cluster observations
 drive_download(file = as_id("1KvZ2jEfv97eAJLatlw-rEic-kPitFPiUvjXcrrX7jiQ"), path = paste0("data/clus_database"), overwrite = TRUE)
-clus_db <- read_excel("data/clus_database.xlsx", sheet="Data sheet")
+clus_db <- read_excel("data/clus_database.xlsx", sheet="Database")
 
 
 # Get current time and last 7 days
@@ -956,7 +957,7 @@ fig1
 
 # Cluster visits
 
-To date we have visited `r nrow(clus_db)' cluster sites.
+To date we have visited `r nrow(clus_db)' cluster sites/tracking locations.
 
 The visits dates are as follows, each point represents a visit:
 
@@ -966,7 +967,7 @@ clus_db$location <- as.numeric(clus_db$country)
 
 plot_ly(data = clus_db, x = clus_db$visit_date, y=clus_db$location,
                hoverinfo = 'text',
-               text = ~paste(visit_date,bird_id,sep = "<br>"), height=200) %>% 
+               text = ~paste(visit_date,animal_id,sep = "<br>"), height=200) %>% 
               layout(title = 'Cluster visits', 
                       xaxis = list(title = 'Dates'), 
                       yaxis = list(title = "",
@@ -974,12 +975,18 @@ plot_ly(data = clus_db, x = clus_db$visit_date, y=clus_db$location,
                                    tickvals=list(1,2)))
 
 
-
 ```
 
 Where are these clusters?
 
 ```{r}
+# Define a palette for the colourscheme
+col_pal <- "VanGogh2"
+clus_db$site_type<- as.factor(clus_db$site_type)
+col.cat <- as.character(met.brewer(col_pal,n=length(levels(clus_db$site_type))))
+
+clus_db$Cols <- col.cat[clus_db$site_type]
+
 m <- leaflet() %>%
       # Add a satellite image layer
       addProviderTiles(providers$Stamen.TonerLite, group="Simple") %>%
@@ -987,7 +994,15 @@ m <- leaflet() %>%
       addProviderTiles(providers$OpenStreetMap.Mapnik, group="OS") %>%     
       addCircleMarkers(lng=clus_db$cluster_longitude,
                          lat=clus_db$cluster_latitude, 
-                         popup=paste(clus_db$visit_date)) %>%
+                         popup=paste(clus_db$visit_date, clus_db$animal_id,
+                                     "<br>", clus_db$site_type),
+                         color=clus_db$Cols,
+                         fillColor = clus_db$Cols,
+                          opacity=0.8) %>%
+      addLegend("topright", colors = col.cat,  labels = levels(clus_db$site_type),
+      title = "Site type",
+      labFormat = labelFormat(prefix = "$"),
+      opacity = 1) %>%
       addScaleBar(position="topleft", 
                   options=scaleBarOptions(maxWidth = 100, metric = TRUE, imperial = FALSE, updateWhenIdle = TRUE)) %>%
       addLayersControl(
@@ -1005,17 +1020,17 @@ kbl(table(clus_db$carcass_id))%>%
   kable_classic(full_width = F) 
 ```
 
-On how many occasions have we observed a bird with a GPS device feeding?
+On how many occasions have we observed/detected a animal with a GPS device?
 
 ```{r}
-kbl(table(clus_db$focal_bird_observed))%>%
+kbl(table(clus_db$focal_animal_detected))%>%
   kable_classic(full_width = F) 
 
 ```
 
-Who were the birds observed?
+Who were the animals observed?
 
 ```{r}
-kbl(table(clus_db$bird_id[clus_db$focal_bird_observed=="yes"]))%>%
+kbl(table(clus_db$animal_id[clus_db$focal_animal_detected=="yes"]))%>%
   kable_classic(full_width = F) 
 ```

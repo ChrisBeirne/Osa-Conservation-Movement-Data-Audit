@@ -57,6 +57,8 @@ jobs:
         run: Rscript -e "install.packages('foreach')"
       - name: Install maptools
         run: Rscript -e "install.packages('maptools')"
+      - name: Install metbrewer
+        run: Rscript -e "install.packages('MetBrewer')"
       - name: Render Book
         env: 
           GOOGLE_AUTHENTICATION_CREDENTIALS: ${{ secrets.GOOGLE_AUTHENTICATION_CREDENTIALS }}
