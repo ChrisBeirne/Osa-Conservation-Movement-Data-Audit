@@ -78,7 +78,7 @@ animals$name[animals$name=="Robin Hood"] <- "Robin.Hood"
 # Sort date objects
 animals$timestamp_start <- ymd_hms(animals$timestamp_start)
 animals$timestamp_end <- ymd_hms(animals$timestamp_end)
-
+ 
 
 #drive_auth()
 ## Authenticate into googledrive service account ----
