@@ -955,6 +955,59 @@ fig1 <- plot_ly(y =tmp2$result,x=tmp2$assay_target, color=tmp2$code_sp,
 fig1
 ```
 
+### Summary tables
+
+```{r}
+tmp$units[tmp$units=="NA"] <- ""
+tmp$name <- paste0(tmp$assay_target, " (", tmp$units,")")
+
+res_sum <- tmp %>% group_by(code_sp, name) %>% summarise(mean=mean(result), sd=sd(result), min=min(result), max=max(result))
+res_sum <- data.frame(res_sum)
+
+colnames(res_sum)[2] <- "Test"
+# Sort the number of dp
+res_sum$mean <- round(res_sum$mean,2)
+res_sum$sd <- round(res_sum$sd,1)
+res_sum$min <- round(res_sum$min,2)
+res_sum$max <- round(res_sum$max,2)
+
+
+```
+
+King vulture (`r length(unique(tmp$sample_code[tmp$code_sp=="KV"]))` samples):
+
+```{r}
+kbl(res_sum[res_sum$code_sp=="KV",2:ncol(res_sum)], escape = F,row.names = FALSE) %>%
+  kable_classic(full_width = T) %>%
+  add_header_above(c(" " = 1, 
+                     "King vulture" =4))
+
+```
+
+
+Turkey vulture (`r length(unique(tmp$sample_code[tmp$code_sp=="TV"]))` samples):
+
+```{r}
+kbl(res_sum[res_sum$code_sp=="TV",2:ncol(res_sum)], escape = F,row.names = FALSE) %>%
+  kable_classic(full_width = T) %>%
+  add_header_above(c(" " = 1, 
+                     "Turkey vulture" =4))
+
+```
+
+
+Black vulture (`r length(unique(tmp$sample_code[tmp$code_sp=="BV"]))` samples):
+
+```{r}
+kbl(res_sum[res_sum$code_sp=="BV",2:ncol(res_sum)], escape = F,row.names = FALSE) %>%
+  kable_classic(full_width = T) %>%
+  add_header_above(c(" " = 1, 
+                     "Black vulture" =4))
+
+```
+
+
+
 # Cluster visits
 
 To date we have visited `r nrow(clus_db)' cluster sites/tracking locations.
