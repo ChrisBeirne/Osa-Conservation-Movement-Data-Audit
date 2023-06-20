@@ -13,4 +13,5 @@ do-all-the-current-vital-settings-match
 laboratory-analyses
 sex
 blood-cell-counts
+summary-tables
 cluster-visits
