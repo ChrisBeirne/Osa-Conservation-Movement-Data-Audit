@@ -777,7 +777,7 @@ kbl(tmp)  %>%
   kable_classic(full_width = F)
 
 ```
-
+ 
 Break down of the type of sample per species:
 
 ```{r}
