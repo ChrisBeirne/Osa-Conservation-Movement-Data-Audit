@@ -72,7 +72,6 @@ animals <- animals[animals$sensor_type_id==653 & is.na(animals$sensor_type_id)==
 # Clean up the name
 animals$animalName <- paste0(sub('\\_.*', '', animals$animalName), "_", sub('\\ .*', '', animals$taxon_canonical_name))
 animals$name <- sub('\\_.*', '', animals$animalName)
-animals$name[animals$name=="Robin Hood"] <- "Robin.Hood"
 
 
 # Sort date objects
@@ -141,7 +140,18 @@ table(unique_db$local_identifier)
 ## THIS MAY NOT BE THE RIGHT ONE ##
 
 drive_download(file = as_id("14hLi94W4WbDn6jdXahJMnxllOgLpZh-PpIBOWqt9jlc"), path = paste0("data/trap_database"), overwrite = TRUE)
-trap_db <- read_excel("data/trap_database.xlsx")
+trap_db1 <- read_excel("data/trap_database.xlsx")
+trap_db1 <- trap_db1[is.na(trap_db1$date)==F,]
+
+trap_db2 <- read_excel("data/trap_database.xlsx",sheet="Vulture_trap_deployments_Peru")
+trap_db2 <- trap_db2[is.na(trap_db2$date)==F,]
+
+# Delete when corrected
+trap_db1$date <- as.character(trap_db1$date)
+trap_db2$date <- as.character(trap_db2$date)
+
+trap_db <- rbind(trap_db1, trap_db2)
+remove(trap_db1, trap_db2)
 trap_db <- trap_db[trap_db$deployment_id!="_",]
 # Add a country code
 trap_db$country <- NA
@@ -285,6 +295,8 @@ There are several important checks to ensure our data integrity - each data entr
 **Do all vulture captures have corresponding trap deployment data?**
 
 ```{r}
+trap_db$date <- ymd(trap_db$date)
+
 tmp <- cap_db[cap_db$date %in% trap_db$date,]
 tmp2 <- cap_db[!(cap_db$date %in% trap_db$date),]
 
@@ -359,11 +371,13 @@ kbl(tmp2[,colnames(tmp2)!="specific_id"])  %>%
   kable_classic(full_width = F)
 }else{print("No samples duplicated")}
 ```
+
 &nbsp;
 
 **Do all vulture captures where a device was deployed have data in `device_deployment_database`?**
 
 ```{r}
+cap_db$transmitor_installation <- as.numeric(cap_db$transmitor_installation)
 tmp <- cap_db[cap_db$transmitor_installation==1 & is.na(cap_db$transmitor_installation)==F,]
 tmp2 <- track_db
 
@@ -770,6 +784,9 @@ bio_db$species[bio_db$code_sp=="BV"] <- "coragyps_atratus"
 bio_db$species[bio_db$code_sp=="KV"] <- "sarcoramphus_papa"
 bio_db$species[bio_db$code_sp=="LP"] <- "leopards_pardalis"
 bio_db$species[bio_db$code_sp=="TV"] <- "cathartes_aura"
+bio_db$species[bio_db$code_sp=="GYV"] <- "cathartes_melambrotus"
+bio_db$species[bio_db$code_sp=="TB"] <- "tapirus_bairdii"
+
 
 tmp <- bio_db %>% group_by(species) %>% summarise(individuals=n_distinct(pit_tag_id), samples=n())
 
@@ -1087,3 +1104,141 @@ Who were the animals observed?
 kbl(table(clus_db$animal_id[clus_db$focal_animal_detected=="yes"]))%>%
   kable_classic(full_width = F) 
 ```
+
+
+# Exclosure data
+
+```{r}
+# Import the exclosure data - it is stored in two locations:
+
+# 1. https://docs.google.com/spreadsheets/d/1i6Isj2vmtzdljYw6h2D29pdqLYxByFI_XsiB-Oy8lZE/edit?usp=sharing 
+
+drive_download(file = as_id("1i6Isj2vmtzdljYw6h2D29pdqLYxByFI_XsiB-Oy8lZE"), path = paste0("data/exc_database"), overwrite = TRUE)
+ex_check_db <- read_excel("data/exc_database.xlsx", sheet="Carcass_checks")
+
+# Cleaning 
+  # Remove NA's
+  ex_check_db <- ex_check_db[is.na(ex_check_db$country)==F,]
+
+  # Remove the trial data
+  ex_check_db <- ex_check_db[ex_check_db$round!="trial",]
+  # Convert to numeric
+  ex_check_db$round <- as.numeric(ex_check_db$round)
+
+  # Create a unique column by pasting the location_code and round 
+  ex_check_db$replicate  <- paste(ex_check_db$treatment,ex_check_db$habitat, ex_check_db$round, sep="_")
+
+  # Create a days column of days since deployment
+  ex_check_db$days <- difftime(ex_check_db$visit_date, ex_check_db$date_carcass_deployed)/ddays(1) 
+  
+  
+  #table(ex_check_db$replicate)
+ex_locs <- read_excel("data/exc_database.xlsx", sheet="Locations_masterlist")
+
+
+
+# The species data
+# 2. https://docs.google.com/spreadsheets/d/18WlT7Loq0xBST6vR8vqt333whm6wJJBCSPyWaz5Z6M0/edit?usp=sharing 
+
+drive_download(file = as_id("18WlT7Loq0xBST6vR8vqt333whm6wJJBCSPyWaz5Z6M0"), path = paste0("data/exc_samples"), overwrite = TRUE)
+ex_db <- read_excel("data/exc_samples.xlsx", sheet="DATA")
+ex_sp <- read_excel("data/exc_samples.xlsx", sheet="SPECIES_CHARACT")
+
+```
+
+### Map of sampling locations
+
+```{r}
+# Create a plot of survey locations
+ex_locs$Habitat_type <- as.factor(ex_locs$Habitat_type)
+cols <- c("#e41a1c", "#ff7f00")
+m <- leaflet() %>% 
+      # Add a satellite image layer
+      addProviderTiles(providers$Esri.WorldImagery, group="Satellite") %>%
+      addProviderTiles(providers$OpenStreetMap.Mapnik, group="OS") %>%     
+      addCircleMarkers(lng=ex_locs$Longitude,
+                         lat=ex_locs$Latitude, 
+                         popup=paste(ex_locs$Location_code, ex_locs$Habitat_type),
+                        color=cols[ex_locs$Habitat_type],
+                       opacity=0.8) %>%
+      addScaleBar(position="topleft", 
+                  options=scaleBarOptions(maxWidth = 100, metric = TRUE, imperial = FALSE, updateWhenIdle = TRUE)) %>%
+      addLayersControl(
+        baseGroups = c("OS", "Satellite"),
+        options = layersControlOptions(collapsed = FALSE)
+      ) %>% 
+  addLegend(colors = cols, labels=c("Closed" ,"Open"), opacity = 1)
+  
+m 
+```
+
+### Carcass weights through time
+
+Absolute:
+
+```{r}
+ex_check_db$current_bait_weight_kg <- as.numeric(ex_check_db$current_bait_weight_kg)
+# Order the dataframe
+ex_check_db <- ex_check_db[order(ex_check_db$round,ex_check_db$full_treat,ex_check_db$days),]
+tmp <- unique(ex_check_db$replicate)
+
+
+cols<-c("#66c2a5", "#fc8d62", "#8da0cb", "#e78ac3")
+ex_check_db$full_treat <- as.factor(paste(ex_check_db$treatment, ex_check_db$habitat, sep="_"))
+
+fig <- plot_ly() 
+for(i in 1:length(tmp))
+{
+   fig <- fig %>% add_trace(x = ex_check_db$days[ex_check_db$replicate==tmp[i]], y=ex_check_db$current_bait_weight_kg[ex_check_db$replicate==tmp[i]],
+                            mode = 'lines+markers', type="scatter",legendgroup=ex_check_db$round[ex_check_db$replicate==tmp[i]][1],
+                            name=ex_check_db$replicate[ex_check_db$replicate==tmp[i]][1],  connectgaps = TRUE, 
+                            color=cols[ex_check_db$full_treat[ex_check_db$replicate==tmp[i]][1]]) 
+}
+fig %>% 
+  layout(title= list(text = "Absolute change"), font=t, 
+         legend=list(title=list(text='Treatment')), 
+         xaxis = list(title = list(text ='Time (days)')),
+         yaxis = list(title = list(text ='Carcass remaining (kg)')))
+
+```
+
+Percentage:
+
+```{r}
+ex_check_db$current_bait_weight_kg <- as.numeric(ex_check_db$current_bait_weight_kg)
+
+ex_check_db$percentage_weight <- round(ex_check_db$current_bait_weight_kg/as.numeric(ex_check_db$initial_bait_weight_kg),2)*100
+
+# Order the dataframe
+ex_check_db <- ex_check_db[order(ex_check_db$round,ex_check_db$full_treat,ex_check_db$days),]
+tmp <- unique(ex_check_db$replicate)
+
+
+cols<-c("#66c2a5", "#fc8d62", "#8da0cb", "#e78ac3")
+ex_check_db$full_treat <- as.factor(paste(ex_check_db$treatment, ex_check_db$habitat, sep="_"))
+
+fig <- plot_ly() 
+for(i in 1:length(tmp))
+{
+   fig <- fig %>% add_trace(x = ex_check_db$days[ex_check_db$replicate==tmp[i]], y=ex_check_db$percentage_weight[ex_check_db$replicate==tmp[i]],
+                            mode = 'lines+markers', type="scatter",legendgroup=ex_check_db$round[ex_check_db$replicate==tmp[i]][1],
+                            name=ex_check_db$replicate[ex_check_db$replicate==tmp[i]][1],  connectgaps = TRUE, 
+                            color=cols[ex_check_db$full_treat[ex_check_db$replicate==tmp[i]][1]]) 
+}
+fig %>% 
+  layout(title= list(text = "Percentage change"), font=t, 
+         legend=list(title=list(text='Treatment')), 
+         xaxis = list(title = list(text ='Time (days)')),
+         yaxis = list(title = list(text ='Carcass remaining (%)')))
+
+```
+
+
+### Species compositions
+
+```{r}
+# not yet done
+```
+
+
+
