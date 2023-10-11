@@ -15,3 +15,8 @@ sex
 blood-cell-counts
 summary-tables
 cluster-visits
+exclosure-data
+map-of-sampling-locations
+carcass-weights-through-time
+capture-rates-by-treatment-and-method
+morphospecies-by-treatment-and-method
