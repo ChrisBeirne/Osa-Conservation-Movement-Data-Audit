@@ -36,6 +36,7 @@ library(geosphere)
 library(foreach)
 library(maptools)
 library(MetBrewer)
+library(htmltools)
 
 # For when the trapping effort file is sorted
 # googledrive::drive_auth(path = Sys.getenv("GOOGLE_AUTHENTICATION_CREDENTIALS"))
@@ -62,7 +63,10 @@ animals <-getMovebankAnimals(study=1573471517,login=loginStored)
 tmp <-getMovebankAnimals(study=2526574641,login=loginStored)
 # Tapir
 tmp2 <- getMovebankAnimals(study=1954804459,login=loginStored)
-animals <- rbind(animals, tmp,tmp2)
+# Ecuador vultures
+tmp3 <- getMovebankAnimals(study=2885579493,login=loginStored)
+tmp3$local_identifier <- sub(".*? ", "", tmp3$local_identifier)
+animals <- rbind(animals, tmp,tmp2, tmp3)
 
 # For some reason they are duplicated
 animals[duplicated(animals)==F,]
@@ -1144,6 +1148,17 @@ drive_download(file = as_id("18WlT7Loq0xBST6vR8vqt333whm6wJJBCSPyWaz5Z6M0"), pat
 ex_db <- read_excel("data/exc_samples.xlsx", sheet="DATA")
 ex_sp <- read_excel("data/exc_samples.xlsx", sheet="SPECIES_CHARACT")
 
+# Remove NAs
+ex_db <- ex_db[is.na(ex_db$date_carcass_deployed)==F,]
+
+
+ # Create a unique column by pasting the location_code and round 
+  ex_db$replicate  <- paste(ex_db$treatment,ex_db$habitat, ex_db$round, sep="_")
+
+  # Create a days column of days since deployment
+  ex_db$days <- difftime(ex_db$sample_date, ex_db$date_carcass_deployed)/ddays(1) 
+  
+
 ```
 
 ### Map of sampling locations
@@ -1178,13 +1193,14 @@ Absolute:
 
 ```{r}
 ex_check_db$current_bait_weight_kg <- as.numeric(ex_check_db$current_bait_weight_kg)
+ex_check_db$full_treat <- as.factor(paste(ex_check_db$treatment, ex_check_db$habitat, sep="_"))
 # Order the dataframe
 ex_check_db <- ex_check_db[order(ex_check_db$round,ex_check_db$full_treat,ex_check_db$days),]
 tmp <- unique(ex_check_db$replicate)
 
 
 cols<-c("#66c2a5", "#fc8d62", "#8da0cb", "#e78ac3")
-ex_check_db$full_treat <- as.factor(paste(ex_check_db$treatment, ex_check_db$habitat, sep="_"))
+
 
 fig <- plot_ly() 
 for(i in 1:length(tmp))
@@ -1234,10 +1250,120 @@ fig %>%
 ```
 
 
-### Species compositions
+### Capture rates by treatment and method
 
 ```{r}
-# not yet done
+ex_db_long <- ex_db %>%
+  pivot_longer(
+    cols = starts_with("sp"),
+    #names_to = "week",
+    #names_prefix = "wk",
+    values_to = "count",
+    values_drop_na = TRUE
+  )
+
+
+cr_summary <- ex_db_long %>% group_by(replicate, trap_type, round, days) %>% summarize(total_ind=sum(count), total_sp=n_distinct(name))
+
+cols<-c("#66c2a5", "#fc8d62", "#8da0cb", "#e78ac3")
+i <- 1
+
+# Create a way to store multiple plots
+
+l <- htmltools::tagList()
+
+for(i in 1:length(unique(cr_summary$round)))
+{
+  fig <- plot_ly( yaxis = list(type = "log"))
+  tmp <- cr_summary[cr_summary$round==i,]
+  treats <- unique(tmp$replicate)[order(unique(tmp$replicate))]
+  methods <- unique(tmp$trap_type)[order(unique(tmp$trap_type))]
+  for(j in 1:length(treats))
+  {
+       fig <- fig %>% add_trace(x = tmp$days[tmp$replicate==treats[j] & tmp$trap_type==methods[1]], 
+                                y = tmp$total_ind[tmp$replicate==treats[j] & tmp$trap_type==methods[1]],
+                                mode = 'lines+markers', type="scatter",
+                                legendgroup = methods[1],
+                                name=paste(methods[1],treats[j]),  
+                                connectgaps = TRUE, 
+                                color=cols[j]) 
+       fig <- fig %>% add_trace(x = tmp$days[tmp$replicate==treats[j] & tmp$trap_type==methods[2]], 
+                                y = tmp$total_ind[tmp$replicate==treats[j] & tmp$trap_type==methods[2]],
+                                mode = 'lines+markers', type="scatter",
+                                line = list(widthh=0.5, dash="dot"),
+                                legendgroup = methods[2],
+                                name=paste(methods[2],treats[j]),  
+                                connectgaps = TRUE, 
+                                color=cols[j]) 
+
+  }
+  l[[i]] <- as_widget(fig %>% 
+  layout(title= list(text = paste("Round", i, "Individuals")), font=t, 
+         legend=list(title=list(text='Method Treatment')), 
+         xaxis = list(title = list(text ='Time (days)')),
+         yaxis = list(title = list(text ='Total individuals'))))
+
+}
+
+l
+
+```
+
+### Morphospecies by treatment and method
+
+```{r}
+
+l <- htmltools::tagList()
+
+for(i in 1:length(unique(cr_summary$round)))
+{
+  fig <- plot_ly( yaxis = list(type = "log"))
+  tmp <- cr_summary[cr_summary$round==i,]
+  treats <- unique(tmp$replicate)[order(unique(tmp$replicate))]
+  methods <- unique(tmp$trap_type)[order(unique(tmp$trap_type))]
+  for(j in 1:length(treats))
+  {
+       fig <- fig %>% add_trace(x = tmp$days[tmp$replicate==treats[j] & tmp$trap_type==methods[1]], 
+                                y = tmp$total_sp[tmp$replicate==treats[j] & tmp$trap_type==methods[1]],
+                                mode = 'lines+markers', type="scatter",
+                                legendgroup = methods[1],
+                                name=paste(methods[1],treats[j]),  
+                                connectgaps = TRUE, 
+                                color=cols[j]) 
+       fig <- fig %>% add_trace(x = tmp$days[tmp$replicate==treats[j] & tmp$trap_type==methods[2]], 
+                                y = tmp$total_sp[tmp$replicate==treats[j] & tmp$trap_type==methods[2]],
+                                mode = 'lines+markers', type="scatter",
+                                line = list(widthh=0.5, dash="dot"),
+                                legendgroup = methods[2],
+                                name=paste(methods[2],treats[j]),  
+                                connectgaps = TRUE, 
+                                color=cols[j]) 
+
+  }
+  l[[i]] <- as_widget(fig %>% 
+  layout(title= list(text = paste("Round", i, "Morphospecies")), font=t, 
+         legend=list(title=list(text='Method Treatment')), 
+         xaxis = list(title = list(text ='Time (days)')),
+         yaxis = list(title = list(text ='Total Morphospecies'))))
+}
+
+l
+
+
+```
+
+
+
+```{r}
+### Species compositions
+#library(tidyr)
+
+#ex_sp
+
+
+
+
+
 ```
 
 
