@@ -37,6 +37,7 @@ library(foreach)
 library(maptools)
 library(MetBrewer)
 library(htmltools)
+library(tidyr)
 
 # For when the trapping effort file is sorted
 # googledrive::drive_auth(path = Sys.getenv("GOOGLE_AUTHENTICATION_CREDENTIALS"))

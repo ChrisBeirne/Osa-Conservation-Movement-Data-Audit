@@ -60,7 +60,9 @@ jobs:
       - name: Install metbrewer
         run: Rscript -e "install.packages('MetBrewer')"
       - name: Install htmltools
-        run: Rscript -e "install.packages('htmltools')"        
+        run: Rscript -e "install.packages('htmltools')" 
+      - name: Install tidyr
+        run: Rscript -e "install.packages('tidyr')" 
       - name: Render Book
         env: 
           GOOGLE_AUTHENTICATION_CREDENTIALS: ${{ secrets.GOOGLE_AUTHENTICATION_CREDENTIALS }}
