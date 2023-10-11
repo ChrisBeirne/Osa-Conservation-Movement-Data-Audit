@@ -760,7 +760,7 @@ kbl(tmp)  %>%
 m <- leaflet() %>%
       fitBounds(-70,-12.8,-84,8.8) %>% 
       # Add a satellite image layer
-      addProviderTiles(providers$Stamen.TonerLite, group="Simple") %>%
+      addProviderTiles(providers$CartoDB.PositronNoLabels, group="Simple") %>%
       addProviderTiles(providers$Esri.WorldImagery, group="Satellite") %>%
       addProviderTiles(providers$OpenStreetMap.Mapnik, group="OS") %>%     
       addCircleMarkers(lng=tmp$longitude,
@@ -1064,7 +1064,7 @@ clus_db$Cols <- col.cat[clus_db$site_type]
 
 m <- leaflet() %>%
       # Add a satellite image layer
-      addProviderTiles(providers$Stamen.TonerLite, group="Simple") %>%
+      addProviderTiles(providers$CartoDB.PositronNoLabels, group="Simple") %>%
       addProviderTiles(providers$Esri.WorldImagery, group="Satellite") %>%
       addProviderTiles(providers$OpenStreetMap.Mapnik, group="OS") %>%     
       addCircleMarkers(lng=clus_db$cluster_longitude,
