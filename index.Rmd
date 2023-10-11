@@ -1142,7 +1142,7 @@ ex_locs <- read_excel("data/exc_database.xlsx", sheet="Locations_masterlist")
 
 
 # The species data
-# 2. https://docs.google.com/spreadsheets/d/18WlT7Loq0xBST6vR8vqt333whm6wJJBCSPyWaz5Z6M0/edit?usp=sharing 
+# 2. https://docs.google.com/spreadsheets/d/18WlT7Loq0xBST6vR8vqt333whm6wJJBCSPyWaz5Z6M0/
 
 drive_download(file = as_id("18WlT7Loq0xBST6vR8vqt333whm6wJJBCSPyWaz5Z6M0"), path = paste0("data/exc_samples"), overwrite = TRUE)
 ex_db <- read_excel("data/exc_samples.xlsx", sheet="DATA")
