@@ -1193,7 +1193,7 @@ m
 Absolute:
 
 ```{r}
-ex_check_db$current_bait_weight_kg <- as.numeric(ex_check_db$current_bait_weight_kg)
+ex_check_db$real_current_weight_kg <- as.numeric(ex_check_db$real_current_weight_kg)
 ex_check_db$full_treat <- as.factor(paste(ex_check_db$treatment, ex_check_db$habitat, sep="_"))
 # Order the dataframe
 ex_check_db <- ex_check_db[order(ex_check_db$round,ex_check_db$full_treat,ex_check_db$days),]
@@ -1206,7 +1206,7 @@ cols<-c("#66c2a5", "#fc8d62", "#8da0cb", "#e78ac3")
 fig <- plot_ly() 
 for(i in 1:length(tmp))
 {
-   fig <- fig %>% add_trace(x = ex_check_db$days[ex_check_db$replicate==tmp[i]], y=ex_check_db$current_bait_weight_kg[ex_check_db$replicate==tmp[i]],
+   fig <- fig %>% add_trace(x = ex_check_db$days[ex_check_db$replicate==tmp[i]], y=ex_check_db$real_current_weight_kg[ex_check_db$replicate==tmp[i]],
                             mode = 'lines+markers', type="scatter",legendgroup=ex_check_db$round[ex_check_db$replicate==tmp[i]][1],
                             name=ex_check_db$replicate[ex_check_db$replicate==tmp[i]][1],  connectgaps = TRUE, 
                             color=cols[ex_check_db$full_treat[ex_check_db$replicate==tmp[i]][1]]) 
@@ -1222,9 +1222,9 @@ fig %>%
 Percentage:
 
 ```{r}
-ex_check_db$current_bait_weight_kg <- as.numeric(ex_check_db$current_bait_weight_kg)
+ex_check_db$real_current_weight_kg <- as.numeric(ex_check_db$real_current_weight_kg)
 
-ex_check_db$percentage_weight <- round(ex_check_db$current_bait_weight_kg/as.numeric(ex_check_db$initial_bait_weight_kg),2)*100
+ex_check_db$percentage_weight <- round(ex_check_db$real_current_weight_kg/as.numeric(ex_check_db$initial_bait_weight_kg),2)*100
 
 # Order the dataframe
 ex_check_db <- ex_check_db[order(ex_check_db$round,ex_check_db$full_treat,ex_check_db$days),]
