@@ -914,12 +914,29 @@ kbl(tmp) %>%
 
 ```{r}
 tmp <- lab_full[lab_full$assay=="blood",]
+
+# Add in country data (and individual)
+#tmp2 <- cap_db[,c("local_identifier", "pit_tag_id", "country", "specific_id", "date")]
+#colnames(tmp2)[5] <- "capture_date"
+#tmp3 <- bio_db[, c("specific_id", "capture_date", "sample_code")]
+
+
+#id_loc_dat <- left_join(tmp3, tmp2, by=c("specific_id", "capture_date"))
+# Add in the ID and location data
+
+#tmp
+loc_code <- cap_db[,c("pit_tag_id", "country")]
+# Remove recaptures
+loc_code <- loc_code[duplicated(loc_code)==F,]
+tmp <- left_join(tmp, loc_code)
+
+
 ```
 
 We have blood cell parameters quantified for `r length(unique(tmp$pit_tag_id))` individuals and `r length(unique(tmp$code_sp))` species. 
 
 ```{r}
-tmp2 <- tmp %>% group_by(code_sp) %>% summarise(individuals=n_distinct(pit_tag_id))
+tmp2 <- tmp %>% group_by(country, code_sp) %>% summarise(individuals=n_distinct(pit_tag_id))
 
 kbl(tmp2) %>%
   kable_classic(full_width = F) 
@@ -948,6 +965,7 @@ fig <- plot_ly(y =tmp2$result,x=tmp2$assay_target, color=tmp2$code_sp,
   layout(yaxis = list(title = '"% composition"'), boxmode="group")
 
 fig
+
 ```
 
 And the other parameters:
@@ -1368,4 +1386,64 @@ l
 ```
 
 
+# Farm surveys
 
+```{r}
+# Import spreadsheet
+drive_download(file = as_id("1vjlbdgLLHHzq-lLR2LOYiUr89471F_uJifnKDDAYrRA"), path = paste0("data/farm_database"), overwrite = TRUE)
+farm_db <- read_excel("data/farm_database.xlsx", sheet="Standarize answer")  
+
+# Sort coordinates
+farm_db$long <- as.numeric(substr(farm_db$`Farms Location Gps coordinates`, 15,23))*-1 
+farm_db$lat <- as.numeric(substr(farm_db$`Farms Location Gps coordinates`, 4,10))
+```
+
+To date we have completed `r nrow(farm_db)` surveys. The locations where surveys were conducted are:
+
+```{r}
+m <- leaflet() %>% 
+      # Add a satellite image layer
+      addProviderTiles(providers$Esri.WorldImagery, group="Satellite") %>%
+      addProviderTiles(providers$OpenStreetMap.Mapnik, group="OS") %>%     
+      addCircleMarkers(lng=farm_db$long,
+                         lat=farm_db$lat, 
+                         popup=paste(farm_db$`Name of the farm`, farm_db$`Name of the farmer`),
+                       opacity=0.8) %>%
+      addScaleBar(position="topleft", 
+                  options=scaleBarOptions(maxWidth = 100, metric = TRUE, imperial = FALSE, updateWhenIdle = TRUE)) %>%
+      addLayersControl(
+        baseGroups = c("OS", "Satellite"),
+        options = layersControlOptions(collapsed = FALSE)
+      ) 
+  
+m 
+```
+
+The following plots summarise the responses:
+
+### Are you a full time farmer?
+
+```{r}
+tmp <- farm_db %>% group_by(`Are you a full-time farmer based on the farm?`) %>% summarise(freq=n())
+
+
+fig <- plot_ly(tmp, labels = ~`Are you a full-time farmer based on the farm?`, values = ~freq, type = 'pie',
+        textposition = 'inside',
+        textinfo = 'label+percent',
+        hoverinfo = 'text',
+        text = ~paste(freq))
+
+fig
+```
+
+### What is the size of the farm?
+
+```{r}
+fig <- plot_ly(x=farm_db$`What is the size of the farm in hectares?`, type = "histogram")
+
+fig
+```
+
+Most are small (1 - 190 Ha).
+
+### 
