@@ -1446,7 +1446,7 @@ fig <- plot_ly(x=farm_db$`What is the size of the farm in hectares?`, type = "hi
 fig
 ```
 
-Most are small (1 - 190 Ha). Median size = `r median(farm_db$`What is the size of the farm in hectares?`)` ha. 
+Most are small (1 - 190 Ha).  
 
 ### Number of animals
 
