@@ -20,3 +20,7 @@ map-of-sampling-locations
 carcass-weights-through-time
 capture-rates-by-treatment-and-method
 morphospecies-by-treatment-and-method
+farm-surveys
+are-you-a-full-time-farmer
+what-is-the-size-of-the-farm
+number-of-animals

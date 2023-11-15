@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Part 9 Farm surveys | Osa Conservation: Movement data audit</title>
+  <meta name="description" content="Part 9 Farm surveys | Osa Conservation: Movement data audit" />
+  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Part 9 Farm surveys | Osa Conservation: Movement data audit" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Part 9 Farm surveys | Osa Conservation: Movement data audit" />
+  
+  
+  
+
+<meta name="author" content="Chris Beirne" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="exclosure-data.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.10.3/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.2.1/leaflet.js"></script>
+<script src="libs/leaflet-providers-2.0.0/leaflet-providers_2.0.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.2.1/leaflet-providers-plugin.js"></script>
+
+
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Osa Conservation: Movement data audit</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Database changes</a>
+<ul>
+<li class="chapter" data-level="1.0.1" data-path="index.html"><a href="index.html#database-changes-last-7-days"><i class="fa fa-check"></i><b>1.0.1</b> Database changes (last 7 days)</a></li>
+<li class="chapter" data-level="1.0.2" data-path="index.html"><a href="index.html#database-linkage-checks"><i class="fa fa-check"></i><b>1.0.2</b> Database linkage checks</a></li>
+<li class="chapter" data-level="1.0.3" data-path="index.html"><a href="index.html#recaptures"><i class="fa fa-check"></i><b>1.0.3</b> Recaptures</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="capture-database.html"><a href="capture-database.html"><i class="fa fa-check"></i><b>2</b> Capture database</a>
+<ul>
+<li class="chapter" data-level="2.0.1" data-path="capture-database.html"><a href="capture-database.html#processing-time"><i class="fa fa-check"></i><b>2.0.1</b> Processing time</a></li>
+<li class="chapter" data-level="2.0.2" data-path="capture-database.html"><a href="capture-database.html#crop-size"><i class="fa fa-check"></i><b>2.0.2</b> Crop size</a></li>
+<li class="chapter" data-level="2.0.3" data-path="capture-database.html"><a href="capture-database.html#morphometrics"><i class="fa fa-check"></i><b>2.0.3</b> Morphometrics</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="trap-deployment-database.html"><a href="trap-deployment-database.html"><i class="fa fa-check"></i><b>3</b> Trap deployment database</a></li>
+<li class="chapter" data-level="4" data-path="biological-samples-database.html"><a href="biological-samples-database.html"><i class="fa fa-check"></i><b>4</b> Biological samples database</a></li>
+<li class="chapter" data-level="5" data-path="tracking-device-deployment-database.html"><a href="tracking-device-deployment-database.html"><i class="fa fa-check"></i><b>5</b> Tracking device deployment database</a>
+<ul>
+<li class="chapter" data-level="5.0.1" data-path="tracking-device-deployment-database.html"><a href="tracking-device-deployment-database.html#do-all-the-current-vital-settings-match"><i class="fa fa-check"></i><b>5.0.1</b> Do all the current vital settings match?</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="laboratory-analyses.html"><a href="laboratory-analyses.html"><i class="fa fa-check"></i><b>6</b> Laboratory analyses</a>
+<ul>
+<li class="chapter" data-level="6.0.1" data-path="laboratory-analyses.html"><a href="laboratory-analyses.html#sex"><i class="fa fa-check"></i><b>6.0.1</b> Sex</a></li>
+<li class="chapter" data-level="6.0.2" data-path="laboratory-analyses.html"><a href="laboratory-analyses.html#blood-cell-counts"><i class="fa fa-check"></i><b>6.0.2</b> Blood cell counts</a></li>
+<li class="chapter" data-level="6.0.3" data-path="laboratory-analyses.html"><a href="laboratory-analyses.html#summary-tables"><i class="fa fa-check"></i><b>6.0.3</b> Summary tables</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="cluster-visits.html"><a href="cluster-visits.html"><i class="fa fa-check"></i><b>7</b> Cluster visits</a></li>
+<li class="chapter" data-level="8" data-path="exclosure-data.html"><a href="exclosure-data.html"><i class="fa fa-check"></i><b>8</b> Exclosure data</a>
+<ul>
+<li class="chapter" data-level="8.0.1" data-path="exclosure-data.html"><a href="exclosure-data.html#map-of-sampling-locations"><i class="fa fa-check"></i><b>8.0.1</b> Map of sampling locations</a></li>
+<li class="chapter" data-level="8.0.2" data-path="exclosure-data.html"><a href="exclosure-data.html#carcass-weights-through-time"><i class="fa fa-check"></i><b>8.0.2</b> Carcass weights through time</a></li>
+<li class="chapter" data-level="8.0.3" data-path="exclosure-data.html"><a href="exclosure-data.html#capture-rates-by-treatment-and-method"><i class="fa fa-check"></i><b>8.0.3</b> Capture rates by treatment and method</a></li>
+<li class="chapter" data-level="8.0.4" data-path="exclosure-data.html"><a href="exclosure-data.html#morphospecies-by-treatment-and-method"><i class="fa fa-check"></i><b>8.0.4</b> Morphospecies by treatment and method</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="farm-surveys.html"><a href="farm-surveys.html"><i class="fa fa-check"></i><b>9</b> Farm surveys</a>
+<ul>
+<li class="chapter" data-level="9.0.1" data-path="farm-surveys.html"><a href="farm-surveys.html#are-you-a-full-time-farmer"><i class="fa fa-check"></i><b>9.0.1</b> Are you a full time farmer?</a></li>
+<li class="chapter" data-level="9.0.2" data-path="farm-surveys.html"><a href="farm-surveys.html#what-is-the-size-of-the-farm"><i class="fa fa-check"></i><b>9.0.2</b> What is the size of the farm?</a></li>
+<li class="chapter" data-level="9.0.3" data-path="farm-surveys.html"><a href="farm-surveys.html#number-of-animals"><i class="fa fa-check"></i><b>9.0.3</b> Number of animals</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/ChrisBeirne/test_report/" target="blank">Osa Conservation: Movement data audit</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Osa Conservation: Movement data audit</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="farm-surveys" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">Part 9</span> Farm surveys<a href="farm-surveys.html#farm-surveys" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>To date we have completed 28 surveys. The locations where surveys were conducted are:</p>
+<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-da2fac6cd6f4f47006e1" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-da2fac6cd6f4f47006e1">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["Esri.WorldImagery",null,"Satellite",{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addProviderTiles","args":["OpenStreetMap.Mapnik",null,"OS",{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addCircleMarkers","args":[[8.55409,8.55748,8.557460000000001,8.55165,8.54805,8.542730000000001,8.565899999999999,8.55878,8.43502,8.43252,8.43252,8.545260000000001,8.42544,8.55301,8.498100000000001,8.55959,8.511850000000001,8.57832,8.51155,null,8.58389,8.57531,8.56358,8.555540000000001,8.565519999999999,8.592700000000001,8.590490000000001,8.595459999999999],[-83.33301,-83.35829,-83.3583,-83.38352,-83.38224,-83.33148,-83.3888,-83.36075,-83.41773000000001,-83.37894,-83.37894,-83.33535999999999,-83.36793,-83.34865000000001,-83.37961,-83.3681,-83.76214,-83.41513,-83.36445999999999,null,-83.41222,-83.41856,-83.39045,-83.38464999999999,-83.38802,-83.49226,-83.42698,-83.42541],10,null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.8,"fill":true,"fillColor":"#03F","fillOpacity":0.2},null,null,["NA Gonzalo","NA Gustavo","Granja villa Yorlenny","NA Jose chavarria cascante alias emelito","Vista al golfo Elian","Propiedad terrones Marvin","Finca monte rey Gerardo","NA Hugo","Reserva Rio Oro Wilson","NA Modesto Suarzo","Hacienda Rio Oro Zira","La finca del tigre Alonso","Bijagual Don Trino","Finca Solano Cristina Mora Quiroz","Casa Verde Luis Valverde","NA Mariela Vargas","NA Santos","NA Positivo Santamaria Guerra","Puerto Galeano Luz Garbanzo Mora","La Joya Pablo Jimenez","Ganaderia Ross Juan","NA Jose Morales","NA Gustavo Matamoros","NA Hannia","Finca La Fuente Ana","Nazlin Iveth Isaac","El titi Enrique Segnini","El madero negro Kenneth Steven"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addScaleBar","args":[{"maxWidth":100,"metric":true,"imperial":false,"updateWhenIdle":true,"position":"topleft"}]},{"method":"addLayersControl","args":[["OS","Satellite"],[],{"collapsed":false,"autoZIndex":true,"position":"topright"}]}],"limits":{"lat":[8.42544,8.595459999999999],"lng":[-83.76214,-83.33148]}},"evals":[],"jsHooks":[]}</script>
+<p>The following plots summarise the responses:</p>
+<div id="are-you-a-full-time-farmer" class="section level3 hasAnchor" number="9.0.1">
+<h3><span class="header-section-number">9.0.1</span> Are you a full time farmer?<a href="farm-surveys.html#are-you-a-full-time-farmer" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-9b1a2d4be32fe304943c" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-9b1a2d4be32fe304943c">{"x":{"visdat":{"115c73238c29":["function () ","plotlyVisDat"]},"cur_data":"115c73238c29","attrs":{"115c73238c29":{"labels":{},"values":{},"textposition":"inside","textinfo":"label+percent","hoverinfo":"text","text":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"pie"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"labels":["No","Yes"],"values":[1,27],"textposition":["inside","inside"],"textinfo":"label+percent","hoverinfo":["text","text"],"text":["1","27"],"type":"pie","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(255,255,255,1)"}},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="what-is-the-size-of-the-farm" class="section level3 hasAnchor" number="9.0.2">
+<h3><span class="header-section-number">9.0.2</span> What is the size of the farm?<a href="farm-surveys.html#what-is-the-size-of-the-farm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-f62fc8a7b6545cea946e" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-f62fc8a7b6545cea946e">{"x":{"visdat":{"115c3ba36291":["function () ","plotlyVisDat"]},"cur_data":"115c3ba36291","attrs":{"115c3ba36291":{"x":[5,70,2,5,5,60,25,4,1300,200,140,40,300,68,63,15,45,4,26,30,87,5,9,20,3,36,41.5,8],"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"histogram"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":[]},"yaxis":{"domain":[0,1],"automargin":true},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[5,70,2,5,5,60,25,4,1300,200,140,40,300,68,63,15,45,4,26,30,87,5,9,20,3,36,41.5,8],"type":"histogram","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p>Most are small (1 - 190 Ha).</p>
+</div>
+<div id="number-of-animals" class="section level3 hasAnchor" number="9.0.3">
+<h3><span class="header-section-number">9.0.3</span> Number of animals<a href="farm-surveys.html#number-of-animals" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-36d93f9f092914cfd7e1" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-36d93f9f092914cfd7e1">{"x":{"data":[{"x":[10,90,30,7,4,20,7,10,300,300,200,30,120,50,60,40,20,5,25,27,50,8,20,50,7,35,15,60],"name":"Cows","type":"histogram","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[70,10,1,9],"name":"Pigs","type":"histogram","marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"xaxis":"x2","yaxis":"y2","frame":null},{"x":[4500,25,5,70,50,22,15],"name":"Chicken","type":"histogram","marker":{"color":"rgba(44,160,44,1)","line":{"color":"rgba(44,160,44,1)"}},"error_y":{"color":"rgba(44,160,44,1)"},"error_x":{"color":"rgba(44,160,44,1)"},"xaxis":"x3","yaxis":"y3","frame":null},{"x":[8,5,20,6,2,1,2,5,1],"name":"Horses","type":"histogram","marker":{"color":"rgba(214,39,40,1)","line":{"color":"rgba(214,39,40,1)"}},"error_y":{"color":"rgba(214,39,40,1)"},"error_x":{"color":"rgba(214,39,40,1)"},"xaxis":"x4","yaxis":"y4","frame":null},{"type":"histogram","marker":{"color":"rgba(148,103,189,1)","line":{"color":"rgba(148,103,189,1)"}},"error_y":{"color":"rgba(148,103,189,1)"},"error_x":{"color":"rgba(148,103,189,1)"},"xaxis":"x5","yaxis":"y5","frame":null},{"type":"histogram","marker":{"color":"rgba(140,86,75,1)","line":{"color":"rgba(140,86,75,1)"}},"error_y":{"color":"rgba(140,86,75,1)"},"error_x":{"color":"rgba(140,86,75,1)"},"xaxis":"x6","yaxis":"y6","frame":null}],"layout":{"xaxis":{"domain":[0,0.3133333333333333],"automargin":true,"anchor":"y"},"xaxis2":{"domain":[0.35333333333333333,0.64666666666666661],"automargin":true,"anchor":"y2"},"xaxis3":{"domain":[0.68666666666666665,1],"automargin":true,"anchor":"y3"},"xaxis4":{"domain":[0,0.3133333333333333],"automargin":true,"anchor":"y4"},"xaxis5":{"domain":[0.35333333333333333,0.64666666666666661],"automargin":true,"anchor":"y5"},"xaxis6":{"domain":[0.68666666666666665,1],"automargin":true,"anchor":"y6"},"yaxis6":{"domain":[0,0.47999999999999998],"automargin":true,"anchor":"x6"},"yaxis5":{"domain":[0,0.47999999999999998],"automargin":true,"anchor":"x5"},"yaxis4":{"domain":[0,0.47999999999999998],"automargin":true,"anchor":"x4"},"yaxis3":{"domain":[0.52000000000000002,1],"automargin":true,"anchor":"x3"},"yaxis2":{"domain":[0.52000000000000002,1],"automargin":true,"anchor":"x2"},"yaxis":{"domain":[0.52000000000000002,1],"automargin":true,"anchor":"x"},"annotations":[],"shapes":[],"images":[],"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Animals on the farm","hovermode":"closest","showlegend":true},"attrs":{"115c2632e172":{"x":[10,90,30,7,4,20,7,10,300,300,200,30,120,50,60,40,20,5,25,27,50,8,20,50,7,35,15,60],"name":"Cows","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"histogram"},"115c566f16f5":{"x":[null,null,null,null,null,null,null,null,70,null,null,null,null,null,10,null,null,1,null,null,null,null,null,null,null,9,null,null],"name":"Pigs","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"histogram"},"115c174c5b28":{"x":[null,null,4500,25,5,null,null,null,70,null,null,null,null,null,null,null,null,null,null,null,50,null,null,null,22,15,null,null],"name":"Chicken","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"histogram"},"115c15f4ab0b":{"x":[null,8,null,null,null,null,null,null,5,null,20,null,6,2,1,null,null,null,2,null,5,null,null,null,null,1,null,null],"name":"Horses","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"histogram"},"115c72096a6f":{"x":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"name":"Sheep","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"histogram"},"115c482ad7e6":{"x":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"name":"Goats","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"histogram"}},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"subplot":true,"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="exclosure-data.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["Osa Conservation: Movement data audit.pdf", "Osa Conservation: Movement data audit.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
