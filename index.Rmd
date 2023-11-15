@@ -1463,3 +1463,382 @@ fig <- subplot(f1, f2, f3, f4, f5, f6, nrows=2) %>%
 fig
 ```
 
+
+### Other crops
+
+```{r}
+table(c(farm_db$`Monoculture crops`, farm_db$`Polyculture crops`))
+```
+
+### Main production
+
+```{r}
+#farm_db$`What is your main production?`
+
+tmp <- farm_db %>% group_by(`What is your main production?`) %>% summarise(freq=n())
+
+fig <- plot_ly(tmp, labels = ~`What is your main production?`, values = ~freq, type = 'pie',
+        textposition = 'inside',
+        textinfo = 'label+percent',
+        hoverinfo = 'text',
+        text = ~paste(freq))
+
+fig
+```
+
+### Do you vaccinate?
+
+```{r}
+#farm_db$`Do you vaccinate your animals?`
+
+tmp <- farm_db %>% group_by(`Do you vaccinate your animals?`) %>% summarise(freq=n())
+
+fig <- plot_ly(tmp, labels = ~`Do you vaccinate your animals?`, values = ~freq, type = 'pie',
+        textposition = 'inside',
+        textinfo = 'label+percent',
+        hoverinfo = 'text',
+        text = ~paste(freq))
+
+fig
+```
+
+### What do you feed your cattle?
+
+```{r}
+#farm_db$`What do your animals feed on additionnal to grazing?`
+
+tmp <- farm_db %>% group_by(`What do your animals feed on additionnal to grazing?`) %>% summarise(freq=n())
+
+fig <- plot_ly(tmp, labels = ~`What do your animals feed on additionnal to grazing?`, values = ~freq, type = 'pie',
+        textposition = 'inside',
+        textinfo = 'label+percent',
+        hoverinfo = 'text',
+        text = ~paste(freq))
+
+fig
+```
+
+### Animal diseases
+
+```{r}
+#farm_db$`What are the diseases that affect your animals?`
+
+tmp <- farm_db %>% group_by(`What are the diseases that affect your animals?`) %>% summarise(freq=n())
+
+fig <- plot_ly(tmp, labels = ~`What are the diseases that affect your animals?`, values = ~freq, type = 'pie',
+        textposition = 'inside',
+        textinfo = 'label+percent',
+        hoverinfo = 'text',
+        text = ~paste(freq))
+
+fig
+```
+
+### How do you manage sick animals?
+
+```{r}
+#farm_db$`How do you manage sick animals?`
+
+tmp <- farm_db %>% group_by(`How do you manage sick animals?`) %>% summarise(freq=n())
+
+fig <- plot_ly(tmp, labels = ~`How do you manage sick animals?`, values = ~freq, type = 'pie',
+        textposition = 'inside',
+        textinfo = 'label+percent',
+        hoverinfo = 'text',
+        text = ~paste(freq))
+
+fig
+```
+
+### Where do you source water for your animals?  
+
+```{r}
+#farm_db$`What is the water source use for the animals from?`     
+
+tmp <- farm_db %>% group_by(`What is the water source use for the animals from?`  ) %>% summarise(freq=n())
+
+fig <- plot_ly(tmp, labels = ~`What is the water source use for the animals from?`  , values = ~freq, type = 'pie',
+        textposition = 'inside',
+        textinfo = 'label+percent',
+        hoverinfo = 'text',
+        text = ~paste(freq))
+
+fig
+```
+
+### Do you treat your animal when sick?  
+
+```{r}
+#farm_db$`Do you treat your animal when sick?`    
+
+tmp <- farm_db %>% group_by(`Do you treat your animal when sick?`  ) %>% summarise(freq=n())
+
+fig <- plot_ly(tmp, labels = ~`Do you treat your animal when sick?`  , values = ~freq, type = 'pie',
+        textposition = 'inside',
+        textinfo = 'label+percent',
+        hoverinfo = 'text',
+        text = ~paste(freq))
+
+fig
+```
+
+### What antibiotics do you use?  
+
+```{r}
+#farm_db$`What antibiotics do you use?`   
+
+tmp <- farm_db %>% group_by(`What antibiotics do you use?`   ) %>% summarise(freq=n())
+
+fig <- plot_ly(tmp, labels = ~`What antibiotics do you use?`   , values = ~freq, type = 'pie',
+        textposition = 'inside',
+        textinfo = 'label+percent',
+        hoverinfo = 'text',
+        text = ~paste(freq))
+
+fig
+```
+
+### Have you experienced any disease outbreaks on your farm in the past 2 years? 
+
+```{r}
+#farm_db$`Have you experienced any disease outbreaks on your farm in the past 2 years?`   
+
+tmp <- farm_db %>% group_by(`Have you experienced any disease outbreaks on your farm in the past 2 years?`   ) %>% summarise(freq=n())
+
+fig <- plot_ly(tmp, labels = ~`Have you experienced any disease outbreaks on your farm in the past 2 years?`   , values = ~freq, type = 'pie',
+        textposition = 'inside',
+        textinfo = 'label+percent',
+        hoverinfo = 'text',
+        text = ~paste(freq))
+
+fig
+```
+
+### Have you experienced any disease outbreaks on your farm in the past 2 years? 
+
+```{r}
+#farm_db$`If yes, what diseases.`   
+
+tmp <- farm_db %>% group_by(`If yes, what diseases.`   ) %>% summarise(freq=n())
+
+fig <- plot_ly(tmp, labels = ~`If yes, what diseases.`   , values = ~freq, type = 'pie',
+        textposition = 'inside',
+        textinfo = 'label+percent',
+        hoverinfo = 'text',
+        text = ~paste(freq))
+
+fig
+```
+
+### How often do animals die? 
+
+```{r}
+#farm_db$`How often do animals die?`   
+
+tmp <- farm_db %>% group_by(`How often do animals die?`  ) %>% summarise(freq=n())
+
+fig <- plot_ly(tmp, labels = ~`How often do animals die?`   , values = ~freq, type = 'pie',
+        textposition = 'inside',
+        textinfo = 'label+percent',
+        hoverinfo = 'text',
+        text = ~paste(freq))
+
+fig
+```
+
+### Normal Cause of death?
+
+```{r}
+#farm_db$`Normal Cause of death?`   
+
+tmp <- farm_db %>% group_by(`Normal Cause of death?`  ) %>% summarise(freq=n())
+
+fig <- plot_ly(tmp, labels = ~`Normal Cause of death?`   , values = ~freq, type = 'pie',
+        textposition = 'inside',
+        textinfo = 'label+percent',
+        hoverinfo = 'text',
+        text = ~paste(freq))
+
+fig
+```
+
+### How often do you consult with a veterinarian and what is their role?
+
+```{r}
+#farm_db$`How often do you consult with a veterinarian and what is their role?`  
+
+tmp <- farm_db %>% group_by(`How often do you consult with a veterinarian and what is their role?`  ) %>% summarise(freq=n())
+
+fig <- plot_ly(tmp, labels = ~`How often do you consult with a veterinarian and what is their role?`   , values = ~freq, type = 'pie',
+        textposition = 'inside',
+        textinfo = 'label+percent',
+        hoverinfo = 'text',
+        text = ~paste(freq))
+
+fig
+```
+
+### Do you consider veterinary services to be affordable and accessible?
+
+```{r}
+#farm_db$`Do you consider veterinary services to be affordable and accessible?`  
+
+tmp <- farm_db %>% group_by(`Do you consider veterinary services to be affordable and accessible?`  ) %>% summarise(freq=n())
+
+fig <- plot_ly(tmp, labels = ~`Do you consider veterinary services to be affordable and accessible?`   , values = ~freq, type = 'pie',
+        textposition = 'inside',
+        textinfo = 'label+percent',
+        hoverinfo = 'text',
+        text = ~paste(freq))
+
+fig
+```
+
+### Have you observed vultures?
+
+#### Black
+
+```{r}
+
+tmp1 <- farm_db %>% group_by(`Have you observed black vultures in your farm? How often?`  ) %>% summarise(freq=n())
+f1 <- plot_ly(tmp1, labels = ~`Have you observed black vultures in your farm? How often?`   , values = ~freq, type = 'pie',
+        textposition = 'inside',
+        textinfo = 'label+percent',
+        hoverinfo = 'text',
+        text = ~paste(freq))
+f1
+```
+
+#### King
+
+```{r}
+tmp2 <- farm_db %>% group_by( `Have you observed turkey vultures in your farm? How often?` ) %>% summarise(freq=n())
+f2 <- plot_ly(tmp2, labels = ~`Have you observed turkey vultures in your farm? How often?`   , values = ~freq, type = 'pie',
+        textposition = 'inside',
+        textinfo = 'label+percent',
+        hoverinfo = 'text',
+        text = ~paste(freq))
+f2
+
+```
+
+#### Turkey
+
+```{r}
+tmp3 <- farm_db %>% group_by( `Have you observed king vultures in your farm? How often?` ) %>% summarise(freq=n())
+f3 <- plot_ly(tmp3, labels = ~`Have you observed king vultures in your farm? How often?`   , values = ~freq, type = 'pie',
+        textposition = 'inside',
+        textinfo = 'label+percent',
+        hoverinfo = 'text',
+        text = ~paste(freq))
+f3
+```
+
+#### Lesser-yellow
+
+```{r}
+tmp4 <- farm_db %>% group_by( `Have you observed Lesser yellow headed vultures in your farm? How often?` ) %>% summarise(freq=n())
+f4 <- plot_ly(tmp4, labels = ~`Have you observed Lesser yellow headed vultures in your farm? How often?`   , values = ~freq, type = 'pie',
+        textposition = 'inside',
+        textinfo = 'label+percent',
+        hoverinfo = 'text',
+        text = ~paste(freq))
+f4
+```
+
+#### Greater-yellow
+
+```{r}
+tmp5 <- farm_db %>% group_by( `Have you observed greater yellow headed vultures in your farm? How often?` ) %>% summarise(freq=n())
+f5 <- plot_ly(tmp5, labels = ~`Have you observed greater yellow headed vultures in your farm? How often?`   , values = ~freq, type = 'pie',
+        textposition = 'inside',
+        textinfo = 'label+percent',
+        hoverinfo = 'text',
+        text = ~paste(freq))
+f5
+```
+
+### What animals have you seen the vultures feeding on?
+
+Simplified version below:
+
+```{r}
+res <- list()
+res[[1]] <- data.frame(animal="Cattle", n=sum(farm_db$Cattle, na.rm=T))
+res[[2]] <- data.frame(animal="Horse", n=sum(farm_db$Horse, na.rm=T))
+res[[3]] <- data.frame(animal="Pig", n=sum(farm_db$Pig...46, na.rm=T))
+res[[4]] <- data.frame(animal="Chicken", n=sum(farm_db$Chicken...47, na.rm=T))
+
+res <- bind_rows(res)
+
+fig <- plot_ly(
+  x = res$animal,
+  y = res$n,
+  type = "bar"
+)
+
+fig
+
+
+```
+
+### Advantages of vultures on your farm?
+
+```{r}
+#farm_db$`What do you see the advantages of vultures on your farm?`
+tmp <- farm_db %>% group_by(`What do you see the advantages of vultures on your farm?`  ) %>% summarise(freq=n())
+
+fig <- plot_ly(tmp, labels = ~`What do you see the advantages of vultures on your farm?`   , values = ~freq, type = 'pie',
+        textposition = 'inside',
+        textinfo = 'label+percent',
+        hoverinfo = 'text',
+        text = ~paste(freq))
+
+fig
+```
+
+
+### Disadvantages of vultures on your farm?
+
+```{r}
+#farm_db$`What do you see the disadvantages of vultures on your farm?`
+tmp <- farm_db %>% group_by(`What do you see the disadvantages of vultures on your farm?`  ) %>% summarise(freq=n())
+
+fig <- plot_ly(tmp, labels = ~`What do you see the disadvantages of vultures on your farm?`   , values = ~freq, type = 'pie',
+        textposition = 'inside',
+        textinfo = 'label+percent',
+        hoverinfo = 'text',
+        text = ~paste(freq))
+
+fig
+```
+
+### Changes in vulture populations in your area in the past 5 years?
+
+```{r}
+#farm_db$`Have you noticed any changes in vulture populations in your area in the past 5 years.`
+tmp <- farm_db %>% group_by(`Have you noticed any changes in vulture populations in your area in the past 5 years.`  ) %>% summarise(freq=n())
+
+fig <- plot_ly(tmp, labels = ~`Have you noticed any changes in vulture populations in your area in the past 5 years.`   , values = ~freq, type = 'pie',
+        textposition = 'inside',
+        textinfo = 'label+percent',
+        hoverinfo = 'text',
+        text = ~paste(freq))
+
+fig
+```
+
+### Interested in monitoring your farms vultures in the future?
+
+```{r}
+farm_db$`Would you be interested in monitoring your farms vultures in the future?`
+tmp <- farm_db %>% group_by(`Would you be interested in monitoring your farms vultures in the future?`  ) %>% summarise(freq=n())
+
+fig <- plot_ly(tmp, labels = ~`Would you be interested in monitoring your farms vultures in the future?`   , values = ~freq, type = 'pie',
+        textposition = 'inside',
+        textinfo = 'label+percent',
+        hoverinfo = 'text',
+        text = ~paste(freq))
+
+fig
+```
