@@ -1600,7 +1600,7 @@ fig
 
 ### Have you experienced any disease outbreaks on your farm in the past 2 years? 
 
-```{r}
+```{r, eval=F}
 #farm_db$`Have you experienced any disease outbreaks on your farm in the past 2 years?`   
 
 tmp <- farm_db %>% group_by(`Have you experienced any disease outbreaks on your farm in the past 2 years?`   ) %>% summarise(freq=n())
@@ -1614,7 +1614,6 @@ fig <- plot_ly(tmp, labels = ~`Have you experienced any disease outbreaks on you
 fig
 ```
 
-### Have you experienced any disease outbreaks on your farm in the past 2 years? 
 
 ```{r}
 #farm_db$`If yes, what diseases.`   
@@ -1764,10 +1763,10 @@ Simplified version below:
 
 ```{r}
 res <- list()
-res[[1]] <- data.frame(animal="Cattle", n=sum(farm_db$Cattle, na.rm=T))
-res[[2]] <- data.frame(animal="Horse", n=sum(farm_db$Horse, na.rm=T))
-res[[3]] <- data.frame(animal="Pig", n=sum(farm_db$Pig...46, na.rm=T))
-res[[4]] <- data.frame(animal="Chicken", n=sum(farm_db$Chicken...47, na.rm=T))
+res[[1]] <- data.frame(animal="Cattle", n=sum(farm_db$Cow_carcass, na.rm=T))
+res[[2]] <- data.frame(animal="Horse", n=sum(farm_db$Horse_carcass, na.rm=T))
+res[[3]] <- data.frame(animal="Pig", n=sum(farm_db$Pig_carcass, na.rm=T))
+res[[4]] <- data.frame(animal="Chicken", n=sum(farm_db$Chicken_carcass, na.rm=T))
 
 res <- bind_rows(res)
 
@@ -1831,7 +1830,7 @@ fig
 ### Interested in monitoring your farms vultures in the future?
 
 ```{r}
-farm_db$`Would you be interested in monitoring your farms vultures in the future?`
+#farm_db$`Would you be interested in monitoring your farms vultures in the future?`
 tmp <- farm_db %>% group_by(`Would you be interested in monitoring your farms vultures in the future?`  ) %>% summarise(freq=n())
 
 fig <- plot_ly(tmp, labels = ~`Would you be interested in monitoring your farms vultures in the future?`   , values = ~freq, type = 'pie',
