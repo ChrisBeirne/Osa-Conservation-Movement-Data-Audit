@@ -62,12 +62,14 @@ loginStored <- movebankLogin(username=MOVE_USE,
 animals <-getMovebankAnimals(study=1573471517,login=loginStored)
 # Ocelot
 tmp <-getMovebankAnimals(study=2526574641,login=loginStored)
+# carnivores
+tmp1 <-getMovebankAnimals(study=2957292408,login=loginStored)
 # Tapir
 tmp2 <- getMovebankAnimals(study=1954804459,login=loginStored)
 # Ecuador vultures
 tmp3 <- getMovebankAnimals(study=2885579493,login=loginStored)
 tmp3$local_identifier <- sub(".*? ", "", tmp3$local_identifier)
-animals <- rbind(animals, tmp,tmp2, tmp3)
+animals <- rbind(animals, tmp,tmp1, tmp2, tmp3)
 
 # For some reason they are duplicated
 animals[duplicated(animals)==F,]
@@ -1444,6 +1446,20 @@ fig <- plot_ly(x=farm_db$`What is the size of the farm in hectares?`, type = "hi
 fig
 ```
 
-Most are small (1 - 190 Ha).
+Most are small (1 - 190 Ha). Median size = `r median(farm_db$`What is the size of the farm in hectares?`)` ha. 
 
-### 
+### Number of animals
+
+```{r}
+
+f1 <- plot_ly(x=as.numeric(farm_db$Cows), type = "histogram", name="Cows") %>% layout(title = 'Cows')
+f2 <- plot_ly(x=as.numeric(farm_db$Pig), type = "histogram", name="Pigs") %>% layout(title = 'Pigs')
+f3 <- plot_ly(x=as.numeric(farm_db$Chicken), type = "histogram", name="Chicken") %>% layout(title = 'Chicken')
+f4 <- plot_ly(x=as.numeric(farm_db$Horses), type = "histogram", name="Horses") %>% layout(title = 'Horses')
+f5 <- plot_ly(x=as.numeric(farm_db$Sheeps), type = "histogram", name="Sheep") %>% layout(title = 'Sheep')
+f6 <- plot_ly(x=as.numeric(farm_db$Goats), type = "histogram", name="Goats") %>% layout(title = 'Goats')
+fig <- subplot(f1, f2, f3, f4, f5, f6, nrows=2) %>% 
+  layout(title = 'Animals on the farm')
+fig
+```
+
