@@ -171,7 +171,7 @@ drive_download(file = as_id("1kx5BYcbbDYZLnWMp1IxQySaLRQ2I4AJhTNjZfn7m4U8"), pat
 bio_db <- read_excel("data/bio_database.xlsx", sheet="biological_samples")
 # Remove NA's
 bio_db <- bio_db[is.na(bio_db$capture_date)==F,]
-
+ 
 # Laboratory results
 drive_download(file = as_id("1GYcqjqLG2SUKMF_s4f7JMGtgOt6snzEzHtFCsiwFiiQ"), path = paste0("data/lab_database"), overwrite = TRUE)
 lab_db <- read_excel("data/lab_database.xlsx", sheet="Results")
