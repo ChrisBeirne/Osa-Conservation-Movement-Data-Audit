@@ -1170,15 +1170,15 @@ ex_db <- read_excel("data/exc_samples.xlsx", sheet="DATA")
 ex_sp <- read_excel("data/exc_samples.xlsx", sheet="SPECIES_CHARACT")
 
 # Remove NAs
-ex_db <- ex_db[is.na(ex_db$date_carcass_deployed)==F,]
-
-
- # Create a unique column by pasting the location_code and round 
-  ex_db$replicate  <- paste(ex_db$treatment,ex_db$habitat, ex_db$round, sep="_")
-
-  # Create a days column of days since deployment
-  ex_db$days <- difftime(ex_db$sample_date, ex_db$date_carcass_deployed)/ddays(1) 
-  
+# ex_db <- ex_db[is.na(ex_db$date_carcass_deployed)==F,]
+# 
+# 
+#  # Create a unique column by pasting the location_code and round 
+#   ex_db$replicate  <- paste(ex_db$treatment,ex_db$habitat, ex_db$round, sep="_")
+# 
+#   # Create a days column of days since deployment
+#   ex_db$days <- difftime(ex_db$sample_date, ex_db$date_carcass_deployed)/ddays(1) 
+#   
 
 ```
 
