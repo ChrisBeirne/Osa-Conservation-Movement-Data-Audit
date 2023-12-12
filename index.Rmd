@@ -786,14 +786,15 @@ To date we have collected `r nrow(bio_db)` biological samples from `r length(uni
 ```{r}
 # add a species column
 bio_db$species <- NA
-#cap_db$species
+#table(bio_db$code_sp)
 bio_db$species[bio_db$code_sp=="BV"] <- "coragyps_atratus"
 bio_db$species[bio_db$code_sp=="KV"] <- "sarcoramphus_papa"
 bio_db$species[bio_db$code_sp=="LP"] <- "leopards_pardalis"
 bio_db$species[bio_db$code_sp=="TV"] <- "cathartes_aura"
 bio_db$species[bio_db$code_sp=="GYV"] <- "cathartes_melambrotus"
 bio_db$species[bio_db$code_sp=="TB"] <- "tapirus_bairdii"
-
+bio_db$species[bio_db$code_sp=="PO"] <- "panthera_onca"
+bio_db$species[bio_db$code_sp=="AM"] <- "atelocynus_microtus"
 
 tmp <- bio_db %>% group_by(species) %>% summarise(individuals=n_distinct(pit_tag_id), samples=n())
 
@@ -801,8 +802,18 @@ kbl(tmp)  %>%
   kable_classic(full_width = F)
 
 ```
- 
-Break down of the type of sample per species:
+
+Break down of individuals by country:
+
+```{r}
+tmp <- bio_db %>% group_by(species, country) %>% summarise(individuals=n_distinct(pit_tag_id))
+
+kbl(tmp)  %>%
+  kable_classic(full_width = F)
+
+```
+
+ Break down of the type of sample per species:
 
 ```{r}
 tmp <- bio_db %>% group_by(species, tissue ) %>% summarise(individuals=n_distinct(pit_tag_id), samples=n())
