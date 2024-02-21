@@ -879,7 +879,7 @@ kbl(tmp2)  %>%
   kable_classic(full_width = F) %>%
   pack_rows(index=table(tmp2$country))%>%
     scroll_box(width = "100%", height="600px")
-
+ 
 
 ```
 
