@@ -1226,7 +1226,7 @@ m
 
 Check there is only one treatment per ID:
 ```{r}
-table(ex_check_db$location, ex_check_db$habitat_type, ex_check_db$treatment)
+table(ex_check_db$location, paste(ex_check_db$habitat_type, ex_check_db$treatment))
 
 ```
 
