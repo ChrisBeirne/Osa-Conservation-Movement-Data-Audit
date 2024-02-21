@@ -1147,48 +1147,52 @@ kbl(table(clus_db$animal_id[clus_db$focal_animal_detected=="yes"]))%>%
 ```{r}
 # Import the exclosure data - it is stored in two locations:
 
-# 1. https://docs.google.com/spreadsheets/d/1i6Isj2vmtzdljYw6h2D29pdqLYxByFI_XsiB-Oy8lZE/edit?usp=sharing 
+# 1. https://docs.google.com/spreadsheets/d/18WlT7Loq0xBST6vR8vqt333whm6wJJBCSPyWaz5Z6M0/edit?usp=drive_link
+drive_download(file = as_id("18WlT7Loq0xBST6vR8vqt333whm6wJJBCSPyWaz5Z6M0"), path = paste0("data/exc_database"), overwrite = TRUE)
+ex_check_db <- read_excel("data/exc_database.xlsx", sheet="INV_EXCL_DATA", col_types = c("text","text","text", "text","date",                   "text","text","text","text","text","text","text","text","text","text",                   "text","text","text","text","text","text","text","text","text","text", "text","text","text","text","text","text","text","text"))
 
-drive_download(file = as_id("1i6Isj2vmtzdljYw6h2D29pdqLYxByFI_XsiB-Oy8lZE"), path = paste0("data/exc_database"), overwrite = TRUE)
-ex_check_db <- read_excel("data/exc_database.xlsx", sheet="Carcass_checks")
+ex_check_db$visit_date <- dmy(ex_check_db$visit_date)
+ex_check_db$deployment_date <- dmy(ex_check_db$deployment_date)
+
+# Clean up the time column
+ex_check_db$time <- substr(ex_check_db$time,12,19)
 
 # Cleaning 
   # Remove NA's
-  ex_check_db <- ex_check_db[is.na(ex_check_db$country)==F,]
-
+  ex_check_db <- ex_check_db[is.na(ex_check_db$location)==F,]
   # Remove the trial data
-  ex_check_db <- ex_check_db[ex_check_db$round!="trial",]
+  #ex_check_db <- ex_check_db[ex_check_db$round!="trial",]
   # Convert to numeric
   ex_check_db$round <- as.numeric(ex_check_db$round)
 
   # Create a unique column by pasting the location_code and round 
-  ex_check_db$replicate  <- paste(ex_check_db$treatment,ex_check_db$habitat, ex_check_db$round, sep="_")
+  #ex_check_db$location  <- paste(ex_check_db$treatment,ex_check_db$habitat, ex_check_db$round, sep="_")
 
   # Create a days column of days since deployment
-  ex_check_db$days <- difftime(ex_check_db$visit_date, ex_check_db$date_carcass_deployed)/ddays(1) 
+  ex_check_db$days <- difftime(ex_check_db$visit_date, ex_check_db$deployment_date)/ddays(1) 
   
   
-  #table(ex_check_db$replicate)
-ex_locs <- read_excel("data/exc_database.xlsx", sheet="Locations_masterlist")
+  #table(ex_check_db$location)
+ex_locs <- read_excel("data/exc_database.xlsx", sheet="SITES_&_SOIL")
 
 
 
 # The species data
 # 2. https://docs.google.com/spreadsheets/d/18WlT7Loq0xBST6vR8vqt333whm6wJJBCSPyWaz5Z6M0/
 
-drive_download(file = as_id("18WlT7Loq0xBST6vR8vqt333whm6wJJBCSPyWaz5Z6M0"), path = paste0("data/exc_samples"), overwrite = TRUE)
-ex_db <- read_excel("data/exc_samples.xlsx", sheet="DATA")
-ex_sp <- read_excel("data/exc_samples.xlsx", sheet="SPECIES_CHARACT")
+#drive_download(file = as_id("18WlT7Loq0xBST6vR8vqt333whm6wJJBCSPyWaz5Z6M0"), path = paste0("data/exc_samples"), overwrite = TRUE)
+#ex_db <- read_excel("data/exc_samples.xlsx", sheet="DATA")
+#ex_sp <- read_excel("data/exc_samples.xlsx", sheet="SPECIES_CHARACT")
 
 # Remove NAs
-ex_db <- ex_db[is.na(ex_db$date_carcass_deployed)==F,]
+#ex_db <- ex_db[is.na(ex_db$date_carcass_deployed)==F,]
 
 
  # Create a unique column by pasting the location_code and round
-  ex_db$replicate  <- paste(ex_db$treatment,ex_db$habitat, ex_db$round, sep="_")
+ # ex_db$replicate  <- paste(ex_db$treatment,ex_db$habitat, ex_db$round, sep="_")
 
   # Create a days column of days since deployment
-  ex_db$days <- difftime(ex_db$sample_date, ex_db$date_carcass_deployed)/ddays(1)
+  # ex_db$days <- difftime(ex_db$sample_date, ex_db$date_carcass_deployed)/ddays(1)
 #   
 
 ```
@@ -1197,16 +1201,17 @@ ex_db <- ex_db[is.na(ex_db$date_carcass_deployed)==F,]
 
 ```{r}
 # Create a plot of survey locations
-ex_locs$Habitat_type <- as.factor(ex_locs$Habitat_type)
+#head(ex_locs)
+ex_locs$habitat_type <- as.factor(ex_locs$habitat_type)
 cols <- c("#e41a1c", "#ff7f00")
 m <- leaflet() %>% 
       # Add a satellite image layer
       addProviderTiles(providers$Esri.WorldImagery, group="Satellite") %>%
       addProviderTiles(providers$OpenStreetMap.Mapnik, group="OS") %>%     
-      addCircleMarkers(lng=ex_locs$Longitude,
-                         lat=ex_locs$Latitude, 
-                         popup=paste(ex_locs$Location_code, ex_locs$Habitat_type),
-                        color=cols[ex_locs$Habitat_type],
+      addCircleMarkers(lng=ex_locs$long,
+                         lat=ex_locs$lat, 
+                         popup=paste(ex_locs$location, ex_locs$habitat_type),
+                        color=cols[ex_locs$habitat_type],
                        opacity=0.8) %>%
       addScaleBar(position="topleft", 
                   options=scaleBarOptions(maxWidth = 100, metric = TRUE, imperial = FALSE, updateWhenIdle = TRUE)) %>%
@@ -1219,28 +1224,41 @@ m <- leaflet() %>%
 m 
 ```
 
+Check there is only one treatment per ID:
+```{r}
+table(ex_check_db$location, ex_check_db$habitat_type, ex_check_db$treatment)
+
+```
+
+
+
+
 ### Carcass weights through time
 
 Absolute:
 
 ```{r}
+# Removed the setups
+ex_check_db <- ex_check_db[ex_check_db$visit_type=="sampling",]
+
 ex_check_db$real_current_weight_kg <- as.numeric(ex_check_db$real_current_weight_kg)
-ex_check_db$full_treat <- as.factor(paste(ex_check_db$treatment, ex_check_db$habitat, sep="_"))
+ex_check_db$full_treat <- as.factor(paste(ex_check_db$treatment, ex_check_db$habitat_type, sep="_"))
+
 # Order the dataframe
-ex_check_db <- ex_check_db[order(ex_check_db$round,ex_check_db$full_treat,ex_check_db$days),]
-tmp <- unique(ex_check_db$replicate)
+ex_check_db <- ex_check_db[order(ex_check_db$location,ex_check_db$days),]
+tmp <- unique(ex_check_db$location)
 
-
+# Treatment colours
 cols<-c("#66c2a5", "#fc8d62", "#8da0cb", "#e78ac3")
 
-
+i <- 1
 fig <- plot_ly() 
 for(i in 1:length(tmp))
 {
-   fig <- fig %>% add_trace(x = ex_check_db$days[ex_check_db$replicate==tmp[i]], y=ex_check_db$real_current_weight_kg[ex_check_db$replicate==tmp[i]],
-                            mode = 'lines+markers', type="scatter",legendgroup=ex_check_db$round[ex_check_db$replicate==tmp[i]][1],
-                            name=ex_check_db$replicate[ex_check_db$replicate==tmp[i]][1],  connectgaps = TRUE, 
-                            color=cols[ex_check_db$full_treat[ex_check_db$replicate==tmp[i]][1]]) 
+   fig <- fig %>% add_trace(x = ex_check_db$days[ex_check_db$location==tmp[i]], y=ex_check_db$real_current_weight_kg[ex_check_db$location==tmp[i]],
+                            mode = 'lines+markers', type="scatter",legendgroup=ex_check_db$round[ex_check_db$location==tmp[i]][2],
+                            name=tmp[i],  connectgaps = TRUE, 
+                            color=cols[ex_check_db$full_treat[ex_check_db$location==tmp[i]][1]]) 
 }
 fig %>% 
   layout(title= list(text = "Absolute change"), font=t, 
@@ -1253,25 +1271,23 @@ fig %>%
 Percentage:
 
 ```{r}
-ex_check_db$real_current_weight_kg <- as.numeric(ex_check_db$real_current_weight_kg)
-
 ex_check_db$percentage_weight <- round(ex_check_db$real_current_weight_kg/as.numeric(ex_check_db$initial_bait_weight_kg),2)*100
 
 # Order the dataframe
-ex_check_db <- ex_check_db[order(ex_check_db$round,ex_check_db$full_treat,ex_check_db$days),]
-tmp <- unique(ex_check_db$replicate)
-
+ex_check_db <- ex_check_db[order(ex_check_db$location,ex_check_db$full_treat,ex_check_db$days),]
+tmp <- unique(ex_check_db$location)
+check <- ex_check_db[ex_check_db$location=="PFN001",]
  
 cols<-c("#66c2a5", "#fc8d62", "#8da0cb", "#e78ac3")
-ex_check_db$full_treat <- as.factor(paste(ex_check_db$treatment, ex_check_db$habitat, sep="_"))
 
+i <- 13
 fig <- plot_ly() 
 for(i in 1:length(tmp))
 {
-   fig <- fig %>% add_trace(x = ex_check_db$days[ex_check_db$replicate==tmp[i]], y=ex_check_db$percentage_weight[ex_check_db$replicate==tmp[i]],
-                            mode = 'lines+markers', type="scatter",legendgroup=ex_check_db$round[ex_check_db$replicate==tmp[i]][1],
-                            name=ex_check_db$replicate[ex_check_db$replicate==tmp[i]][1],  connectgaps = TRUE, 
-                            color=cols[ex_check_db$full_treat[ex_check_db$replicate==tmp[i]][1]]) 
+   fig <- fig %>% add_trace(x = ex_check_db$days[ex_check_db$location==tmp[i]], y=ex_check_db$percentage_weight[ex_check_db$location==tmp[i]],
+                            mode = 'lines+markers', type="scatter",legendgroup=ex_check_db$round[ex_check_db$location==tmp[i]][1],
+                            name=tmp[i] ,  connectgaps = TRUE, 
+                            color=cols[ex_check_db$full_treat[ex_check_db$location==tmp[i]][1]]) 
 }
 fig %>% 
   layout(title= list(text = "Percentage change"), font=t, 
@@ -1282,106 +1298,6 @@ fig %>%
 ```
 
 
-### Capture rates by treatment and method
-
-```{r}
-ex_db_long <- ex_db %>%
-  pivot_longer(
-    cols = starts_with("sp"),
-    #names_to = "week",
-    #names_prefix = "wk",
-    values_to = "count",
-    values_drop_na = TRUE
-  )
-
-
-cr_summary <- ex_db_long %>% group_by(replicate, trap_type, round, days) %>% summarize(total_ind=sum(count), total_sp=n_distinct(name))
-
-cols<-c("#66c2a5", "#fc8d62", "#8da0cb", "#e78ac3")
-i <- 1
-
-# Create a way to store multiple plots
-
-l <- htmltools::tagList()
-
-for(i in 1:length(unique(cr_summary$round)))
-{
-  fig <- plot_ly( yaxis = list(type = "log"))
-  tmp <- cr_summary[cr_summary$round==i,]
-  treats <- unique(tmp$replicate)[order(unique(tmp$replicate))]
-  methods <- unique(tmp$trap_type)[order(unique(tmp$trap_type))]
-  for(j in 1:length(treats))
-  {
-       fig <- fig %>% add_trace(x = tmp$days[tmp$replicate==treats[j] & tmp$trap_type==methods[1]], 
-                                y = tmp$total_ind[tmp$replicate==treats[j] & tmp$trap_type==methods[1]],
-                                mode = 'lines+markers', type="scatter",
-                                legendgroup = methods[1],
-                                name=paste(methods[1],treats[j]),  
-                                connectgaps = TRUE, 
-                                color=cols[j]) 
-       fig <- fig %>% add_trace(x = tmp$days[tmp$replicate==treats[j] & tmp$trap_type==methods[2]], 
-                                y = tmp$total_ind[tmp$replicate==treats[j] & tmp$trap_type==methods[2]],
-                                mode = 'lines+markers', type="scatter",
-                                line = list(widthh=0.5, dash="dot"),
-                                legendgroup = methods[2],
-                                name=paste(methods[2],treats[j]),  
-                                connectgaps = TRUE, 
-                                color=cols[j]) 
-
-  }
-  l[[i]] <- as_widget(fig %>% 
-  layout(title= list(text = paste("Round", i, "Individuals")), font=t, 
-         legend=list(title=list(text='Method Treatment')), 
-         xaxis = list(title = list(text ='Time (days)')),
-         yaxis = list(title = list(text ='Total individuals'))))
-
-}
-
-l
-```
-
-### Morphospecies by treatment and method
-
-```{r}
-
-l <- htmltools::tagList()
-
-for(i in 1:length(unique(cr_summary$round)))
-{
-  fig <- plot_ly( yaxis = list(type = "log"))
-  tmp <- cr_summary[cr_summary$round==i,]
-  treats <- unique(tmp$replicate)[order(unique(tmp$replicate))]
-  methods <- unique(tmp$trap_type)[order(unique(tmp$trap_type))]
-  for(j in 1:length(treats))
-  {
-       fig <- fig %>% add_trace(x = tmp$days[tmp$replicate==treats[j] & tmp$trap_type==methods[1]], 
-                                y = tmp$total_sp[tmp$replicate==treats[j] & tmp$trap_type==methods[1]],
-                                mode = 'lines+markers', type="scatter",
-                                legendgroup = methods[1],
-                                name=paste(methods[1],treats[j]),  
-                                connectgaps = TRUE, 
-                                color=cols[j]) 
-       fig <- fig %>% add_trace(x = tmp$days[tmp$replicate==treats[j] & tmp$trap_type==methods[2]], 
-                                y = tmp$total_sp[tmp$replicate==treats[j] & tmp$trap_type==methods[2]],
-                                mode = 'lines+markers', type="scatter",
-                                line = list(widthh=0.5, dash="dot"),
-                                legendgroup = methods[2],
-                                name=paste(methods[2],treats[j]),  
-                                connectgaps = TRUE, 
-                                color=cols[j]) 
-
-  }
-  l[[i]] <- as_widget(fig %>% 
-  layout(title= list(text = paste("Round", i, "Morphospecies")), font=t, 
-         legend=list(title=list(text='Method Treatment')), 
-         xaxis = list(title = list(text ='Time (days)')),
-         yaxis = list(title = list(text ='Total Morphospecies'))))
-}
-
-l
-
-
-```
 
 
 
