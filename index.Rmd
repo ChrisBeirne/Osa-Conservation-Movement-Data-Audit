@@ -742,7 +742,7 @@ fig
 # Trap deployment database
 
 To date we have deployed vulture traps in `r  length(unique(trap_db$location_code)) ` different locations.
-
+ 
 The trapping locations are as follows:
 
 ```{r}
