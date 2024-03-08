@@ -1149,10 +1149,12 @@ kbl(table(clus_db$animal_id[clus_db$focal_animal_detected=="yes"]))%>%
 
 # 1. https://docs.google.com/spreadsheets/d/18WlT7Loq0xBST6vR8vqt333whm6wJJBCSPyWaz5Z6M0/edit?usp=drive_link
 drive_download(file = as_id("18WlT7Loq0xBST6vR8vqt333whm6wJJBCSPyWaz5Z6M0"), path = paste0("data/exc_database"), overwrite = TRUE)
-ex_check_db <- read_excel("data/exc_database.xlsx", sheet="INV_EXCL_DATA", col_types = c("text","text","text", "text","date",                   "text","text","text","text","text","text","text","text","text","text",                   "text","text","text","text","text","text","text","text","text","text", "text","text","text","text","text","text","text","text"))
+ex_check_db <- read_excel("data/exc_database.xlsx", sheet="exclosure_deployments", col_types = c("text","text","text", "text","text",                   "text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text", "text","text","text","text","text","text","text","text"))
 
-ex_check_db$visit_date <- dmy(ex_check_db$visit_date)
-ex_check_db$deployment_date <- dmy(ex_check_db$deployment_date)
+
+?as.Date
+ex_check_db$visit_date <- as.Date(as.numeric(ex_check_db$visit_date), "1899-12-30")
+ex_check_db$deployment_date <- as.Date(as.numeric(ex_check_db$deployment_date), "1899-12-30")
 
 # Clean up the time column
 ex_check_db$time <- substr(ex_check_db$time,12,19)
@@ -1173,8 +1175,7 @@ ex_check_db$time <- substr(ex_check_db$time,12,19)
   
   
   #table(ex_check_db$location)
-ex_locs <- read_excel("data/exc_database.xlsx", sheet="SITES_&_SOIL")
-
+ex_locs <- read_excel("data/exc_database.xlsx", sheet="sites_and_soils")
 
 
 # The species data
@@ -1202,6 +1203,11 @@ ex_locs <- read_excel("data/exc_database.xlsx", sheet="SITES_&_SOIL")
 ```{r}
 # Create a plot of survey locations
 #head(ex_locs)
+
+ex_locs$long <- as.numeric(ex_locs$long)
+ex_locs$lat<- as.numeric(ex_locs$lat)
+
+
 ex_locs$habitat_type <- as.factor(ex_locs$habitat_type)
 cols <- c("#e41a1c", "#ff7f00")
 m <- leaflet() %>% 
@@ -1223,13 +1229,6 @@ m <- leaflet() %>%
   
 m 
 ```
-
-Check there is only one treatment per ID:
-```{r}
-table(ex_check_db$location, paste(ex_check_db$habitat_type, ex_check_db$treatment))
-
-```
-
 
 
 
