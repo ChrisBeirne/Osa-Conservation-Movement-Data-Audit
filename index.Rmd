@@ -101,6 +101,8 @@ dir.create(data_path)
 #Capture_database
 drive_download(file = as_id("1Q8ir4HNvP2zBFwItINhc1rmBvW2MdHnJ-mUULh_Z_oc"), path = paste0("data/cap_database"), overwrite = TRUE)
 cap_db <- read_excel("data/cap_database.xlsx", sheet="database")  
+head(cap_db)
+colnames(cap_db)
 # Convert the times to minutes
 cap_db$total_time_processing <- as.numeric(cap_db$total_time_processing)*24*60
 cap_db$delay <- as.numeric(cap_db$delay)*24*60
@@ -134,7 +136,7 @@ cap_db$species <- as.factor(cap_db$species)
 
 # Remove empty rows
 cap_db <- cap_db[is.na(cap_db$date)==F & is.na(cap_db$country)==F,]
-
+head(cap_db)
 unique_db <- cap_db[,c("pit_tag_id", "local_identifier", "code_sp")]
 # Remove NA's
 unique_db <- unique_db[unique_db$local_identifier!="NA",]
@@ -293,36 +295,6 @@ kbl(table_dat, escape = F) %>%
   kable_classic(full_width = T) %>%
   add_header_above(c(" " = 1, "All locations" = 2, "Costa Rica" = 2, "Peru" = 2)) %>% 
   column_spec (c(1,3,5,7),border_left = F, border_right = T) 
-```
-
-### Database linkage checks
-
-There are several important checks to ensure our data integrity - each data entry sheet links to others (e.g. capture data to biological samples).
-
-**Do all vulture captures have corresponding trap deployment data?**
-
-```{r}
-trap_db$date <- ymd(trap_db$date)
-
-tmp <- cap_db[cap_db$date %in% trap_db$date,]
-tmp2 <- cap_db[!(cap_db$date %in% trap_db$date),]
-
-tmp3 <- data.frame("yes" = nrow(tmp), "no"=nrow(tmp2))
-
-tmp3$no <- as.numeric(tmp3$no)
-
-kbl(tmp3, escape=F)  %>%
-  kable_classic(full_width = F)
-
-```
-
-The dates and locations when we captured vultures which are not in the database are as follows:
-
-```{r}
-tmp3 <- tmp2 %>% group_by(location_code, date) %>% summarize("vultures captured"=n())
-
-kbl(tmp3, escape=F)  %>%
-  kable_classic(full_width = F)
 ```
 
 &nbsp;
@@ -787,6 +759,8 @@ To date we have collected `r nrow(bio_db)` biological samples from `r length(uni
 # add a species column
 bio_db$species <- NA
 #table(bio_db$code_sp)
+#table(is.na(bio_db$code_sp))
+#bio_db[is.na(bio_db$code_sp),]
 bio_db$species[bio_db$code_sp=="BV"] <- "coragyps_atratus"
 bio_db$species[bio_db$code_sp=="KV"] <- "sarcoramphus_papa"
 bio_db$species[bio_db$code_sp=="LP"] <- "leopards_pardalis"
@@ -794,6 +768,7 @@ bio_db$species[bio_db$code_sp=="TV"] <- "cathartes_aura"
 bio_db$species[bio_db$code_sp=="GYV"] <- "cathartes_melambrotus"
 bio_db$species[bio_db$code_sp=="TB"] <- "tapirus_bairdii"
 bio_db$species[bio_db$code_sp=="PO"] <- "panthera_onca"
+bio_db$species[bio_db$code_sp=="PC"] <- "puma_concolor"
 bio_db$species[bio_db$code_sp=="AM"] <- "atelocynus_microtus"
 
 tmp <- bio_db %>% group_by(species) %>% summarise(individuals=n_distinct(pit_tag_id), samples=n())
