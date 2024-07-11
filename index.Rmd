@@ -133,7 +133,6 @@ cap_db$biological_sample <- as.numeric(cap_db$biological_sample)
 # Setup the categories
 cap_db$species <- as.factor(cap_db$species)
 
-
 # Remove empty rows
 cap_db <- cap_db[is.na(cap_db$date)==F & is.na(cap_db$country)==F,]
 head(cap_db)
@@ -143,6 +142,27 @@ unique_db <- unique_db[unique_db$local_identifier!="NA",]
 # Remove duplicates
 unique_db <- unique_db[duplicated(unique_db)==F,]
 table(unique_db$local_identifier)
+
+# Mammal captures
+mam_cap_db <- read_excel("data/cap_database.xlsx", sheet="mammal_capture_database")  
+mam_cap_db <- mam_cap_db[is.na(mam_cap_db$code_sp)==F ,]
+
+mam_cap_db$individual_weight_kg <- as.numeric(mam_cap_db$individual_weight_kg)
+mam_cap_db$tick<- as.numeric(mam_cap_db$tick)
+mam_cap_db$head_length<- as.numeric(mam_cap_db$head_length)
+mam_cap_db$head_width<- as.numeric(mam_cap_db$head_width)
+mam_cap_db$ear_length<- as.numeric(mam_cap_db$ear_length)
+mam_cap_db$neck_circumference<- as.numeric(mam_cap_db$neck_circumference)
+mam_cap_db$thorax_circum<- as.numeric(mam_cap_db$thorax_circum)
+mam_cap_db$tail_length<- as.numeric(mam_cap_db$tail_length)
+mam_cap_db$total_length<- as.numeric(mam_cap_db$total_length)
+mam_cap_db$tarsal_length<- as.numeric(mam_cap_db$tarsal_length)
+mam_cap_db$fore_paw_palm_length<- as.numeric(mam_cap_db$fore_paw_palm_length)
+mam_cap_db$fore_paw_palm_width<- as.numeric(mam_cap_db$fore_paw_palm_width)
+mam_cap_db$hind_paw_palm_length <- as.numeric(mam_cap_db$hind_paw_palm_length)
+mam_cap_db$hind_paw_palm_width<- as.numeric(mam_cap_db$hind_paw_palm_width)
+mam_cap_db$canine_length_superior<- as.numeric(mam_cap_db$canine_length_superior)
+mam_cap_db$canine_length_inferior<- as.numeric(mam_cap_db$canine_length_inferior)
 
 #trap_deployments
 ###################################
@@ -219,13 +239,15 @@ The following table shows total number of observations in each database (left) a
 
 ```{r, include=F}
 cap_db$NEW   <- difftime(cap_db$date,t)>-7
+mam_cap_db$NEW   <- difftime(mam_cap_db$date,t)>-7
 trap_db$NEW  <- difftime(trap_db$date,t)>-7
 bio_db$NEW   <- difftime(bio_db$capture_date,t)>-7
 track_db_1$NEW <- difftime(track_db_1$deployment_start,t)>-7
 clus_db$NEW   <- difftime(clus_db$visit_date,t)>-7
 
-list_db <- list(cap_db, trap_db, bio_db, track_db_1, clus_db)
+list_db <- list(cap_db, mam_cap_db, trap_db, bio_db, track_db_1, clus_db)
 names(list_db) <- c("vulture_capture_database",
+                    "mammal_capture_database",
                                     "vulture_trap_deployments",
                                     "biological_samples",
                                     "tracking_device_deployment_database",
@@ -420,7 +442,7 @@ kbl(tmp)  %>%
 Are these expected?
 
 
-# Capture database
+# Vulture capture database
 
 To date we have captured vultures `r nrow(cap_db)` times, deployed `r length(unique(cap_db$transmitor_identifier))` tracking devices and `r length(unique(cap_db$pit_tag_id[nchar(cap_db$pit_tag_id)>10]))` pit tags. 
 
@@ -710,6 +732,284 @@ fig <- subplot(f1, f2, f3)
 fig <- fig %>%layout(annotations = annotations) 
 fig
 ```
+
+
+# Mammal capture database
+
+To date we have captured mammals `r nrow(mam_cap_db)` times, representing `r length(unique(mam_cap_db$local_identifier))` individuals, and deployed `r length(unique(mam_cap_db$collar_code))` tracking devices. 
+
+These captures occurred on the following dates:
+
+```{r}
+tmp <- mam_cap_db
+tmp$country <- as.factor(tmp$country)
+tmp$location <- as.numeric(tmp$country)
+tmp$local_identifier[tmp$local_identifier=="NA"] <- tmp$pit_tag_id[tmp$local_identifier=="NA"] 
+plot_ly(data = tmp, x = tmp$date, y=tmp$location, color = ~code_sp,
+               hoverinfo = 'text',height=200,
+               text = ~paste(date,local_identifier,sep = "<br>")) %>% 
+              layout(title = '', 
+                      xaxis = list(title = 'Vulture capture date'), 
+                      yaxis = list(title = "",
+                                   ticktext=c("Costa Rica", "Peru"),
+                                   tickvals=list(1,2)), 
+                      legend = list(title=list(text='<b> Species </b>')))
+
+```
+
+
+The following section provides a summary of the data taken during animal captures
+
+### Morphometrics
+
+*Weight* 
+
+Of `r nrow(mam_cap_db)` captures we have *`r length(mam_cap_db$individual_weight_kg[is.na(mam_cap_db$individual_weight_kg)==T])`* captures where weight was not assessed.
+
+Of the weights recorded the distributions are as follows:
+
+```{r}
+# Weight
+
+f1 <- plot_ly(data=mam_cap_db, y = ~individual_weight_kg, color = ~code_sp, 
+               type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
+               hoverinfo = 'text',
+               text = ~paste(date,local_identifier,sex,country, individual_weight_kg,sep = "<br>")) %>% 
+              layout(title = 'Individual weight (kg)', 
+                      xaxis = list(title = 'Species'), 
+                      yaxis = list(title = 'Weight (g)'))
+
+f1
+
+
+```
+
+
+Other:
+
+**Head traits**
+
+```{r}
+f1 <- plot_ly(data=mam_cap_db, y = ~head_length, color = ~code_sp, 
+               type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
+               hoverinfo = 'text',
+               text = ~paste(date,local_identifier,sex,country, head_length,sep = "<br>")) %>% 
+              layout( xaxis = list(title = 'code_sp'), 
+                      yaxis = list(title = 'Head length (cm)'),
+                     showlegend=F)
+
+f2 <- plot_ly(data=mam_cap_db, y = ~head_width, color = ~code_sp, 
+               type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
+               hoverinfo = 'text',
+               text = ~paste(date,local_identifier,sex,country, head_width,sep = "<br>")) %>% 
+              layout(xaxis = list(title = 'code_sp'), 
+                      yaxis = list(title = 'Head length (cm)'),
+                     showlegend=F)
+
+#Ear length
+f3 <- plot_ly(data=mam_cap_db, y = ~ear_length, color = ~code_sp, 
+               type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
+               hoverinfo = 'text',
+               text = ~paste(date,local_identifier,sex,country, ear_length,sep = "<br>")) %>% 
+              layout(xaxis = list(title = 'code_sp'), 
+                      yaxis = list(title = 'Ear length (cm)'),
+                     showlegend=F)
+
+#Ear length
+f4 <- plot_ly(data=mam_cap_db, y = ~neck_circumference, color = ~code_sp, 
+               type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
+               hoverinfo = 'text',
+               text = ~paste(date,local_identifier,sex,country, neck_circumference,sep = "<br>")) %>% 
+              layout(xaxis = list(title = 'code_sp'), 
+                      yaxis = list(title = 'Neck circumference (cm)'),
+                     showlegend=F)
+
+
+
+
+annotations = list( 
+                    list(x = 0.1, y = 1.0,   text = "Head length (cm)",
+                         xref = "paper",  yref = "paper",  xanchor = "center", yanchor = "bottom", 
+                         showarrow = FALSE),
+                    list(x = 0.35, y = 1,text = "Head width (cm)",
+                         xref = "paper",yref = "paper", xanchor = "center", yanchor = "bottom",  
+                         showarrow = FALSE),
+                    list(x = 0.65, y = 1,text = "Ear length (cm)",
+                         xref = "paper",yref = "paper", xanchor = "center", yanchor = "bottom",  
+                         showarrow = FALSE),
+                    list(x = 0.9, y = 1,text = "Neck circumference (cm)",
+                         xref = "paper",yref = "paper", xanchor = "center", yanchor = "bottom",  
+                         showarrow = FALSE)
+                  )
+
+fig <- subplot(f1, f2, f3, f4) 
+fig <- fig %>%layout(annotations = annotations) 
+fig
+```
+
+**Size traits**
+
+```{r}
+f1 <- plot_ly(data=mam_cap_db, y = ~thorax_circum, color = ~code_sp, 
+               type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
+               hoverinfo = 'text',
+               text = ~paste(date,local_identifier,sex,country, thorax_circum,sep = "<br>")) %>% 
+              layout( xaxis = list(title = 'code_sp'), 
+                      yaxis = list(title = 'Thorax circumference (cm)'),
+                     showlegend=F)
+
+f2 <- plot_ly(data=mam_cap_db, y = ~tail_length, color = ~code_sp, 
+               type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
+               hoverinfo = 'text',
+               text = ~paste(date,local_identifier,sex,country, tail_length,sep = "<br>")) %>% 
+              layout(xaxis = list(title = 'code_sp'), 
+                      yaxis = list(title = 'Tail length (cm)'),
+                     showlegend=F)
+
+#Ear length
+f3 <- plot_ly(data=mam_cap_db, y = ~total_length, color = ~code_sp, 
+               type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
+               hoverinfo = 'text',
+               text = ~paste(date,local_identifier,sex,country, total_length,sep = "<br>")) %>% 
+              layout(xaxis = list(title = 'code_sp'), 
+                      yaxis = list(title = 'Total length (cm)'),
+                     showlegend=F)
+
+#Ear length
+f4 <- plot_ly(data=mam_cap_db, y = ~tarsal_length, color = ~code_sp, 
+               type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
+               hoverinfo = 'text',
+               text = ~paste(date,local_identifier,sex,country, tarsal_length,sep = "<br>")) %>% 
+              layout(xaxis = list(title = 'code_sp'), 
+                      yaxis = list(title = 'Tarsal length (cm)'),
+                     showlegend=F)
+
+
+
+
+annotations = list( 
+                    list(x = 0.1, y = 1.0,   text = "Thorax circumference (cm)",
+                         xref = "paper",  yref = "paper",  xanchor = "center", yanchor = "bottom", 
+                         showarrow = FALSE),
+                    list(x = 0.35, y = 1,text = "Tail length (cm)",
+                         xref = "paper",yref = "paper", xanchor = "center", yanchor = "bottom",  
+                         showarrow = FALSE),
+                    list(x = 0.65, y = 1,text = "Total length (cm)",
+                         xref = "paper",yref = "paper", xanchor = "center", yanchor = "bottom",  
+                         showarrow = FALSE),
+                    list(x = 0.9, y = 1,text = "Tarsal length (cm)",
+                         xref = "paper",yref = "paper", xanchor = "center", yanchor = "bottom",  
+                         showarrow = FALSE)
+                  )
+
+fig <- subplot(f1, f2, f3, f4) 
+fig <- fig %>%layout(annotations = annotations) 
+fig
+
+
+
+
+
+```
+
+**Paw traits**
+
+```{r}
+
+f1 <- plot_ly(data=mam_cap_db, y = ~fore_paw_palm_length, color = ~code_sp, 
+               type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
+               hoverinfo = 'text',
+               text = ~paste(date,local_identifier,sex,country, fore_paw_palm_length,sep = "<br>")) %>% 
+              layout( xaxis = list(title = 'code_sp'), 
+                      yaxis = list(title = ''),
+                     showlegend=F)
+
+f2 <- plot_ly(data=mam_cap_db, y = ~fore_paw_palm_width, color = ~code_sp, 
+               type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
+               hoverinfo = 'text',
+               text = ~paste(date,local_identifier,sex,country, fore_paw_palm_width,sep = "<br>")) %>% 
+              layout(xaxis = list(title = 'code_sp'), 
+                      yaxis = list(title = ''),
+                     showlegend=F)
+
+f3 <- plot_ly(data=mam_cap_db, y = ~hind_paw_palm_length, color = ~code_sp, 
+               type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
+               hoverinfo = 'text',
+               text = ~paste(date,local_identifier,sex,country, hind_paw_palm_length,sep = "<br>")) %>% 
+              layout(xaxis = list(title = 'code_sp'), 
+                      yaxis = list(title = ''),
+                     showlegend=F)
+
+f4 <- plot_ly(data=mam_cap_db, y = ~hind_paw_palm_width, color = ~code_sp, 
+               type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
+               hoverinfo = 'text',
+               text = ~paste(date,local_identifier,sex,country, hind_paw_palm_width,sep = "<br>")) %>% 
+              layout(xaxis = list(title = 'code_sp'), 
+                      yaxis = list(title = ''),
+                     showlegend=F)
+
+
+annotations = list( 
+                    list(x = 0.1, y = 0.95,   text = "Fore paw <br> palm length (cm)",
+                         xref = "paper",  yref = "paper",  xanchor = "center", yanchor = "bottom", 
+                         showarrow = FALSE),
+                    list(x = 0.35, y = 0.95,text = "Fore paw <br> palm width (cm)",
+                         xref = "paper",yref = "paper", xanchor = "center", yanchor = "bottom",  
+                         showarrow = FALSE),
+                    list(x = 0.65, y = 0.95,text = "Hind paw <br> palm length (cm)",
+                         xref = "paper",yref = "paper", xanchor = "center", yanchor = "bottom",  
+                         showarrow = FALSE),
+                    list(x = 0.9, y = 0.95,text = "Hind paw <br> palm width (cm)",
+                         xref = "paper",yref = "paper", xanchor = "center", yanchor = "bottom",  
+                         showarrow = FALSE)
+                  )
+
+fig <- subplot(f1, f2, f3, f4) 
+fig <- fig %>%layout(annotations = annotations) 
+fig
+
+
+# mam_cap_db$tarsus_length <- as.numeric(mam_cap_db$tarsus_length)
+# mam_cap_db$body_length <- as.numeric(mam_cap_db$body_length)
+# mam_cap_db$MTO_length <- as.numeric(mam_cap_db$MTO_length)
+
+```
+
+**Teeth traits**
+
+```{r}
+f1 <- plot_ly(data=mam_cap_db, y = ~canine_length_superior, color = ~code_sp, 
+               type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
+               hoverinfo = 'text',
+               text = ~paste(date,local_identifier,sex,country, canine_length_superior,sep = "<br>")) %>% 
+              layout( xaxis = list(title = 'code_sp'), 
+                      yaxis = list(title = ''),
+                     showlegend=F)
+
+f2 <- plot_ly(data=mam_cap_db, y = ~canine_length_inferior, color = ~code_sp, 
+               type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8,
+               hoverinfo = 'text',
+               text = ~paste(date,local_identifier,sex,country, canine_length_inferior,sep = "<br>")) %>% 
+              layout(xaxis = list(title = 'code_sp'), 
+                      yaxis = list(title = ''),
+                     showlegend=F)
+
+annotations = list( 
+                    list(x = 0.25, y = 0.95,   text = "Canine length <br> superior (cm)",
+                         xref = "paper",  yref = "paper",  xanchor = "center", yanchor = "bottom", 
+                         showarrow = FALSE),
+                    list(x = 0.75, y = 0.95,text = "Canine length <br> inferior (cm)",
+                         xref = "paper",yref = "paper", xanchor = "center", yanchor = "bottom",
+                         showarrow = FALSE)  
+                  )
+
+fig <- subplot(f1, f2) 
+fig <- fig %>%layout(annotations = annotations) 
+fig
+
+```
+
+
 
 # Trap deployment database
 
