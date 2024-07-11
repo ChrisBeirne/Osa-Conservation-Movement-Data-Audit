@@ -1,10 +1,12 @@
 database-changes
 database-changes-last-7-days
 recaptures
-capture-database
+vulture-capture-database
 processing-time
 crop-size
 morphometrics
+mammal-capture-database
+morphometrics-1
 trap-deployment-database
 biological-samples-database
 tracking-device-deployment-database
