@@ -466,6 +466,17 @@ plot_ly(data = tmp, x = tmp$date, y=tmp$location, color = ~species,
 
 ```
 
+Capture breakdown by country and species:
+
+```{r}
+tmp2 <- tmp %>% group_by(country, code_sp) %>% summarise(n())
+
+kbl(tmp2)  %>%
+  kable_classic(full_width = F)
+```
+
+
+
 
 The following section provides a summary of the data taken during animal captures
 
