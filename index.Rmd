@@ -150,7 +150,7 @@ mam_cap_db <- mam_cap_db[is.na(mam_cap_db$code_sp)==F ,]
 mam_cap_db$individual_weight_kg <- as.numeric(mam_cap_db$individual_weight_kg)
 mam_cap_db$tick<- as.numeric(mam_cap_db$tick)
 mam_cap_db$head_length<- as.numeric(mam_cap_db$head_length)
-mam_cap_db$head_width<- as.numeric(mam_cap_db$head_width)
+mam_cap_db$head_width<- as.numeric(mam_cap_db$head_width_neurocranium)
 mam_cap_db$ear_length<- as.numeric(mam_cap_db$ear_length)
 mam_cap_db$neck_circumference<- as.numeric(mam_cap_db$neck_circumference)
 mam_cap_db$thorax_circum<- as.numeric(mam_cap_db$thorax_circum)
@@ -476,8 +476,6 @@ kbl(tmp2)  %>%
 ```
 
 
-
-
 The following section provides a summary of the data taken during animal captures
 
 ### Processing time
@@ -743,6 +741,25 @@ fig <- subplot(f1, f2, f3)
 fig <- fig %>%layout(annotations = annotations) 
 fig
 ```
+
+
+**Wing photos**
+
+Which individuals have wing photos (0 = no, 1 = yes).
+
+```{r}
+cap_db$wing_surface_area <- as.numeric(cap_db$wing_surface_area)
+wing_db <- cap_db[cap_db$wing_surface_area==1 & is.na(cap_db$wing_surface_area)==F,]
+
+wing_db$transmitor_installation <- as.numeric(wing_db$transmitor_installation)
+
+wing_db$transmitor_installation[is.na(wing_db$transmitor_installation)==T] <- 0
+
+table(wing_db$species, wing_db$transmitor_installation)
+
+```
+
+And we have a total of `r nrow(wing_db)` individuals. 
 
 
 # Mammal capture database
