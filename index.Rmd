@@ -149,7 +149,7 @@ mam_cap_db <- mam_cap_db[is.na(mam_cap_db$code_sp)==F ,]
 
 mam_cap_db$individual_weight_kg <- as.numeric(mam_cap_db$individual_weight_kg)
 mam_cap_db$tick<- as.numeric(mam_cap_db$tick)
-mam_cap_db$head_length<- as.numeric(mam_cap_db$head_length)
+mam_cap_db$head_length<- as.numeric(mam_cap_db$head_length_cm)
 mam_cap_db$head_width<- as.numeric(mam_cap_db$head_width_neurocranium_cm)
 mam_cap_db$ear_length<- as.numeric(mam_cap_db$ear_length_cm)
 mam_cap_db$neck_circumference<- as.numeric(mam_cap_db$neck_circumference_CM)
