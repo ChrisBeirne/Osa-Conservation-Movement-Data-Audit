@@ -1198,6 +1198,7 @@ lab_full <- left_join(lab_db, bio_db[,c("sample_code", "pit_tag_id", "code_sp")]
 # And if individuals have a unique ID - add it
 lab_full <- left_join(lab_full, unique_db)
 
+
 kbl(table(is.na(lab_full$pit_tag_id)==F)) %>%
   kable_classic(full_width = F)
 
@@ -1219,9 +1220,11 @@ kbl(tmp) %>%
 So far we have sexed `r nrow(lab_full[lab_full$assay=="sex",])` vultures:
 
 ```{r}
-tmp <- lab_full[lab_full$assay=="sex",]
-tmp <- tmp[,c("local_identifier", "result", "code_sp")]
-tmp <- tmp[order(tmp$code_sp,tmp$result, tmp$local_identifier),]
+tmp <- cap_db[cap_db$sex!="NA",]
+tmp <- tmp[is.na(tmp$sex)==F,]
+tmp <- tmp %>% group_by(country, species, sex) %>%  summarise(n())
+
+
 kbl(tmp) %>%
   kable_classic(full_width = F) 
 ```
